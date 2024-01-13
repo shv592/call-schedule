@@ -1,10 +1,24 @@
 // SAMPLE_DATA defined in sampleData.js
-(function () {
-  const ownTeamName = 'Team 4';
+(async function () {
+  const ownTeamName = 'Ward Night';
   let ownTeamIndex = 0;
   const tableElement = document.getElementById("schedule");
   const theadElement = document.createElement("thead");
   const tbodyElement = document.createElement("tbody");
+  const dataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBfkLZwlSmj2Rh0w8AFLlirlzCm_26qZnf4tIcE5e8qgqQz7NtFBZyhBRX61TB0-jCignTKJNdOty/pub?gid=0&single=true&output=csv';
+  
+  let tableData = SAMPLE_DATA;
+  
+  async function getTableData() {
+    const tableDataResponse = await fetch(dataUrl);
+    const csvData = await tableDataResponse.text();
+    const rawRows = csvData.split('\n');
+    const rows = rawRows.map(row => row.split(','));
+
+    return rows;
+  }
+
+  tableData = await getTableData();
 
   // thead
   const createTableHeader = (data) => {
@@ -13,8 +27,8 @@
     data.forEach((item, index) => {
       const thElement = document.createElement("th");
       thElement.setAttribute("class", "head-cell");
-      thElement.innerHTML = item.value;
-      if (item.value === ownTeamName) {
+      thElement.innerHTML = '<span>' + item + '</span>';
+      if (item === ownTeamName) {
         thElement.setAttribute("class", "head-cell head-cell--own-team");
         ownTeamIndex = index;
       }
@@ -22,7 +36,7 @@
     });
     return trElement;
   };
-  const trElementForHead = createTableHeader(SAMPLE_DATA[0]);
+  const trElementForHead = createTableHeader(tableData[0]);
   theadElement.appendChild(trElementForHead);
 
   // tbody
@@ -35,14 +49,14 @@
       if (index === ownTeamIndex) {
         tdElement.setAttribute("class", "body-cell body-cell--own-team");
       }
-      tdElement.innerHTML = item.value;
+      tdElement.innerHTML = '<span>' + item + '</span>';
       trElement.appendChild(tdElement);
     });
     return trElement;
   };
 
-  for (let i = 1; i < SAMPLE_DATA.length; i++) {
-    const trElementForBody = createTrForTableBody(SAMPLE_DATA[i]);
+  for (let i = 1; i < tableData.length; i++) {
+    const trElementForBody = createTrForTableBody(tableData[i]);
     tbodyElement.appendChild(trElementForBody);
   }
 

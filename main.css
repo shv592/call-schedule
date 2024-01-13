@@ -43,7 +43,8 @@
 }
 
 .body-cell:first-child {
-  background: white;
+  background: rgb(73, 129, 207);
+  color: white;
 }
 
 .body-cell--own-team {
