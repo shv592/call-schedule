@@ -10,7 +10,7 @@
   let tableData = SAMPLE_DATA;
   
   async function getTableData() {
-    const tableDataResponse = await fetch(dataUrl);
+    const tableDataResponse = await fetch(dataUrl, {cache: "no-store"});
     const csvData = await tableDataResponse.text();
     const rawRows = csvData.split('\n');
     const rows = rawRows.map(row => row.split(','));
