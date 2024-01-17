@@ -30,6 +30,12 @@
   color: #000;
 }
 
+.body-row--today,
+.body-row--today .body-cell {
+  background-color: rgb(73, 129, 207);
+  color: #fff;
+}
+
 .body-cell {
   padding: 10px;
   text-align: center;
@@ -44,11 +50,13 @@
   z-index: 1;
 }
 
-.body-cell:first-child {
+.body-cell:first-child,
+.body-cell:nth-child(2) {
   background: rgb(73, 129, 207);
   color: white;
   position: sticky;
   left: 0;
+  min-width: 150px;
 }
 
 .body-cell--own-team {

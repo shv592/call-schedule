@@ -5,15 +5,22 @@
   const tableElement = document.getElementById("schedule");
   const theadElement = document.createElement("thead");
   const tbodyElement = document.createElement("tbody");
-  const dataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBfkLZwlSmj2Rh0w8AFLlirlzCm_26qZnf4tIcE5e8qgqQz7NtFBZyhBRX61TB0-jCignTKJNdOty/pub?gid=0&single=true&output=csv';
+  const dataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBfkLZwlSmj2Rh0w8AFLlirlzCm_26qZnf4tIcE5e8qgqQz7NtFBZyhBRX61TB0-jCignTKJNdOty/pub?gid=0&single=true&output=tsv';
   
   let tableData = SAMPLE_DATA;
+  let today = new Date();
+
+  function isToday(date) {
+    return date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear();
+  }
   
   async function getTableData() {
     const tableDataResponse = await fetch(dataUrl, {cache: "reload"});
     const csvData = await tableDataResponse.text();
     const rawRows = csvData.split('\n');
-    const rows = rawRows.map(row => row.split(','));
+    const rows = rawRows.map(row => row.split('\t'));
 
     return rows;
   }
@@ -43,6 +50,12 @@
   const createTrForTableBody = (data) => {
     const trElement = document.createElement("tr");
     trElement.setAttribute("class", "body-row");
+
+    const date = new Date(data[0]);
+    if (isToday(date)) {
+      trElement.setAttribute("class", "body-row body-row--today");
+    }
+
     data.forEach((item, index) => {
       const tdElement = document.createElement("td");
       tdElement.setAttribute("class", "body-cell");
