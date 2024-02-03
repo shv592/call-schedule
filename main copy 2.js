@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const tableElement = document.getElementById("schedule");
   const theadElement = document.createElement("thead");
   const tbodyElement = document.createElement("tbody");
-  const searchInput = document.getElementById("searchInput");
   const dataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBfkLZwlSmj2Rh0w8AFLlirlzCm_26qZnf4tIcE5e8qgqQz7NtFBZyhBRX61TB0-jCignTKJNdOty/pub?gid=0&single=true&output=tsv';
 
   let baseDate = new Date('2024-01-14');
@@ -45,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       trElement.appendChild(thElement);
     });
-
     return trElement;
   }
 
@@ -90,25 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
     tableElement.innerHTML = '';
     tableElement.appendChild(theadElement);
     tableElement.appendChild(tbodyElement);
-
-    highlightCells();
-  }
-
-  function highlightCells() {
-    const searchTerm = searchInput.value.trim().toLowerCase();
-    if (!searchTerm) {
-      return;
-    }
-  
-    const cells = document.querySelectorAll('.body-cell');
-    cells.forEach(cell => {
-      const text = cell.textContent.toLowerCase();
-      if (text.includes(searchTerm)) {
-        cell.classList.add('highlight');
-      } else {
-        cell.classList.remove('highlight');
-      }
-    });
   }
 
   const nextWeeksButton = document.getElementById("nextWeeksButton");
@@ -120,10 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const previousWeeksButton = document.getElementById("previousWeeksButton");
   previousWeeksButton.addEventListener("click", () => {
     baseDate.setDate(baseDate.getDate() - 28);
-    updateTable();
-  });
-
-  searchInput.addEventListener("input", function () {
     updateTable();
   });
 

@@ -90,3 +90,12 @@
   background-color: rgb(200, 105, 64);
   color: #fff;
 }
+
+
+.highlight {
+  background-color: yellow;
+}
+
+.body-cell span.highlight {
+  background-color: rgb(165, 165, 40);
+}

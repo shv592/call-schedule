@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let baseDate = new Date('2024-01-14');
   let tableData = [];
+  let searchTerm = '';
 
   async function getTableData() {
     const tableDataResponse = await fetch(dataUrl, { cache: "reload" });
@@ -46,6 +47,11 @@ document.addEventListener("DOMContentLoaded", function () {
       trElement.appendChild(thElement);
     });
 
+    // Add an empty column for the search input
+    const thSearchElement = document.createElement("th");
+    thSearchElement.setAttribute("class", "head-cell");
+    trElement.appendChild(thSearchElement);
+
     return trElement;
   }
 
@@ -68,6 +74,11 @@ document.addEventListener("DOMContentLoaded", function () {
       trElement.appendChild(tdElement);
     });
 
+    // Add an empty column for the search input
+    const tdSearchElement = document.createElement("td");
+    tdSearchElement.setAttribute("class", "body-cell");
+    trElement.appendChild(tdSearchElement);
+
     return trElement;
   }
 
@@ -86,29 +97,28 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
+    // Filter rows based on the search term
+    const filteredRows = tableData.slice(1).filter(row => {
+      return row.some(cell => cell.toLowerCase().includes(searchTerm));
+    });
+
+    for (let i = 0; i < filteredRows.length; i++) {
+      const trElementForBody = createTrForTableBody(filteredRows[i]);
+      tbodyElement.appendChild(trElementForBody);
+    }
+
     // Clear existing content and append new content
     tableElement.innerHTML = '';
     tableElement.appendChild(theadElement);
     tableElement.appendChild(tbodyElement);
 
-    highlightCells();
-  }
-
-  function highlightCells() {
-    const searchTerm = searchInput.value.trim().toLowerCase();
-    if (!searchTerm) {
-      return;
-    }
-  
-    const cells = document.querySelectorAll('.body-cell');
-    cells.forEach(cell => {
-      const text = cell.textContent.toLowerCase();
-      if (text.includes(searchTerm)) {
-        cell.classList.add('highlight');
-      } else {
-        cell.classList.remove('highlight');
-      }
-    });
+    // Add search input to the last column
+    const trSearchElement = document.createElement("tr");
+    const tdSearchElement = document.createElement("td");
+    tdSearchElement.colSpan = tableData[0].length + 1;
+    tdSearchElement.appendChild(searchInput);
+    trSearchElement.appendChild(tdSearchElement);
+    tbodyElement.appendChild(trSearchElement);
   }
 
   const nextWeeksButton = document.getElementById("nextWeeksButton");
@@ -124,6 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   searchInput.addEventListener("input", function () {
+    searchTerm = this.value.trim().toLowerCase();
     updateTable();
   });
 
