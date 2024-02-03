@@ -1,28 +1,38 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const ownTeamName = 'Ward Night';
-  let ownTeamIndex = 0;
+document.addEventListener("DOMContentLoaded", async function () {
+
+  // Constants and variables 
   const tableElement = document.getElementById("schedule");
   const theadElement = document.createElement("thead");
   const tbodyElement = document.createElement("tbody");
   const searchInput = document.getElementById("searchInput");
+  const filterDropdown = document.getElementById("filterColumn");
+  const resetButton = document.getElementById("resetButton");
   const dataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBfkLZwlSmj2Rh0w8AFLlirlzCm_26qZnf4tIcE5e8qgqQz7NtFBZyhBRX61TB0-jCignTKJNdOty/pub?gid=0&single=true&output=tsv';
 
-  let baseDate = new Date('2024-01-14');
+  let baseDate = new Date('2024-01-14');  //set the base date you want to start calculating each Block. 
   let tableData = [];
+  let selectedColumnIndex = -1;
+  let optionsInitialized = false;
 
+
+  //Fetch data from external source - google docs
   async function getTableData() {
     const tableDataResponse = await fetch(dataUrl, { cache: "reload" });
     const csvData = await tableDataResponse.text();
     return csvData.split('\n').map(row => row.split('\t'));
   }
 
+  //Table is initialized on page load
   async function initializeTable() {
     tableData = await getTableData();
     theadElement.appendChild(createTableHeader(tableData[0]));
     tableElement.appendChild(theadElement);
+    tableElement.appendChild(tbodyElement);
+    updateFilterDropdown(tableData[0]);
     updateTable();
   }
 
+  //Check if a given date is today
   function isToday(date) {
     const today = new Date();
     return (
@@ -32,38 +42,58 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
+  //Create the table header based on the data
   function createTableHeader(data) {
     const trElement = document.createElement("tr");
     trElement.setAttribute("class", "head-row");
-    data.forEach((item, index) => {
+
+    // Date column
+    const dateThElement = document.createElement("th");
+    dateThElement.setAttribute("class", "head-cell");
+    dateThElement.innerHTML = `<span>${data[0]}</span>`;
+    trElement.appendChild(dateThElement);
+
+    // Day column
+    const dayThElement = document.createElement("th");
+    dayThElement.setAttribute("class", "head-cell");
+    dayThElement.innerHTML = `<span>${data[1]}</span>`;
+    trElement.appendChild(dayThElement);
+
+    //Check if a column is selected from the filter
+    if (selectedColumnIndex !== -1) {
+      // Display only the selected column header
       const thElement = document.createElement("th");
       thElement.setAttribute("class", "head-cell");
-      thElement.innerHTML = `<span>${item}</span>`;
-      if (item === ownTeamName) {
-        thElement.setAttribute("class", "head-cell head-cell--own-team");
-        ownTeamIndex = index;
-      }
+      thElement.innerHTML = `<span>${data[selectedColumnIndex]}</span>`;
       trElement.appendChild(thElement);
-    });
+    } else {
+      // Display all column headers except the first two
+      data.slice(2).forEach((item, index) => {
+        const thElement = document.createElement("th");
+        thElement.setAttribute("class", "head-cell");
+        thElement.innerHTML = `<span>${item}</span>`;
+        trElement.appendChild(thElement);
+      });
+    }
 
     return trElement;
   }
 
+  // Create a table row for the body based on the data
   function createTrForTableBody(data) {
     const trElement = document.createElement("tr");
     trElement.setAttribute("class", "body-row");
 
+    // Check if the date is today
     const date = new Date(data[0]);
     if (isToday(date)) {
       trElement.setAttribute("class", "body-row body-row--today");
     }
 
+    // Create cells for each item in the data
     data.forEach((item, index) => {
       const tdElement = document.createElement("td");
       tdElement.setAttribute("class", "body-cell");
-      if (index === ownTeamIndex) {
-        tdElement.setAttribute("class", "body-cell body-cell--own-team");
-      }
       tdElement.innerHTML = `<span>${item}</span>`;
       trElement.appendChild(tdElement);
     });
@@ -71,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return trElement;
   }
 
+  // Update the table based on the selected filters
   function updateTable() {
     tbodyElement.innerHTML = '';
 
@@ -78,28 +109,74 @@ document.addEventListener("DOMContentLoaded", function () {
     const endDate = new Date(baseDate);
     endDate.setDate(endDate.getDate() + 27);
 
+    // Iterate through the table data and update the rows
     for (let i = 1; i < tableData.length; i++) {
       const rowDate = new Date(tableData[i][0]);
+      const trElementForBody = document.createElement("tr");
+      trElementForBody.setAttribute("class", "body-row");
+
+      // Date cell
+      const dateCell = document.createElement("td");
+      dateCell.setAttribute("class", "body-cell");
+      dateCell.innerHTML = `<span>${tableData[i][0]}</span>`;
+      trElementForBody.appendChild(dateCell);
+
+      // Day cell
+      const dayCell = document.createElement("td");
+      dayCell.setAttribute("class", "body-cell");
+      dayCell.innerHTML = `<span>${tableData[i][1]}</span>`;
+      trElementForBody.appendChild(dayCell);
+
+      // Check if a column is selected
+      if (selectedColumnIndex !== -1) {
+        // Only display the selected column
+        const tdElement = document.createElement("td");
+        tdElement.setAttribute("class", "body-cell");
+        tdElement.innerHTML = `<span>${tableData[i][selectedColumnIndex]}</span>`; // Offset by 2 for the skipped first two columns
+        trElementForBody.appendChild(tdElement);
+      } else {
+        // Display all columns except the first two
+        tableData[i].forEach((item, index) => {
+          if (index > 1) {
+            const tdElement = document.createElement("td");
+            tdElement.setAttribute("class", "body-cell");
+            tdElement.innerHTML = `<span>${item}</span>`;
+            trElementForBody.appendChild(tdElement);
+          }
+        });
+      }
+
+      // Add the row to the tbody if it falls within the date range
       if (rowDate >= startDate && rowDate <= endDate) {
-        const trElementForBody = createTrForTableBody(tableData[i]);
         tbodyElement.appendChild(trElementForBody);
+      }
+
+      // Add a class if the row corresponds to today's date
+      if (isToday(rowDate)) {
+        trElementForBody.classList.add('body-row--today');
       }
     }
 
-    // Clear existing content and append new content
+    // Update header
+    theadElement.innerHTML = '';
+    theadElement.appendChild(createTableHeader(tableData[0]));
+
+    // Append existing content
     tableElement.innerHTML = '';
     tableElement.appendChild(theadElement);
     tableElement.appendChild(tbodyElement);
 
+    // Highlight cells based on search input
     highlightCells();
   }
 
+  // Highlight cells based on search input
   function highlightCells() {
     const searchTerm = searchInput.value.trim().toLowerCase();
     if (!searchTerm) {
       return;
     }
-  
+
     const cells = document.querySelectorAll('.body-cell');
     cells.forEach(cell => {
       const text = cell.textContent.toLowerCase();
@@ -111,6 +188,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Update the filter dropdown options
+  function updateFilterDropdown(data) {
+    if (!optionsInitialized) {
+      // Display all column headers except the first two
+      data.slice(2).forEach((item, index) => {
+        const optionElement = document.createElement("option");
+        optionElement.value = (index + 2).toString(); // Offset by 2 for the skipped first two columns
+        optionElement.textContent = item;
+        filterDropdown.appendChild(optionElement);
+      });
+
+      optionsInitialized = true;
+    }
+  }
+
+  // Event listeners for buttons and input fields
   const nextWeeksButton = document.getElementById("nextWeeksButton");
   nextWeeksButton.addEventListener("click", () => {
     baseDate.setDate(baseDate.getDate() + 28);
@@ -127,5 +220,19 @@ document.addEventListener("DOMContentLoaded", function () {
     updateTable();
   });
 
-  initializeTable();
+  filterDropdown.addEventListener("change", function () {
+    selectedColumnIndex = parseInt(filterDropdown.value);
+    updateTable();
+  });
+
+  resetButton.addEventListener("click", function () {
+    // Reset any filter-related variables
+    selectedColumnIndex = -1;
+
+    // Update the table to display the original data
+    updateTable();
+  });
+
+  // Initialize the table on page load
+  await initializeTable();
 });
