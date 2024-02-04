@@ -1,68 +1,58 @@
-.head-row {
+/* Common styles for header and body cells */
+.head-cell, .body-cell {
+  padding: 8px;
+  text-align: center;
+  white-space: nowrap;
+  font-family: Calibri, sans-serif;
+}
 
+/* Header row styles */
+.head-row {
   position: sticky;
   top: 0;
   z-index: 10;
   text-align: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold;
   color: white;
   white-space: nowrap;
   background-color: rgb(65, 65, 65);
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.head-cell:first-child{
-  background-color: rgb(65, 65, 65);
+/* Header cell styles */
+.head-cell:first-child {
   position: sticky;
   left: 0;
   z-index: 9;
-
+  background-color: rgb(65, 65, 65);
 }
 
-.head-cell:nth-child(2){
-  background-color: rgb(65, 65, 65);
+.head-cell:nth-child(2) {
   position: sticky;
   left: 85px !important;
   z-index: 8;
-
+  background-color: rgb(65, 65, 65);
 }
 
-.head-cell {
-  padding: 7px;
-  text-align: center;
-  font-weight: bold;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
-}
-
-.head-cell--own-team {
-  background-color: rgb(73, 129, 207);
-  color: #fff;
-}
-
+/* Body row styles */
 .body-row {
   background-color: #fff;
   color: #000;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
 }
 
+
+
+/* Body cell styles */
 .body-cell {
-  padding: 7px;
-  text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: normal;
   color: #000;
-  white-space: nowrap;
   position: relative;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
+  cursor: default;
 }
 
-
 .body-cell:first-child {
-
   position: sticky;
   left: 0;
   z-index: 9;
@@ -70,9 +60,7 @@
   color: white;
 }
 
-
-
-.body-cell:nth-child(2){
+.body-cell:nth-child(2) {
   position: sticky;
   left: 85px !important;
   z-index: 8;
@@ -80,22 +68,41 @@
   color: white;
 }
 
-.body-cell--own-team {
-  background-color: rgb(255, 216, 199);
-  color: #fff;
-}
 
+/* Today row styles */
 .body-row--today,
 .body-row--today .body-cell {
   background-color: rgb(200, 105, 64);
   color: #fff;
 }
 
-
+/* Highlight styles */
 .highlight {
   background-color: yellow;
 }
 
-.body-cell span.highlight {
-  background-color: rgb(165, 165, 40);
+
+
+/* Hover effect for header and body cells */
+.body-row:hover,
+.body-cell:hover {
+  background-color: #e6e6e6; /* Change the background color on hover */
 }
+
+/* Hover effect for header and body cells when hovered */
+.hovered-cell{
+  background-color: #e6e6e6; /* Change the background color when hovered */
+}
+
+/* Hover effect for entire column */
+.hovered-column{
+  background-color: #e6e6e6; /* Change the background color for the entire column when hovered */
+}
+
+/* Smooth transition for hover effects */
+.body-row,
+.body-cell {
+  transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect */
+}
+
+

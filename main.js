@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Constants and variables 
   const tableElement = document.getElementById("schedule");
+
   const theadElement = document.createElement("thead");
   const tbodyElement = document.createElement("tbody");
   const searchInput = document.getElementById("searchInput");
@@ -232,6 +233,55 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Update the table to display the original data
     updateTable();
   });
+
+ // Hover effect for rows and columns
+tableElement.addEventListener("mouseover", function (event) {
+  const target = event.target;
+  
+  // Find the closest parent cell
+  const cell = target.closest("td");
+
+  // Hover effect for body cells
+  if (cell && cell.classList.contains("body-cell")) {
+    cell.classList.add("hovered-cell");
+
+    // Highlight the entire column
+    const columnIndex = Array.from(cell.parentNode.children).indexOf(cell);
+    highlightColumn(columnIndex);
+  }
+});
+
+tableElement.addEventListener("mouseout", function (event) {
+  const target = event.target;
+
+  // Find the closest parent cell
+  const cell = target.closest("td");
+
+  // Remove hover effect for body cells
+  if (cell && cell.classList.contains("body-cell")) {
+    cell.classList.remove("hovered-cell");
+
+    // Unhighlight the entire column
+    unhighlightColumns();
+  }
+});
+
+
+
+
+  function highlightColumn(index) {
+    const cells = document.querySelectorAll(`.body-cell:nth-child(${index + 1})`);
+    cells.forEach((cell) => {
+      cell.classList.add("hovered-column");
+    });
+  }
+
+  function unhighlightColumns() {
+    const cells = document.querySelectorAll(".hovered-column");
+    cells.forEach((cell) => {
+      cell.classList.remove("hovered-column");
+    });
+  }
 
   // Initialize the table on page load
   await initializeTable();
