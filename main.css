@@ -1,9 +1,42 @@
 /* Common styles for header and body cells */
-.head-cell, .body-cell {
-  padding: 8px;
+.head-cell, .body-cell, .head-row {
+  padding: 6px;
   text-align: center;
-  white-space: nowrap;
-  font-family: Calibri, sans-serif;
+  font-family: Helvetica, sans-serif;
+  font-variant: small-caps;
+}
+
+#schedule {
+  border-collapse: collapse;
+}
+
+
+/* Apply background color to even rows */
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2; /* Replace with your preferred color */
+}
+
+/* Apply background color to odd rows */
+tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* Replace with your preferred color */
+}
+
+.head-cell {
+  background-color: rgb(12, 89, 114);
+}
+
+#sticky-container {
+  position: sticky;
+  top: 0;
+  background-color: rgb(71, 59, 59); /* Set background color as needed */
+  z-index: 1000; /* Adjust the z-index based on your layout */
+  /* Add any other styles you want for the sticky container */
+}
+
+/* Additional styles for buttons and search input if needed */
+#sticky-container button,
+#sticky-container input {
+  margin: 5px; /* Adjust margins as needed */
 }
 
 /* Header row styles */
@@ -11,12 +44,8 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  text-align: center;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 13px;
   color: white;
-  white-space: nowrap;
-  background-color: rgb(65, 65, 65);
 }
 
 /* Header cell styles */
@@ -24,16 +53,22 @@
   position: sticky;
   left: 0;
   z-index: 9;
-  background-color: rgb(65, 65, 65);
 }
 
 .head-cell:nth-child(2) {
   position: sticky;
-  left: 85px !important;
+  left: 90px !important;
   z-index: 8;
-  background-color: rgb(65, 65, 65);
 }
 
+/* Set fixed width for the first two columns */
+.head-cell,
+.body-cell:nth-child(1),
+.body-cell:nth-child(2) {
+  min-width: 100px;
+  max-width: 100px;
+  width: 100px;
+}
 
 /* Body row styles */
 .body-row {
@@ -41,15 +76,13 @@
   color: #000;
 }
 
-
-
 /* Body cell styles */
 .body-cell {
   font-size: 12px;
-  font-weight: normal;
   color: #000;
   position: relative;
   cursor: default;
+  height: 30px;
 }
 
 .body-cell:first-child {
@@ -68,11 +101,10 @@
   color: white;
 }
 
-
 /* Today row styles */
 .body-row--today,
 .body-row--today .body-cell {
-  background-color: rgb(200, 105, 64);
+  background-color: rgb(114, 200, 64);
   color: #fff;
 }
 
@@ -81,28 +113,24 @@
   background-color: yellow;
 }
 
-
-
 /* Hover effect for header and body cells */
 .body-row:hover,
 .body-cell:hover {
-  background-color: #e6e6e6; /* Change the background color on hover */
+  background-color: #ededed;
 }
 
 /* Hover effect for header and body cells when hovered */
-.hovered-cell{
-  background-color: #e6e6e6; /* Change the background color when hovered */
+.hovered-cell {
+  background-color: #ededed;
 }
 
 /* Hover effect for entire column */
-.hovered-column{
-  background-color: #e6e6e6; /* Change the background color for the entire column when hovered */
+.hovered-column {
+  background-color: #ededed;
 }
 
 /* Smooth transition for hover effects */
 .body-row,
 .body-cell {
-  transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect */
+  transition: background-color 0.3s ease-in-out;
 }
-
-

@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
-
-  // Constants and variables 
+  // Constants and variables
   const tableElement = document.getElementById("schedule");
-
   const theadElement = document.createElement("thead");
   const tbodyElement = document.createElement("tbody");
   const searchInput = document.getElementById("searchInput");
@@ -10,20 +8,24 @@ document.addEventListener("DOMContentLoaded", async function () {
   const resetButton = document.getElementById("resetButton");
   const dataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBfkLZwlSmj2Rh0w8AFLlirlzCm_26qZnf4tIcE5e8qgqQz7NtFBZyhBRX61TB0-jCignTKJNdOty/pub?gid=0&single=true&output=tsv';
 
-  let baseDate = new Date('2024-01-14');  //set the base date you want to start calculating each Block. 
+  let baseDate = new Date('2024-01-14');
   let tableData = [];
   let selectedColumnIndex = -1;
   let optionsInitialized = false;
 
-
-  //Fetch data from external source - google docs
+  // Fetch data from external source - google docs
   async function getTableData() {
-    const tableDataResponse = await fetch(dataUrl, { cache: "reload" });
-    const csvData = await tableDataResponse.text();
-    return csvData.split('\n').map(row => row.split('\t'));
+    try {
+      const tableDataResponse = await fetch(dataUrl, { cache: "reload" });
+      const csvData = await tableDataResponse.text();
+      return csvData.split('\n').map(row => row.split('\t'));
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return [];
+    }
   }
 
-  //Table is initialized on page load
+  // Table is initialized on page load
   async function initializeTable() {
     tableData = await getTableData();
     theadElement.appendChild(createTableHeader(tableData[0]));
@@ -33,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateTable();
   }
 
-  //Check if a given date is today
+  // Check if a given date is today
   function isToday(date) {
     const today = new Date();
     return (
@@ -43,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     );
   }
 
-  //Create the table header based on the data
+  // Create the table header based on the data
   function createTableHeader(data) {
     const trElement = document.createElement("tr");
     trElement.setAttribute("class", "head-row");
@@ -60,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     dayThElement.innerHTML = `<span>${data[1]}</span>`;
     trElement.appendChild(dayThElement);
 
-    //Check if a column is selected from the filter
+    // Check if a column is selected from the filter
     if (selectedColumnIndex !== -1) {
       // Display only the selected column header
       const thElement = document.createElement("th");
@@ -234,41 +236,32 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateTable();
   });
 
- // Hover effect for rows and columns
-tableElement.addEventListener("mouseover", function (event) {
-  const target = event.target;
-  
-  // Find the closest parent cell
-  const cell = target.closest("td");
+  // Hover effect for rows and columns
+  tableElement.addEventListener("mouseover", handleTableHover);
+  tableElement.addEventListener("mouseout", handleTableHoverOut);
 
-  // Hover effect for body cells
-  if (cell && cell.classList.contains("body-cell")) {
-    cell.classList.add("hovered-cell");
+  function handleTableHover(event) {
+    const target = event.target;
+    const cell = target.closest("td");
 
-    // Highlight the entire column
-    const columnIndex = Array.from(cell.parentNode.children).indexOf(cell);
-    highlightColumn(columnIndex);
+    if (cell && cell.classList.contains("body-cell")) {
+      cell.classList.add("hovered-cell");
+      const columnIndex = Array.from(cell.parentNode.children).indexOf(cell);
+      highlightColumn(columnIndex);
+    }
   }
-});
 
-tableElement.addEventListener("mouseout", function (event) {
-  const target = event.target;
+  function handleTableHoverOut(event) {
+    const target = event.target;
+    const cell = target.closest("td");
 
-  // Find the closest parent cell
-  const cell = target.closest("td");
-
-  // Remove hover effect for body cells
-  if (cell && cell.classList.contains("body-cell")) {
-    cell.classList.remove("hovered-cell");
-
-    // Unhighlight the entire column
-    unhighlightColumns();
+    if (cell && cell.classList.contains("body-cell")) {
+      cell.classList.remove("hovered-cell");
+      unhighlightColumns();
+    }
   }
-});
 
-
-
-
+  // Highlight entire column
   function highlightColumn(index) {
     const cells = document.querySelectorAll(`.body-cell:nth-child(${index + 1})`);
     cells.forEach((cell) => {
@@ -276,6 +269,7 @@ tableElement.addEventListener("mouseout", function (event) {
     });
   }
 
+  // Remove highlight from entire column
   function unhighlightColumns() {
     const cells = document.querySelectorAll(".hovered-column");
     cells.forEach((cell) => {
