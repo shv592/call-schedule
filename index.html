@@ -10,20 +10,30 @@
 
 <body>
 
-  <script src="main.js"></script>
-  <div id="sticky-container">
+  <nav id="sticky-container">
     <button id="previousWeeksButton">Last Block</button>
     <button id="nextWeeksButton">Next Block</button>
     <input type="text" id="searchInput" placeholder="Search for your name">
-    <p></p>
     <label for="filterColumn">Filter by Team:</label>
     <select id="filterColumn">
       <option value="">Select a Team</option>
+      <!-- Add dynamically populated options here if needed -->
     </select>
     <button id="resetButton">Reset Filters</button>
-    <br><br>
-  </div>
-  <table id="schedule" class="table table-striped"></table>
+    
+  </nav>
+
+  <main>
+    <div id="table-wrapper">
+      <table id="schedule"></table>
+    </div>
+  </main>
+
+  <footer>
+    <!-- Add any footer content here if needed -->
+  </footer>
+
+  <script src="main.js"></script>
 
 </body>
 

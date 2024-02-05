@@ -2,41 +2,11 @@
 .head-cell, .body-cell, .head-row {
   padding: 6px;
   text-align: center;
-  font-family: Helvetica, sans-serif;
-  font-variant: small-caps;
-}
-
-#schedule {
-  border-collapse: collapse;
-}
-
-
-/* Apply background color to even rows */
-tbody tr:nth-child(even) {
-  background-color: #f2f2f2; /* Replace with your preferred color */
-}
-
-/* Apply background color to odd rows */
-tbody tr:nth-child(odd) {
-  background-color: #ffffff; /* Replace with your preferred color */
-}
-
-.head-cell {
-  background-color: rgb(12, 89, 114);
-}
-
-#sticky-container {
-  position: sticky;
-  top: 0;
-  background-color: rgb(71, 59, 59); /* Set background color as needed */
-  z-index: 1000; /* Adjust the z-index based on your layout */
-  /* Add any other styles you want for the sticky container */
-}
-
-/* Additional styles for buttons and search input if needed */
-#sticky-container button,
-#sticky-container input {
-  margin: 5px; /* Adjust margins as needed */
+  white-space: nowrap;
+  font-family: Calibri, sans-serif;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 /* Header row styles */
@@ -44,8 +14,10 @@ tbody tr:nth-child(odd) {
   position: sticky;
   top: 0;
   z-index: 10;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: bold;
   color: white;
+  
 }
 
 /* Header cell styles */
@@ -57,17 +29,16 @@ tbody tr:nth-child(odd) {
 
 .head-cell:nth-child(2) {
   position: sticky;
-  left: 90px !important;
+  left: 110px !important;
   z-index: 8;
 }
 
-/* Set fixed width for the first two columns */
-.head-cell,
-.body-cell:nth-child(1),
-.body-cell:nth-child(2) {
+.head-cell {
   min-width: 100px;
   max-width: 100px;
   width: 100px;
+  background-color: rgb(8, 117, 134);
+
 }
 
 /* Body row styles */
@@ -79,6 +50,7 @@ tbody tr:nth-child(odd) {
 /* Body cell styles */
 .body-cell {
   font-size: 12px;
+  font-weight: normal;
   color: #000;
   position: relative;
   cursor: default;
@@ -89,17 +61,30 @@ tbody tr:nth-child(odd) {
   position: sticky;
   left: 0;
   z-index: 9;
-  background-color: rgb(65, 65, 65);
+  background-color: #087586;
   color: white;
+  border-style: hidden!important;
 }
 
 .body-cell:nth-child(2) {
   position: sticky;
-  left: 85px !important;
+  left: 110px !important;
   z-index: 8;
-  background-color: rgb(65, 65, 65);
+  background-color: #087586;
   color: white;
+  border-style: hidden!important;
 }
+
+/* Set fixed width for the first two columns */
+.body-cell:nth-child(1),
+.body-cell:nth-child(2) {
+  min-width: 100px;
+  max-width: 100px;
+  width: 100px;
+
+}
+
+
 
 /* Today row styles */
 .body-row--today,
@@ -114,11 +99,14 @@ tbody tr:nth-child(odd) {
 }
 
 /* Hover effect for header and body cells */
-.body-row:hover,
 .body-cell:hover {
   background-color: #ededed;
 }
 
+
+.body-row:hover{
+  background-color: rgba(242, 242, 242, 0.4); /* Adjust the color and opacity as needed */
+}
 /* Hover effect for header and body cells when hovered */
 .hovered-cell {
   background-color: #ededed;
@@ -126,11 +114,87 @@ tbody tr:nth-child(odd) {
 
 /* Hover effect for entire column */
 .hovered-column {
-  background-color: #ededed;
+  background-color: rgba(242, 242, 242, 0.8); /* Adjust the color and opacity as needed */
+
 }
 
 /* Smooth transition for hover effects */
 .body-row,
 .body-cell {
   transition: background-color 0.3s ease-in-out;
+}
+
+/* Sticky container styles */
+#sticky-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  padding: 10px;
+  z-index: 100;
+  width: 100%;
+  font-family: Calibri, sans-serif;
+}
+
+/* Add overflow: auto to the table wrapper */
+#table-wrapper {
+  margin-top: 110px;
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+}
+
+/* Your existing table styles */
+#schedule {
+  border-collapse: collapse;
+  border: 0;
+}
+
+/* Style every even row */
+.body-row:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+/*BUTTON DESIGNS*/
+
+#sticky-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f4f4f4; /* Light background color */
+  padding: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#previousWeeksButton,
+#nextWeeksButton {
+  order: -1; /* Move the buttons to the start of the flex container */
+}
+
+#sticky-container button,
+#sticky-container input,
+#sticky-container select {
+  margin: 5px;
+  padding: 10px; /* Slightly wider padding */
+  border: 1px solid #ccc; /* Subtle border */
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+#searchInput {
+  flex-grow: 1;
+}
+
+label {
+  color: #555; /* Subtle text color for labels */
+  margin-right: 5px;
+}
+
+#resetButton {
+  background-color: #3498db; /* Blue color for the reset button */
+  color: #fff;
+  cursor: pointer;
+}
+
+#resetButton:hover {
+  background-color: #2980b9; /* Darker shade on hover */
 }
