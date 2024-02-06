@@ -1,5 +1,7 @@
 /* Common styles for header and body cells */
-.head-cell, .body-cell, .head-row {
+.head-cell,
+.body-cell,
+.head-row {
   padding: 6px;
   text-align: center;
   white-space: nowrap;
@@ -17,10 +19,20 @@
   font-size: 14px;
   font-weight: bold;
   color: white;
-  
+  background-color: #354156;
+  overflow: visible;
 }
 
+
 /* Header cell styles */
+.head-cell:nth-child(1),
+.head-cell:nth-child(2) {
+  min-width: 70px;
+  max-width: 70px;
+  width: 70px;
+}
+
+
 .head-cell:first-child {
   position: sticky;
   left: 0;
@@ -29,17 +41,18 @@
 
 .head-cell:nth-child(2) {
   position: sticky;
-  left: 110px !important;
+  left: 82px !important;
   z-index: 8;
 }
 
+
 .head-cell {
+  background-color: #354156;
   min-width: 100px;
   max-width: 100px;
   width: 100px;
-  background-color: rgb(8, 117, 134);
-
 }
+
 
 /* Body row styles */
 .body-row {
@@ -61,35 +74,41 @@
   position: sticky;
   left: 0;
   z-index: 9;
-  background-color: #087586;
+  background-color: #4f607e;
   color: white;
-  border-style: hidden!important;
 }
+
 
 .body-cell:nth-child(2) {
   position: sticky;
-  left: 110px !important;
+  left: 82px !important;
   z-index: 8;
-  background-color: #087586;
+  background-color: #4f607e;
   color: white;
-  border-style: hidden!important;
+}
+
+.body-cell:nth-child(2)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: 5px; /* Adjust the width of the shadow as needed */
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
 }
 
 /* Set fixed width for the first two columns */
 .body-cell:nth-child(1),
 .body-cell:nth-child(2) {
-  min-width: 100px;
-  max-width: 100px;
-  width: 100px;
-
+  min-width: 70px;
+  max-width: 70px;
+  width: 70px;
 }
-
-
 
 /* Today row styles */
 .body-row--today,
 .body-row--today .body-cell {
-  background-color: rgb(114, 200, 64);
+  background-color: rgb(164, 46, 46)!important;
   color: #fff;
 }
 
@@ -99,30 +118,37 @@
 }
 
 /* Hover effect for header and body cells */
+.body-row:hover,
 .body-cell:hover {
-  background-color: #ededed;
+  background-color: rgba(237, 237, 237, 0.4); /* Change the background color on hover */
 }
 
-
-.body-row:hover{
-  background-color: rgba(242, 242, 242, 0.4); /* Adjust the color and opacity as needed */
-}
 /* Hover effect for header and body cells when hovered */
-.hovered-cell {
-  background-color: #ededed;
+.hovered-cell{
+  background-color: rgba(211, 208, 208, 0.9)!important; /* Change the background color when hovered */
 }
 
 /* Hover effect for entire column */
-.hovered-column {
-  background-color: rgba(242, 242, 242, 0.8); /* Adjust the color and opacity as needed */
-
+.hovered-column{
+  background-color: rgba(237, 237, 237, 0.5); /* Change the background color for the entire column when hovered */
 }
 
 /* Smooth transition for hover effects */
 .body-row,
 .body-cell {
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect */
 }
+
+
+
+
+/* Smooth transition for hover effects */
+.body-row,
+.body-cell {
+  transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect */
+}
+
+
 
 /* Sticky container styles */
 #sticky-container {
@@ -134,13 +160,16 @@
   z-index: 100;
   width: 100%;
   font-family: Calibri, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Add overflow: auto to the table wrapper */
 #table-wrapper {
-  margin-top: 110px;
-  max-height: calc(100vh - 110px);
-  overflow-y: auto;
+  margin-top: 120px;
+  max-height: calc(100vh - 130px);
 }
 
 /* Your existing table styles */
@@ -149,21 +178,13 @@
   border: 0;
 }
 
-/* Style every even row */
+
+/* Style every even row 
 .body-row:nth-child(even) {
   background-color: #f8f8f8;
-}
+}*/
 
-/*BUTTON DESIGNS*/
-
-#sticky-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #f4f4f4; /* Light background color */
-  padding: 10px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
+/* BUTTON DESIGNS */
 
 #previousWeeksButton,
 #nextWeeksButton {
