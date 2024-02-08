@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", async function () {
   // Constants and variables
   const tableElement = document.getElementById("schedule");
@@ -50,14 +51,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     const trElement = document.createElement("tr");
     trElement.setAttribute("class", "head-row");
 
-    // Date column
-    const dateThElement = document.createElement("th");
-    dateThElement.setAttribute("class", "head-cell");
-    dateThElement.innerHTML = `<span>${data[0]}</span>`;
-    trElement.appendChild(dateThElement);
+    // Always display Date and Day columns
+    ['Date', 'Day'].forEach((item) => {
+      const thElement = document.createElement("th");
+      thElement.setAttribute("class", "head-cell");
+      thElement.innerHTML = `<span>${item}</span>`;
+      trElement.appendChild(thElement);
+    });
 
     // Rest of the columns
-    data.slice(1).forEach((item, index) => {
+    data.slice(2).forEach((item, index) => {
       const thElement = document.createElement("th");
       thElement.setAttribute("class", "head-cell");
       thElement.innerHTML = `<span>${item}</span>`;
@@ -87,8 +90,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     dateCell.innerHTML = `<span>${formattedDate}</span>`;
     trElement.appendChild(dateCell);
 
+    // Create cell for Day
+    const dayCell = document.createElement("td");
+    dayCell.setAttribute("class", "body-cell");
+    dayCell.innerHTML = `<span>${data[1]}</span>`;
+    trElement.appendChild(dayCell);
+
     // Create cells for the rest of the data
-    data.slice(1).forEach((item, index) => {
+    data.slice(2).forEach((item, index) => {
       const tdElement = document.createElement("td");
       tdElement.setAttribute("class", "body-cell");
       tdElement.innerHTML = `<span>${item}</span>`;
@@ -106,25 +115,100 @@ document.addEventListener("DOMContentLoaded", async function () {
     const endDate = new Date(baseDate);
     endDate.setDate(endDate.getDate() + 27);
 
-    // Iterate through the table data and update the rows
-    for (let i = 1; i < tableData.length; i++) {
-      const rowDate = new Date(tableData[i][0]);
-      const trElementForBody = createTrForTableBody(tableData[i]);
+    // Add a class to trigger the transition
+    tableElement.classList.add("updating-table");
 
-      // Add the row to the tbody if it falls within the date range
-      if (rowDate >= startDate && rowDate <= endDate) {
-        tbodyElement.appendChild(trElementForBody);
+    // Remove the class after a short delay
+    setTimeout(() => {
+      tableElement.classList.remove("updating-table");
+    }, 100);
+
+    
+    // Check if "Select a Team" is chosen from the dropdown
+    if (filterDropdown.value === "") {
+      // Display the original table
+      theadElement.innerHTML = '';
+      theadElement.appendChild(createTableHeader(tableData[0]));
+
+      // Iterate through the table data and update the rows
+      for (let i = 1; i < tableData.length; i++) {
+        const rowDate = new Date(tableData[i][0]);
+        const trElementForBody = createTrForTableBody(tableData[i]);
+
+        // Add the row to the tbody if it falls within the date range
+        if (rowDate >= startDate && rowDate <= endDate) {
+          tbodyElement.appendChild(trElementForBody);
+        }
+
+        // Add a class if the row corresponds to today's date
+        if (isToday(rowDate)) {
+          trElementForBody.classList.add('body-row--today');
+        }
+      }
+    } else {
+      // Create header data including "Date" and "Day"
+      const headerData = ["Date", "Day"];
+
+      // Check if a column is selected
+      if (selectedColumnIndex !== -1) {
+        // Only display the selected column in the header
+        headerData.push(tableData[0][selectedColumnIndex]); // +2 to account for date and column 0
+      } else {
+        // Display all columns except the first two in the header
+        headerData.push(...tableData[0].slice(2)); // Concatenate date and column 0 with the rest of the columns
       }
 
-      // Add a class if the row corresponds to today's date
-      if (isToday(rowDate)) {
-        trElementForBody.classList.add('body-row--today');
+      // Update header
+      theadElement.innerHTML = '';
+      theadElement.appendChild(createTableHeader(headerData));
+
+      // Iterate through the table data and update the rows
+      for (let i = 1; i < tableData.length; i++) {
+        const rowDate = new Date(tableData[i][0]);
+        const trElementForBody = document.createElement("tr");
+        trElementForBody.setAttribute("class", "body-row");
+
+        // Date cell
+        const dateCell = document.createElement("td");
+        dateCell.setAttribute("class", "body-cell");
+        const formattedDate = rowDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        dateCell.innerHTML = `<span>${formattedDate}</span>`;
+        trElementForBody.appendChild(dateCell);
+
+        // Day cell
+        const dayCell = document.createElement("td");
+        dayCell.setAttribute("class", "body-cell");
+        dayCell.innerHTML = `<span>${tableData[i][1]}</span>`;
+        trElementForBody.appendChild(dayCell);
+
+        // Check if a column is selected
+        if (selectedColumnIndex !== -1) {
+          // Only display the selected column
+          const tdElement = document.createElement("td");
+          tdElement.setAttribute("class", "body-cell");
+          tdElement.innerHTML = `<span>${tableData[i][selectedColumnIndex]}</span>`; // +2 to account for date and column 0
+          trElementForBody.appendChild(tdElement);
+        } else {
+          // Display all columns except the first two
+          tableData[i].slice(2).forEach((item, index) => {
+            const tdElement = document.createElement("td");
+            tdElement.setAttribute("class", "body-cell");
+            tdElement.innerHTML = `<span>${item}</span>`;
+            trElementForBody.appendChild(tdElement);
+          });
+        }
+
+        // Add the row to the tbody if it falls within the date range
+        if (rowDate >= startDate && rowDate <= endDate) {
+          tbodyElement.appendChild(trElementForBody);
+        }
+
+        // Add a class if the row corresponds to today's date
+        if (isToday(rowDate)) {
+          trElementForBody.classList.add('body-row--today');
+        }
       }
     }
-
-    // Update header
-    theadElement.innerHTML = '';
-    theadElement.appendChild(createTableHeader(tableData[0]));
 
     // Append existing content
     tableElement.innerHTML = '';
@@ -194,82 +278,39 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Reset any filter-related variables
     selectedColumnIndex = -1;
 
+    // Reset the search input
+    searchInput.value = "";
+
+    // Reset the filter dropdown to the default option
+    filterDropdown.value = "";
+
+    // Reset the baseDate to the original date
+    baseDate = new Date('2024-01-14');
+
     // Update the table to display the original data
     updateTable();
   });
 
+  // Hover effect for rows and columns
+  // Consolidate event listeners for "mouseover" and "mouseout"
+  tableElement.addEventListener("mouseover", handleHover);
+  tableElement.addEventListener("mouseout", handleHover);
 
+  function handleHover(event) {
+    const target = event.target;
+    const cell = target.closest("td");
 
- // Hover effect for rows and columns
- tableElement.addEventListener("mouseover", function (event) {
-  const target = event.target;
-  
-  // Find the closest parent cell
-  const cell = target.closest("td");
-
-  // Hover effect for body cells
-  if (cell && cell.classList.contains("body-cell")) {
-    cell.classList.add("hovered-cell");
-
-    // Highlight the entire column
-    const columnIndex = Array.from(cell.parentNode.children).indexOf(cell);
-    highlightColumn(columnIndex);
+    if (cell && cell.classList.contains("body-cell")) {
+      if (event.type === "mouseover") {
+        cell.classList.add("hovered-cell");
+        const columnIndex = Array.from(cell.parentNode.children).indexOf(cell);
+        highlightColumn(columnIndex);
+      } else if (event.type === "mouseout") {
+        cell.classList.remove("hovered-cell");
+        unhighlightColumns();
+      }
+    }
   }
-});
-
-tableElement.addEventListener("mouseout", function (event) {
-  const target = event.target;
-
-  // Find the closest parent cell
-  const cell = target.closest("td");
-
-  // Remove hover effect for body cells
-  if (cell && cell.classList.contains("body-cell")) {
-    cell.classList.remove("hovered-cell");
-
-    // Unhighlight the entire column
-    unhighlightColumns();
-  }
-});
-
-
-
-
-  
- // Hover effect for rows and columns
-tableElement.addEventListener("mouseover", function (event) {
-  const target = event.target;
-  
-  // Find the closest parent cell
-  const cell = target.closest("td");
-
-  // Hover effect for body cells
-  if (cell && cell.classList.contains("body-cell")) {
-    cell.classList.add("hovered-cell");
-
-    // Highlight the entire column
-    const columnIndex = Array.from(cell.parentNode.children).indexOf(cell);
-    highlightColumn(columnIndex);
-  }
-});
-
-tableElement.addEventListener("mouseout", function (event) {
-  const target = event.target;
-
-  // Find the closest parent cell
-  const cell = target.closest("td");
-
-  // Remove hover effect for body cells
-  if (cell && cell.classList.contains("body-cell")) {
-    cell.classList.remove("hovered-cell");
-
-    // Unhighlight the entire column
-    unhighlightColumns();
-  }
-});
-
-
-
 
   function highlightColumn(index) {
     const cells = document.querySelectorAll(`.body-cell:nth-child(${index + 1})`);
@@ -284,6 +325,9 @@ tableElement.addEventListener("mouseout", function (event) {
       cell.classList.remove("hovered-column");
     });
   }
+
+  // Additional CSS for smoother transitions
+  const bodyElement = document.body;
 
   // Initialize the table on page load
   await initializeTable();

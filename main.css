@@ -23,7 +23,6 @@
   overflow: visible;
 }
 
-
 /* Header cell styles */
 .head-cell:nth-child(1),
 .head-cell:nth-child(2) {
@@ -31,7 +30,6 @@
   max-width: 70px;
   width: 70px;
 }
-
 
 .head-cell:first-child {
   position: sticky;
@@ -45,14 +43,12 @@
   z-index: 8;
 }
 
-
 .head-cell {
   background-color: #354156;
   min-width: 100px;
   max-width: 100px;
   width: 100px;
 }
-
 
 /* Body row styles */
 .body-row {
@@ -77,7 +73,6 @@
   background-color: #4f607e;
   color: white;
 }
-
 
 .body-cell:nth-child(2) {
   position: sticky;
@@ -118,36 +113,34 @@
 }
 
 /* Hover effect for header and body cells */
+.head-row:hover,
 .body-row:hover,
+.head-cell:hover,
 .body-cell:hover {
   background-color: rgba(237, 237, 237, 0.4); /* Change the background color on hover */
 }
 
 /* Hover effect for header and body cells when hovered */
-.hovered-cell{
+.head-cell.hovered-cell,
+.body-cell.hovered-cell {
   background-color: rgba(211, 208, 208, 0.9)!important; /* Change the background color when hovered */
 }
 
+
 /* Hover effect for entire column */
-.hovered-column{
+.body-cell.hovered-column {
   background-color: rgba(237, 237, 237, 0.5); /* Change the background color for the entire column when hovered */
+  transition: background-color 0.3s ease; /* Add a smooth transition effect for the entire column */
 }
 
 /* Smooth transition for hover effects */
+.head-row,
 .body-row,
-.body-cell {
-  transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect */
+.head-cell,
+.body-cell,
+.body-cell.hovered-column { /* Include .body-cell.hovered-column for the transition */
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Add a smooth transition effect */
 }
-
-
-
-
-/* Smooth transition for hover effects */
-.body-row,
-.body-cell {
-  transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect */
-}
-
 
 
 /* Sticky container styles */
@@ -168,8 +161,8 @@
 
 /* Add overflow: auto to the table wrapper */
 #table-wrapper {
-  margin-top: 120px;
-  max-height: calc(100vh - 130px);
+  margin-top: 100px;
+  max-height: calc(100vh - 105px);
 }
 
 /* Your existing table styles */
@@ -178,44 +171,85 @@
   border: 0;
 }
 
-
-/* Style every even row 
-.body-row:nth-child(even) {
-  background-color: #f8f8f8;
-}*/
-
 /* BUTTON DESIGNS */
+#previousWeeksButton,
+#nextWeeksButton,
+#filterColumn,
+#resetButton {
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 10px;
+}
 
+#filterColumn{
+  order: 0;
+  margin-left: auto;
+}
+
+/* Move the buttons to the left */
 #previousWeeksButton,
 #nextWeeksButton {
-  order: -1; /* Move the buttons to the start of the flex container */
+  order: -1;
+  background-color: #c42222;
+  color: #fff;
+  cursor: pointer;
+  width: 120px;
 }
 
-#sticky-container button,
-#sticky-container input,
-#sticky-container select {
-  margin: 5px;
-  padding: 10px; /* Slightly wider padding */
-  border: 1px solid #ccc; /* Subtle border */
-  border-radius: 4px;
-  font-size: 14px;
+#previousWeeksButton:hover,
+#nextWeeksButton:hover {
+  background-color: #c42222a9; /* Darker shade on hover */
 }
 
+/* Set a width for the search input */
 #searchInput {
-  flex-grow: 1;
+  width: 200px; /* Adjust the width as needed */
+  order: 0; /* Place search bar at the far right */
+  margin-left: 5px; /* Push to the far right and be responsive */
 }
 
+/* Set a width for the search label */
 label {
   color: #555; /* Subtle text color for labels */
-  margin-right: 5px;
+  font-size: 10px;
+}
+
+/* Set margin-left for the filter dropdown */
+#filterColumn {
+  order: 0; /* Place filter dropdown to the left of the search label */
+  margin-right: auto; /* Adjust the margin as needed */
+  margin-left: 5px;
 }
 
 #resetButton {
-  background-color: #3498db; /* Blue color for the reset button */
+  order: 2;
+  background-color: #c42222; /* Blue color for the reset button */
   color: #fff;
   cursor: pointer;
+  width: 120px;
+  margin-left: 30px;
 }
 
 #resetButton:hover {
-  background-color: #2980b9; /* Darker shade on hover */
+  background-color: #c42222a9; /* Darker shade on hover */
+}
+
+body {
+  transition: background-color 3s ease;
+}
+
+.head-cell, .body-cell {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.hovered-cell, .hovered-column {
+  transition: background-color 0.3s ease;
+}
+
+/* Table update transition */
+#schedule.updating-table {
+  opacity: 0; /* Optionally fade out the table during the update */
+  transition: opacity 1s ease-in-out; /* Add a smooth transition effect */
 }
