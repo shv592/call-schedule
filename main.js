@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", async function () {
   // Constants and variables
   const tableElement = document.getElementById("schedule");
@@ -7,12 +6,17 @@ document.addEventListener("DOMContentLoaded", async function () {
   const searchInput = document.getElementById("searchInput");
   const filterDropdown = document.getElementById("filterColumn");
   const resetButton = document.getElementById("resetButton");
+  const specificYear = 2023; // Change this to the desired year
+
   const dataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBfkLZwlSmj2Rh0w8AFLlirlzCm_26qZnf4tIcE5e8qgqQz7NtFBZyhBRX61TB0-jCignTKJNdOty/pub?gid=0&single=true&output=tsv';
 
-  let baseDate = new Date('2024-01-14');
   let tableData = [];
   let selectedColumnIndex = -1;
-  let optionsInitialized = false;
+  let currentDate;
+  let blockNumber;
+  let schoolYearStart = getFirstSundayInJuly(specificYear);
+  let currentBlockStartDate;
+  let currentBlockEndDate;
 
   // Fetch data from external source - google docs
   async function getTableData() {
@@ -26,14 +30,40 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  // Table is initialized on page load
-  async function initializeTable() {
-    tableData = await getTableData();
-    theadElement.appendChild(createTableHeader(tableData[0]));
-    tableElement.appendChild(theadElement);
-    tableElement.appendChild(tbodyElement);
-    updateFilterDropdown(tableData[0]);
+
+  // Function to update current block start and end dates based on current date
+  function updateDates() {
+    currentBlockStartDate = new Date(schoolYearStart);
+    currentBlockStartDate.setDate(currentBlockStartDate.getDate() + (blockNumber - 1) * 28);
+
+    currentBlockEndDate = new Date(currentBlockStartDate.getTime());
+    currentBlockEndDate.setDate(currentBlockEndDate.getDate() + 28);
+
     updateTable();
+    updateTitle();
+  }
+
+  // Event listeners for buttons and input fields
+  const nextWeeksButton = document.getElementById("nextWeeksButton");
+  nextWeeksButton.addEventListener("click", () => {
+    moveToNextBlock();
+    updateTable();
+    updateTitle();
+  });
+
+  const previousWeeksButton = document.getElementById("previousWeeksButton");
+  previousWeeksButton.addEventListener("click", () => {
+    moveToPreviousBlock();
+    updateTable();
+    updateTitle();
+  });
+
+
+  // Calculate the first Sunday in July for the given year
+  function getFirstSundayInJuly(year) {
+    const july = new Date(year, 6, 1); // 6 corresponds to July (0-indexed month)
+    const firstSunday = new Date(july.setDate(1 + (7 - july.getDay()) % 7));
+    return firstSunday;
   }
 
   // Check if a given date is today
@@ -46,21 +76,43 @@ document.addEventListener("DOMContentLoaded", async function () {
     );
   }
 
+  // Calculate the current block's start and end dates based on the current date
+  async function initializeTable() {
+    tableData = await getTableData();
+    schoolYearStart = getFirstSundayInJuly(specificYear);
+    currentDate = new Date();
+
+    const daysElapsed = Math.floor((currentDate - schoolYearStart) / (24 * 60 * 60 * 1000));
+    blockNumber = Math.floor(daysElapsed / 28) + 1;
+
+    currentBlockStartDate = new Date(schoolYearStart);
+    currentBlockStartDate.setDate(currentBlockStartDate.getDate() + (blockNumber - 1) * 28);
+    currentBlockEndDate = new Date(currentBlockStartDate.getTime());
+    currentBlockEndDate.setDate(currentBlockEndDate.getDate() + 28);
+
+    theadElement.appendChild(createTableHeader(tableData[0]));
+    tableElement.appendChild(theadElement);
+    tableElement.appendChild(tbodyElement);
+    updateFilterDropdown(tableData[0]);
+    updateTitle();
+    updateTable();
+  }
+
   // Create the table header based on the data
   function createTableHeader(data) {
     const trElement = document.createElement("tr");
     trElement.setAttribute("class", "head-row");
 
     // Always display Date and Day columns
-    ['Date', 'Day'].forEach((item) => {
+    ['DATE', 'DAY'].forEach((item, index) => {
       const thElement = document.createElement("th");
-      thElement.setAttribute("class", "head-cell");
+      thElement.setAttribute("class", `head-cell${index === 0 || index === 1 ? ' special-column' : ''}`);
       thElement.innerHTML = `<span>${item}</span>`;
       trElement.appendChild(thElement);
     });
 
     // Rest of the columns
-    data.slice(2).forEach((item, index) => {
+    data.slice(2).forEach((item) => {
       const thElement = document.createElement("th");
       thElement.setAttribute("class", "head-cell");
       thElement.innerHTML = `<span>${item}</span>`;
@@ -68,6 +120,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     return trElement;
+  }
+
+  // Update the title based on the current block
+  function updateTitle() {
+    const titleElement = document.getElementById("table-title");
+    const titleText = `Block ${blockNumber}: ${currentBlockStartDate.toDateString()} - ${currentBlockEndDate.toDateString()}`;
+    titleElement.textContent = titleText;
   }
 
   // Create a table row for the body based on the data
@@ -84,20 +143,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Format date to display only month and day
     const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
+
     // Create cell for formatted date
     const dateCell = document.createElement("td");
-    dateCell.setAttribute("class", "body-cell");
+    dateCell.setAttribute("class", `body-cell${' special-column'}`);
     dateCell.innerHTML = `<span>${formattedDate}</span>`;
     trElement.appendChild(dateCell);
 
-    // Create cell for Day
-    const dayCell = document.createElement("td");
-    dayCell.setAttribute("class", "body-cell");
-    dayCell.innerHTML = `<span>${data[1]}</span>`;
-    trElement.appendChild(dayCell);
+  // Create cell for Day using JavaScript date object
+  const dayCell = document.createElement("td");
+  dayCell.setAttribute("class", "body-cell special-column");
+  const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
+  dayCell.innerHTML = `<span>${dayOfWeek}</span>`;
+  trElement.appendChild(dayCell);
 
     // Create cells for the rest of the data
-    data.slice(2).forEach((item, index) => {
+    data.slice(2).forEach((item) => {
       const tdElement = document.createElement("td");
       tdElement.setAttribute("class", "body-cell");
       tdElement.innerHTML = `<span>${item}</span>`;
@@ -111,10 +172,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   function updateTable() {
     tbodyElement.innerHTML = '';
 
-    const startDate = new Date(baseDate);
-    const endDate = new Date(baseDate);
-    endDate.setDate(endDate.getDate() + 27);
-
     // Add a class to trigger the transition
     tableElement.classList.add("updating-table");
 
@@ -123,7 +180,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       tableElement.classList.remove("updating-table");
     }, 100);
 
-    
+
     // Check if "Select a Team" is chosen from the dropdown
     if (filterDropdown.value === "") {
       // Display the original table
@@ -136,7 +193,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const trElementForBody = createTrForTableBody(tableData[i]);
 
         // Add the row to the tbody if it falls within the date range
-        if (rowDate >= startDate && rowDate <= endDate) {
+        if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
           tbodyElement.appendChild(trElementForBody);
         }
 
@@ -147,12 +204,12 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
     } else {
       // Create header data including "Date" and "Day"
-      const headerData = ["Date", "Day"];
+      const headerData = ["DATE", "DAY"];
 
       // Check if a column is selected
       if (selectedColumnIndex !== -1) {
         // Only display the selected column in the header
-        headerData.push(tableData[0][selectedColumnIndex]); // +2 to account for date and column 0
+        headerData.push(tableData[0][selectedColumnIndex]);
       } else {
         // Display all columns except the first two in the header
         headerData.push(...tableData[0].slice(2)); // Concatenate date and column 0 with the rest of the columns
@@ -181,6 +238,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         dayCell.innerHTML = `<span>${tableData[i][1]}</span>`;
         trElementForBody.appendChild(dayCell);
 
+
         // Check if a column is selected
         if (selectedColumnIndex !== -1) {
           // Only display the selected column
@@ -190,7 +248,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           trElementForBody.appendChild(tdElement);
         } else {
           // Display all columns except the first two
-          tableData[i].slice(2).forEach((item, index) => {
+          tableData[i].slice(2).forEach((item) => {
             const tdElement = document.createElement("td");
             tdElement.setAttribute("class", "body-cell");
             tdElement.innerHTML = `<span>${item}</span>`;
@@ -199,7 +257,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
         // Add the row to the tbody if it falls within the date range
-        if (rowDate >= startDate && rowDate <= endDate) {
+        if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
           tbodyElement.appendChild(trElementForBody);
         }
 
@@ -218,6 +276,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Highlight cells based on search input
     highlightCells();
   }
+
+
+
+
+
+
 
   // Highlight cells based on search input
   function highlightCells() {
@@ -238,32 +302,40 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   // Update the filter dropdown options
-  function updateFilterDropdown(data) {
-    if (!optionsInitialized) {
-      // Display all column headers except the first two
-      data.slice(2).forEach((item, index) => {
-        const optionElement = document.createElement("option");
-        optionElement.value = (index + 2).toString(); // Offset by 2 for the skipped first two columns
-        optionElement.textContent = item;
-        filterDropdown.appendChild(optionElement);
-      });
+function updateFilterDropdown(data) {
+  // Clear existing options
+  filterDropdown.innerHTML = '';
+  
+  // Create a default "Select a Team" option
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "Select a Team";
+  filterDropdown.appendChild(defaultOption);
 
-      optionsInitialized = true;
+  // Add options for each column
+  data.slice(2).forEach((item, index) => {
+    const optionElement = document.createElement("option");
+    optionElement.value = (index + 2).toString();
+    optionElement.textContent = item;
+    filterDropdown.appendChild(optionElement);
+  });
+}
+
+  // Function to move to the next block
+  function moveToNextBlock() {
+    blockNumber++;
+    updateDates();
+  }
+
+  // Function to move to the previous block
+  function moveToPreviousBlock() {
+    if (blockNumber > 1) {
+      blockNumber--;
+      updateDates();
     }
   }
 
-  // Event listeners for buttons and input fields
-  const nextWeeksButton = document.getElementById("nextWeeksButton");
-  nextWeeksButton.addEventListener("click", () => {
-    baseDate.setDate(baseDate.getDate() + 28);
-    updateTable();
-  });
 
-  const previousWeeksButton = document.getElementById("previousWeeksButton");
-  previousWeeksButton.addEventListener("click", () => {
-    baseDate.setDate(baseDate.getDate() - 28);
-    updateTable();
-  });
 
   searchInput.addEventListener("input", function () {
     updateTable();
@@ -275,59 +347,49 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 
   resetButton.addEventListener("click", function () {
-    // Reset any filter-related variables
     selectedColumnIndex = -1;
-
-    // Reset the search input
     searchInput.value = "";
-
-    // Reset the filter dropdown to the default option
     filterDropdown.value = "";
-
-    // Reset the baseDate to the original date
-    baseDate = new Date('2024-01-14');
-
-    // Update the table to display the original data
+    currentDate = new Date();
     updateTable();
+    updateTitle();
   });
 
   // Hover effect for rows and columns
-  // Consolidate event listeners for "mouseover" and "mouseout"
   tableElement.addEventListener("mouseover", handleHover);
   tableElement.addEventListener("mouseout", handleHover);
 
   function handleHover(event) {
     const target = event.target;
-    const cell = target.closest("td");
-
+    const cell = target.closest("th, td");
     if (cell && cell.classList.contains("body-cell")) {
-      if (event.type === "mouseover") {
-        cell.classList.add("hovered-cell");
-        const columnIndex = Array.from(cell.parentNode.children).indexOf(cell);
-        highlightColumn(columnIndex);
-      } else if (event.type === "mouseout") {
-        cell.classList.remove("hovered-cell");
-        unhighlightColumns();
+      const columnIndex = Array.from(cell.parentNode.children).indexOf(cell);
+      if (columnIndex >= 2) {
+        if (event.type === "mouseover") {
+          cell.classList.add("hovered-cell");
+          highlightColumn(columnIndex);
+        } else if (event.type === "mouseout") {
+          cell.classList.remove("hovered-cell");
+          unhighlightColumns();
+        }
       }
     }
   }
 
+
+  //HIGHLIGHT FUNCTIONS
   function highlightColumn(index) {
     const cells = document.querySelectorAll(`.body-cell:nth-child(${index + 1})`);
     cells.forEach((cell) => {
       cell.classList.add("hovered-column");
     });
   }
-
   function unhighlightColumns() {
     const cells = document.querySelectorAll(".hovered-column");
     cells.forEach((cell) => {
       cell.classList.remove("hovered-column");
     });
   }
-
-  // Additional CSS for smoother transitions
-  const bodyElement = document.body;
 
   // Initialize the table on page load
   await initializeTable();

@@ -6,13 +6,12 @@
   text-align: center;
   white-space: nowrap;
   font-family: Calibri, sans-serif;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
+  white-space: normal; /* Allow content to break into multiple lines */
 }
 
 /* Header row styles */
 .head-row {
+  height: 45px;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -20,34 +19,32 @@
   font-weight: bold;
   color: white;
   background-color: #354156;
-  overflow: visible;
 }
 
 /* Header cell styles */
-.head-cell:nth-child(1),
-.head-cell:nth-child(2) {
-  min-width: 70px;
-  max-width: 70px;
-  width: 70px;
+.head-cell {
+  min-width: 100px;
+  max-width: 100px;
+  width: 100px;
+  background-color: #354156;
 }
 
-.head-cell:first-child {
+/* Sticky styles for the first two header cells */
+.head-cell:nth-child(1),
+.head-cell:nth-child(2) {
+  min-width: 70px !important;
+  max-width: 70px !important;
+  width: 70px !important;
   position: sticky;
   left: 0;
   z-index: 9;
 }
 
+/* Sticky styles for the second header cell */
 .head-cell:nth-child(2) {
   position: sticky;
   left: 82px !important;
   z-index: 8;
-}
-
-.head-cell {
-  background-color: #354156;
-  min-width: 100px;
-  max-width: 100px;
-  width: 100px;
 }
 
 /* Body row styles */
@@ -66,7 +63,9 @@
   height: 30px;
 }
 
-.body-cell:first-child {
+/* Sticky styles for the first two body cells */
+.body-cell:first-child,
+.body-cell:nth-child(2) {
   position: sticky;
   left: 0;
   z-index: 9;
@@ -74,14 +73,7 @@
   color: white;
 }
 
-.body-cell:nth-child(2) {
-  position: sticky;
-  left: 82px !important;
-  z-index: 8;
-  background-color: #4f607e;
-  color: white;
-}
-
+/* Sticky styles for the second body cell with a gradient shadow */
 .body-cell:nth-child(2)::after {
   content: '';
   position: absolute;
@@ -92,18 +84,10 @@
   background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
 }
 
-/* Set fixed width for the first two columns */
-.body-cell:nth-child(1),
-.body-cell:nth-child(2) {
-  min-width: 70px;
-  max-width: 70px;
-  width: 70px;
-}
-
 /* Today row styles */
 .body-row--today,
 .body-row--today .body-cell {
-  background-color: rgb(164, 46, 46)!important;
+  background-color: rgb(164, 46, 46) !important;
   color: #fff;
 }
 
@@ -112,20 +96,20 @@
   background-color: yellow;
 }
 
-/* Hover effect for header and body cells */
-.head-row:hover,
-.body-row:hover,
-.head-cell:hover,
-.body-cell:hover {
+/* Hover effect for body cells when hovered */
+.body-row:hover .body-cell:not(:nth-child(1)):not(:nth-child(2)) {
   background-color: rgba(237, 237, 237, 0.4); /* Change the background color on hover */
 }
 
-/* Hover effect for header and body cells when hovered */
-.head-cell.hovered-cell,
-.body-cell.hovered-cell {
-  background-color: rgba(211, 208, 208, 0.9)!important; /* Change the background color when hovered */
+/* Hover effect for body cells when hovered */
+.body-cell:hover:not(:nth-child(1)):not(:nth-child(2)) {
+  background-color: rgba(237, 237, 237, 0.4); /* Change the background color on hover */
 }
 
+/* Hover effect for body cells when hovered */
+.body-cell.hovered-cell:not(:nth-child(1)):not(:nth-child(2)) {
+  background-color: rgba(211, 208, 208, 0.9) !important; /* Change the background color when hovered */
+}
 
 /* Hover effect for entire column */
 .body-cell.hovered-column {
@@ -134,14 +118,9 @@
 }
 
 /* Smooth transition for hover effects */
-.head-row,
-.body-row,
-.head-cell,
-.body-cell,
-.body-cell.hovered-column { /* Include .body-cell.hovered-column for the transition */
+.body-cell.hovered-column {
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Add a smooth transition effect */
 }
-
 
 /* Sticky container styles */
 #sticky-container {
@@ -161,9 +140,23 @@
 
 /* Add overflow: auto to the table wrapper */
 #table-wrapper {
-  margin-top: 100px;
+  margin-top: 20px;
   max-height: calc(100vh - 105px);
+  overflow: auto;
 }
+
+#table-title{
+  position: sticky;
+  top: 4px;
+  z-index: 90;
+  margin-top: 100px;
+  text-align: center;
+  font-size: large;
+  font-family: Calibri, sans-serif;
+  align-content: center;
+
+}
+
 
 /* Your existing table styles */
 #schedule {
@@ -183,7 +176,7 @@
   font-size: 10px;
 }
 
-#filterColumn{
+#filterColumn {
   order: 0;
   margin-left: auto;
 }
@@ -240,11 +233,13 @@ body {
   transition: background-color 3s ease;
 }
 
-.head-cell, .body-cell {
+.head-cell,
+.body-cell {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.hovered-cell, .hovered-column {
+.hovered-cell,
+.hovered-column {
   transition: background-color 0.3s ease;
 }
 
@@ -252,4 +247,50 @@ body {
 #schedule.updating-table {
   opacity: 0; /* Optionally fade out the table during the update */
   transition: opacity 1s ease-in-out; /* Add a smooth transition effect */
+}
+
+/* Add this style to make the first two header cells sticky and designate them as special columns */
+.head-cell.special-column {
+  min-width: 70px!important;
+  max-width: 70px!important;
+  width: 70px!important;
+  position: sticky;
+  left: 0;
+  z-index: 9;
+}
+
+/* Add this style to make the second header cell sticky and designate it as a special column */
+.head-cell.special-column:nth-child(2) {
+  position: sticky;
+  left: 82px!important;
+  z-index: 8;
+}
+
+/* Add this style to make the first body cell sticky and designate it as a special column */
+.body-cell.special-column:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 9;
+  background-color: #4f607e;
+  color: white;
+}
+
+/* Add this style to make the second body cell sticky and designate it as a special column */
+.body-cell.special-column:nth-child(2) {
+  position: sticky;
+  left: 82px!important;
+  z-index: 8;
+  background-color: #4f607e;
+  color: white;
+}
+
+/* Add this style to create a shadow for the sticky column */
+.body-cell.special-column:nth-child(2)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: 5px; /* Adjust the width of the shadow as needed */
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
 }
