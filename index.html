@@ -6,17 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Call Schedule</title>
   <link rel="stylesheet" type="text/css" href="main.css">
-  <!-- Add this in the <head> section of your HTML file -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 
 <body>
-
   <nav id="sticky-container">
     <button id="previousWeeksButton">Last Block</button>
     <button id="nextWeeksButton">Next Block</button>
-
     <label for="filterColumn">&nbsp; &nbsp; Filter by team:</label>
     <select id="filterColumn">
       <option value="">Select a Team</option>
@@ -25,15 +21,14 @@
     <input type="text" id="searchInput" placeholder="Search by name">
     <button id="resetButton">Reset Filters</button>
   </nav>
+  
   <div id="table-title-together">
-  <div id="table-title">
-  </div>
+    <div id="table-title"></div>
     <div id="table-wrapper">
- 
-   <table id="schedule"></table>
+      <table id="schedule"></table>
+    </div>
   </div>
-</div>
-  <!-- Place the script tag at the end of the body -->
+
   <script src="main.js"></script>
 
 </body>

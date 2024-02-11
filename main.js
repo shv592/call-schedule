@@ -1,26 +1,34 @@
 document.addEventListener("DOMContentLoaded", async function () {
+
   // Constants and variables
+  const specificYear = 2023; // Change this to the desired year
   const tableElement = document.getElementById("schedule");
   const theadElement = document.createElement("thead");
   const tbodyElement = document.createElement("tbody");
   const searchInput = document.getElementById("searchInput");
   const filterDropdown = document.getElementById("filterColumn");
   const resetButton = document.getElementById("resetButton");
-  const specificYear = 2023; // Change this to the desired year
-  // Add this at the top of your script
-  const moment = window.moment;
-
+  const nextWeeksButton = document.getElementById("nextWeeksButton");
+  const previousWeeksButton = document.getElementById("previousWeeksButton");
   const dataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBfkLZwlSmj2Rh0w8AFLlirlzCm_26qZnf4tIcE5e8qgqQz7NtFBZyhBRX61TB0-jCignTKJNdOty/pub?gid=0&single=true&output=tsv';
+  const moment = window.moment || (await import('https://cdn.jsdelivr.net/momentjs/latest/moment.min.js')).default;
+  if (!moment) {
+    console.error("Moment.js is not loaded. Check the CDN link or your internet connection.");
+    return;
+  }
 
   let tableData = [];
   let selectedColumnIndex = -1;
-  let currentDate;
-  let blockNumber;
-  let schoolYearStart = getFirstSundayInJuly(specificYear);
+  let currentDate = moment().startOf('day');
   let currentBlockStartDate;
   let currentBlockEndDate;
 
-  // Fetch data from external source - google docs
+  let schoolYearStart = getFirstSundayInJuly(specificYear);
+  const daysElapsed = Math.ceil(currentDate.diff(schoolYearStart, "days"));
+  let blockNumber = Math.ceil(daysElapsed / 28);
+
+
+  // ************************ Fetch data from external source - google docs ************************************************
   async function getTableData() {
     try {
       const tableDataResponse = await fetch(dataUrl, { cache: "reload" });
@@ -32,80 +40,84 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
+  //************************ Determines the first sunday of July ************************************************
+  function getFirstSundayInJuly(specificYear) {
+    const julyMoment = moment(`${specificYear}-07-01`, 'YYYY-MM-DD');
+    const dayOfWeek = julyMoment.day(); // Calculate the day of the week for July 1st
+    const daysToAdd = dayOfWeek === 0 ? 0 : 7 - dayOfWeek; // Calculate the number of days to add to reach the first Sunday
+    const firstSundayMoment = julyMoment.add(daysToAdd, 'days').startOf('day'); // Add the days to get the first Sunday
 
-  // Function to update current block start and end dates based on current date
-// Import moment.js (if not already imported)
-// const moment = window.moment;
-
-function updateDates() {
-  // Calculate the start date of the current block
-  const currentBlockStartDateMoment = moment(schoolYearStart).add((blockNumber - 1) * 28, 'days');
-  currentBlockStartDate = currentBlockStartDateMoment.toDate();
-
-  // Calculate the end date of the current block
-  const currentBlockEndDateMoment = currentBlockStartDateMoment.add(28, 'days');
-  currentBlockEndDate = currentBlockEndDateMoment.toDate();
-
-  // Update the table and title
-  updateTable();
-  updateTitle();
-}
+    return firstSundayMoment;
+  }
 
 
-  // Event listeners for buttons and input fields
-  const nextWeeksButton = document.getElementById("nextWeeksButton");
-  nextWeeksButton.addEventListener("click", () => {
-    moveToNextBlock();
-    updateTable();
-    updateTitle();
-  });
-
-  const previousWeeksButton = document.getElementById("previousWeeksButton");
-  previousWeeksButton.addEventListener("click", () => {
-    moveToPreviousBlock();
-    updateTable();
-    updateTitle();
-  });
-
-
-// Import moment.js (if not already imported)
-// const moment = window.moment;
-
-function getFirstSundayInJuly(year) {
-  const julyMoment = moment(`${year}-07-01`, 'YYYY-MM-DD');
-  const firstSundayMoment = julyMoment.day('Sunday').startOf('day');
-  return firstSundayMoment.toDate();
-}
-
-
-  // Check if a given date is today
-// Check if a given date is today
-function isToday(date) {
-  return moment(date).isSame(moment(), 'day');
-}
-
-  
-
-  // Calculate the current block's start and end dates based on the current date
+  // ************************ Initializes the original table ************************************************
   async function initializeTable() {
     tableData = await getTableData();
-    schoolYearStart = getFirstSundayInJuly(specificYear);
-    currentDate = moment(); // Use moment for the current date
-    
-    const daysElapsed = Math.floor(currentDate.diff(schoolYearStart, 'days'));
-    blockNumber = Math.floor(daysElapsed / 28) + 1;
-    
-    currentBlockStartDate = moment(schoolYearStart).add((blockNumber - 1) * 28, 'days');
-    currentBlockEndDate = moment(currentBlockStartDate).add(28, 'days');
-    
+
+    // Log the schoolYearStart and currentDate for debugging
+    console.log('schoolYearStart:', schoolYearStart.format('YYYY-MM-DD'));
+    console.log('currentDate:', currentDate.format('YYYY-MM-DD'));
+    console.log('Days Elapsed:', daysElapsed);
+
+    // Check if today is July 1st, and if so, reset all relevant variables
+    if (currentDate.isSame(schoolYearStart.clone().startOf('year').add(6, 'months'), 'day')) {
+      schoolYearStart = getFirstSundayInJuly(currentDate.year());
+      currentDate = moment().startOf('day');
+      daysElapsed = Math.ceil(currentDate.diff(schoolYearStart, "days"));
+      blockNumber = 1; // Reset blockNumber to 1
+    } else {
+      // Calculate the block number based on days elapsed
+      blockNumber = Math.ceil(daysElapsed / 28);
+    }
+
+    // Calculate the current block's start and end dates based on the current block number
+    currentBlockStartDate = schoolYearStart.clone().add((blockNumber - 1) * 28, "days");
+    currentBlockEndDate = currentBlockStartDate.clone().add(27, "days");
+
+    // If today's date is not within the current block, move to the next block
+    if (!(currentDate.isSameOrAfter(currentBlockStartDate) && currentDate.isSameOrBefore(currentBlockEndDate))) {
+      moveToNextBlock();
+    }
+
+    console.log('Block Number:', blockNumber);
+
     theadElement.appendChild(createTableHeader(tableData[0]));
     tableElement.appendChild(theadElement);
     tableElement.appendChild(tbodyElement);
     updateFilterDropdown(tableData[0]);
     updateTitle();
     updateTable();
-    
   }
+
+
+  // Check if a given date is today
+  function isToday(date) {
+    return moment(date).isSame(moment(), "day");
+
+  }
+
+
+  function updateDates() {
+    currentBlockStartDate = schoolYearStart.clone().add((blockNumber - 1) * 28, "days");
+    currentBlockEndDate = currentBlockStartDate.clone().add(27, "days");
+
+    //consoles
+    console.log('schoolYearStart:', schoolYearStart.format('YYYY-MM-DD'));
+    console.log('currentDate:', currentDate.format('YYYY-MM-DD'));
+    console.log('blockNumber:', blockNumber);
+    console.log('currentBlockStartDate:', currentBlockStartDate);
+    console.log('currentBlockEndDate:', currentBlockEndDate);
+
+    theadElement.appendChild(createTableHeader(tableData[0]));
+    tableElement.appendChild(theadElement);
+    tableElement.appendChild(tbodyElement);
+    updateFilterDropdown(tableData[0]);
+    updateTitle();
+    updateTable();
+
+  }
+
 
   // Create the table header based on the data
   function createTableHeader(data) {
@@ -132,86 +144,89 @@ function isToday(date) {
   }
 
   // Update the title based on the current block
+
   function updateTitle() {
     const titleElement = document.getElementById("table-title");
-    const titleText = `Block ${blockNumber}: ${currentBlockStartDate.toDateString()} - ${currentBlockEndDate.toDateString()}`;
+    const titleText = `Block ${blockNumber}: ${currentBlockStartDate.format('MMM D, YYYY')} - ${currentBlockEndDate.format('MMM D, YYYY')}`;
     titleElement.textContent = titleText;
   }
 
-///********************************************* */
-function createTrForTableBody(data) {
-  const trElement = document.createElement("tr");
-  trElement.setAttribute("class", "body-row");
+  ///********************************************* */
+  function createTrForTableBody(data) {
+    const trElement = document.createElement("tr");
+    trElement.setAttribute("class", "body-row");
+
+    // Check if the date is today
+    const date = moment(data[0]).toDate();
+    if (isToday(date)) {
+      trElement.classList.add("body-row--today");
+    }
+
+    // Modified code for DATE column
+    const dateParts = data[0].split('-');
+    const rowDate = moment.utc(`${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`, 'YYYY-MM-DD').toDate();
+
+    //DATE CELL 
+    const dateValue = data[0];
+
+    const dateCell = document.createElement("td");
+    dateCell.setAttribute("class", `body-cell${' special-column'}`);
+
+    // Format the date using moment.js
+    const formattedDate = moment(dateValue).format('MMM D');
+    dateCell.innerHTML = `<span>${formattedDate}</span>`;
+    trElement.appendChild(dateCell);
 
 
-// Check if the date is today
-const date = moment(data[0]).toDate();
-if (isToday(date)) {
-  trElement.classList.add("body-row--today");
-}
+    // Create cell for Day using the value from Google Sheets
+    const dayCell = document.createElement("td");
+    dayCell.setAttribute("class", "body-cell special-column");
+    const dayValue = data[1]; // Assuming the "Day" column is at index 1
+    dayCell.innerHTML = `<span>${dayValue}</span>`;
+    trElement.appendChild(dayCell);
 
-// Modified code for DATE column
-const dateParts = data[0].split('-');
-const rowDate = moment.utc(`${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`, 'YYYY-MM-DD').toDate();
-
-//DATE CELL 
-const dateCell = document.createElement("td");
-dateCell.setAttribute("class", `body-cell${' special-column'}`);
-const formattedDate = moment(rowDate).format('MMM D'); // Format the date using moment.js
-dateCell.innerHTML = `<span>${formattedDate}</span>`;
-trElement.appendChild(dateCell);
-
-
-  // Create cell for Day using the value from Google Sheets
-  const dayCell = document.createElement("td");
-  dayCell.setAttribute("class", "body-cell special-column");
-  const dayValue = data[1]; // Assuming the "Day" column is at index 1
-  dayCell.innerHTML = `<span>${dayValue}</span>`;
-  trElement.appendChild(dayCell);
-
-  // Create cells based on selected column
-if (selectedColumnIndex !== -1) {
-  const tdElement = document.createElement("td");
-  tdElement.setAttribute("class", "body-cell");
-  tdElement.innerHTML = `<span>${data[selectedColumnIndex]}</span>`;
-  trElement.appendChild(tdElement);
-} else {
-  // Create cells for the rest of the data
-  data.slice(2).forEach((item) => {
-    const tdElement = document.createElement("td");
-    tdElement.setAttribute("class", "body-cell");
-    tdElement.innerHTML = `<span>${item}</span>`;
-    trElement.appendChild(tdElement);
-  });
-}
+    // Create cells based on selected column
+    if (selectedColumnIndex !== -1) {
+      const tdElement = document.createElement("td");
+      tdElement.setAttribute("class", "body-cell");
+      tdElement.innerHTML = `<span>${data[selectedColumnIndex]}</span>`;
+      trElement.appendChild(tdElement);
+    } else {
+      // Create cells for the rest of the data
+      data.slice(2).forEach((item) => {
+        const tdElement = document.createElement("td");
+        tdElement.setAttribute("class", "body-cell");
+        tdElement.innerHTML = `<span>${item}</span>`;
+        trElement.appendChild(tdElement);
+      });
+    }
 
 
-  return trElement;
-}
+    return trElement;
+  }
 
 
 
   // Update the table based on the selected filters
   function updateTable() {
     tbodyElement.innerHTML = '';
-  
-    // Check if "Select a Team" is chosen from the dropdown
+
     if (filterDropdown.value === "") {
-      // Display the original table
+      // Display the original table header
       theadElement.innerHTML = '';
       theadElement.appendChild(createTableHeader(tableData[0]));
-  
+
       // Iterate through the table data and update the rows
       for (let i = 1; i < tableData.length; i++) {
         const trElementForBody = createTrForTableBody(tableData[i]);
-  
+
         // Add the row to the tbody if it falls within the date range
         const rowDate = moment(tableData[i][0]).toDate();
         if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
           tbodyElement.appendChild(trElementForBody);
         }
-  
-        // Add a class if the row corresponds to today's date
+
+        // Add the "body-row--today" class if it's today's date
         if (isToday(rowDate)) {
           trElementForBody.classList.add('body-row--today');
         }
@@ -219,49 +234,45 @@ if (selectedColumnIndex !== -1) {
     } else {
       // Create header data including "Date" and "Day"
       const headerData = ["DATE", "DAY"];
-  
-      // Check if a column is selected
-     // Check if a column is selected
-if (selectedColumnIndex !== -1) {
-  // Only display the selected column in the header
-  headerData.push(tableData[0][selectedColumnIndex]);
-} else {
-  // Display only DATE and DAY columns in the header
-  headerData.push("DATE", "DAY");
-}
+
+      // Check if a column is selected // Only display the selected column in the header
+      if (selectedColumnIndex !== -1) {
+        headerData.push(tableData[0][selectedColumnIndex]);
+      } else {
+        headerData.push("DATE", "DAY"); // Display only DATE and DAY columns in the header
+      }
 
       // Update header
       theadElement.innerHTML = '';
       theadElement.appendChild(createTableHeader(headerData));
-  
 
-      
       // Iterate through the table data and update the rows
       for (let i = 1; i < tableData.length; i++) {
         const trElementForBody = createTrForTableBody(tableData[i]);
-  
+
         // Add the row to the tbody if it falls within the date range
         const rowDate = moment(tableData[i][0]).toDate();
         if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
           tbodyElement.appendChild(trElementForBody);
         }
-  
-        // Add a class if the row corresponds to today's date
+
+        // Add the "body-row--today" class if it's today's date
         if (isToday(rowDate)) {
           trElementForBody.classList.add('body-row--today');
         }
       }
     }
-  
+
     // Append existing content
     tableElement.innerHTML = '';
     tableElement.appendChild(theadElement);
     tableElement.appendChild(tbodyElement);
-  
+
     // Highlight cells based on search input
     highlightCells();
   }
-  
+
+
 
 
 
@@ -320,7 +331,18 @@ if (selectedColumnIndex !== -1) {
     }
   }
 
+  // Event listeners for buttons and input fields
+  nextWeeksButton.addEventListener("click", () => {
+    moveToNextBlock();
+    updateTable();
+    updateTitle();
+  });
 
+  previousWeeksButton.addEventListener("click", () => {
+    moveToPreviousBlock();
+    updateTable();
+    updateTitle();
+  });
 
   searchInput.addEventListener("input", function () {
     updateTable();
@@ -331,14 +353,15 @@ if (selectedColumnIndex !== -1) {
     updateTable();
   });
 
-  resetButton.addEventListener("click", function () {
-    selectedColumnIndex = -1;
-    searchInput.value = "";
-    filterDropdown.value = "";
-    currentDate = new Date();
-    updateTable();
-    updateTitle();
-  });
+// Event listeners for buttons and input fields
+resetButton.addEventListener("click", function () {
+  selectedColumnIndex = -1;
+  searchInput.value = "";
+  filterDropdown.value = "";
+  initializeTable(); // Reinitialize the table
+});
+
+
 
   // Hover effect for rows and columns
   tableElement.addEventListener("mouseover", handleHover);
