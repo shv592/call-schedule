@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  //************************ Determines the first sunday of July ************************************************
+  // ************************ Determines the first Sunday of July ************************************************
   function getFirstSundayInJuly(specificYear) {
     const julyMoment = moment(`${specificYear}-07-01`, 'YYYY-MM-DD');
     const dayOfWeek = julyMoment.day(); // Calculate the day of the week for July 1st
@@ -54,34 +54,27 @@ document.addEventListener("DOMContentLoaded", async function () {
   // ************************ Initializes the original table ************************************************
   async function initializeTable() {
     tableData = await getTableData();
-
-    // Log the schoolYearStart and currentDate for debugging
+        // Log the schoolYearStart and currentDate for debugging
     console.log('schoolYearStart:', schoolYearStart.format('YYYY-MM-DD'));
     console.log('currentDate:', currentDate.format('YYYY-MM-DD'));
     console.log('Days Elapsed:', daysElapsed);
-
-    // Check if today is July 1st, and if so, reset all relevant variables
+       // Resets all variables if its July 1st
     if (currentDate.isSame(schoolYearStart.clone().startOf('year').add(6, 'months'), 'day')) {
       schoolYearStart = getFirstSundayInJuly(currentDate.year());
       currentDate = moment().startOf('day');
       daysElapsed = Math.ceil(currentDate.diff(schoolYearStart, "days"));
-      blockNumber = 1; // Reset blockNumber to 1
+      blockNumber = 1;
     } else {
-      // Calculate the block number based on days elapsed
+          // Calculates the block number 
       blockNumber = Math.ceil(daysElapsed / 28);
     }
-
-    // Calculate the current block's start and end dates based on the current block number
+        // Current block's start and end dates based on the current block number
     currentBlockStartDate = schoolYearStart.clone().add((blockNumber - 1) * 28, "days");
     currentBlockEndDate = currentBlockStartDate.clone().add(27, "days");
-
-    // If today's date is not within the current block, move to the next block
+       // Check if today's date is within the current block, otherwise it moves to the next block
     if (!(currentDate.isSameOrAfter(currentBlockStartDate) && currentDate.isSameOrBefore(currentBlockEndDate))) {
       moveToNextBlock();
     }
-
-    console.log('Block Number:', blockNumber);
-
     theadElement.appendChild(createTableHeader(tableData[0]));
     tableElement.appendChild(theadElement);
     tableElement.appendChild(tbodyElement);
@@ -90,49 +83,42 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateTable();
   }
 
-
   // Check if a given date is today
   function isToday(date) {
     return moment(date).isSame(moment(), "day");
-
   }
 
-
+  // ************************ Updates the block start and end dates ************************************************
   function updateDates() {
     currentBlockStartDate = schoolYearStart.clone().add((blockNumber - 1) * 28, "days");
     currentBlockEndDate = currentBlockStartDate.clone().add(27, "days");
-
-    //consoles
+       //Consoles for debugging
     console.log('schoolYearStart:', schoolYearStart.format('YYYY-MM-DD'));
     console.log('currentDate:', currentDate.format('YYYY-MM-DD'));
     console.log('blockNumber:', blockNumber);
     console.log('currentBlockStartDate:', currentBlockStartDate);
     console.log('currentBlockEndDate:', currentBlockEndDate);
-
+    
     theadElement.appendChild(createTableHeader(tableData[0]));
     tableElement.appendChild(theadElement);
     tableElement.appendChild(tbodyElement);
     updateFilterDropdown(tableData[0]);
     updateTitle();
     updateTable();
-
   }
 
-
-  // Create the table header based on the data
+  // ************************ Create the table header based on the data ************************************************
   function createTableHeader(data) {
     const trElement = document.createElement("tr");
     trElement.setAttribute("class", "head-row");
-
-    // Always display Date and Day columns
+          // Always display Date and Day columns
     ['DATE', 'DAY'].forEach((item, index) => {
       const thElement = document.createElement("th");
       thElement.setAttribute("class", `head-cell${index === 0 || index === 1 ? ' special-column' : ''}`);
       thElement.innerHTML = `<span>${item}</span>`;
       trElement.appendChild(thElement);
     });
-
-    // Rest of the columns
+         // Rest of the columns
     data.slice(2).forEach((item) => {
       const thElement = document.createElement("th");
       thElement.setAttribute("class", "head-cell");
@@ -143,42 +129,34 @@ document.addEventListener("DOMContentLoaded", async function () {
     return trElement;
   }
 
-  // Update the title based on the current block
 
+  // ************************ Update the title based on the current block ************************************************
   function updateTitle() {
     const titleElement = document.getElementById("table-title");
     const titleText = `Block ${blockNumber}: ${currentBlockStartDate.format('MMM D, YYYY')} - ${currentBlockEndDate.format('MMM D, YYYY')}`;
     titleElement.textContent = titleText;
   }
 
-  ///********************************************* */
+  // ************************ Rows of the table ************************************************
   function createTrForTableBody(data) {
     const trElement = document.createElement("tr");
     trElement.setAttribute("class", "body-row");
-
-    // Check if the date is today
+         // Check if the date is today
     const date = moment(data[0]).toDate();
     if (isToday(date)) {
       trElement.classList.add("body-row--today");
     }
-
-    // Modified code for DATE column
-    const dateParts = data[0].split('-');
-    const rowDate = moment.utc(`${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`, 'YYYY-MM-DD').toDate();
-
-    //DATE CELL 
+        //DATE CELL 
     const dateValue = data[0];
-
     const dateCell = document.createElement("td");
     dateCell.setAttribute("class", `body-cell${' special-column'}`);
 
-    // Format the date using moment.js
+       // Format the date using moment.js
     const formattedDate = moment(dateValue).format('MMM D');
     dateCell.innerHTML = `<span>${formattedDate}</span>`;
     trElement.appendChild(dateCell);
 
-
-    // Create cell for Day using the value from Google Sheets
+       // Create cell for Day using the value from Google Sheets
     const dayCell = document.createElement("td");
     dayCell.setAttribute("class", "body-cell special-column");
     const dayValue = data[1]; // Assuming the "Day" column is at index 1
@@ -200,14 +178,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         trElement.appendChild(tdElement);
       });
     }
-
-
     return trElement;
   }
 
-
-
-  // Update the table based on the selected filters
+  // ************************ Update the table based on the selected filters ************************************************
   function updateTable() {
     tbodyElement.innerHTML = '';
 
@@ -215,17 +189,14 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Display the original table header
       theadElement.innerHTML = '';
       theadElement.appendChild(createTableHeader(tableData[0]));
-
       // Iterate through the table data and update the rows
       for (let i = 1; i < tableData.length; i++) {
         const trElementForBody = createTrForTableBody(tableData[i]);
-
         // Add the row to the tbody if it falls within the date range
         const rowDate = moment(tableData[i][0]).toDate();
         if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
           tbodyElement.appendChild(trElementForBody);
         }
-
         // Add the "body-row--today" class if it's today's date
         if (isToday(rowDate)) {
           trElementForBody.classList.add('body-row--today');
@@ -234,14 +205,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     } else {
       // Create header data including "Date" and "Day"
       const headerData = ["DATE", "DAY"];
-
       // Check if a column is selected // Only display the selected column in the header
       if (selectedColumnIndex !== -1) {
         headerData.push(tableData[0][selectedColumnIndex]);
       } else {
         headerData.push("DATE", "DAY"); // Display only DATE and DAY columns in the header
       }
-
       // Update header
       theadElement.innerHTML = '';
       theadElement.appendChild(createTableHeader(headerData));
@@ -249,34 +218,24 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Iterate through the table data and update the rows
       for (let i = 1; i < tableData.length; i++) {
         const trElementForBody = createTrForTableBody(tableData[i]);
-
         // Add the row to the tbody if it falls within the date range
         const rowDate = moment(tableData[i][0]).toDate();
         if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
           tbodyElement.appendChild(trElementForBody);
         }
-
         // Add the "body-row--today" class if it's today's date
         if (isToday(rowDate)) {
           trElementForBody.classList.add('body-row--today');
         }
       }
     }
-
     // Append existing content
     tableElement.innerHTML = '';
     tableElement.appendChild(theadElement);
     tableElement.appendChild(tbodyElement);
-
     // Highlight cells based on search input
     highlightCells();
   }
-
-
-
-
-
-
 
 
   // Highlight cells based on search input
@@ -285,7 +244,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (!searchTerm) {
       return;
     }
-
     const cells = document.querySelectorAll('.body-cell');
     cells.forEach(cell => {
       const text = cell.textContent.toLowerCase();
@@ -353,6 +311,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateTable();
   });
 
+  
 // Event listeners for buttons and input fields
 resetButton.addEventListener("click", function () {
   selectedColumnIndex = -1;
@@ -360,8 +319,6 @@ resetButton.addEventListener("click", function () {
   filterDropdown.value = "";
   initializeTable(); // Reinitialize the table
 });
-
-
 
   // Hover effect for rows and columns
   tableElement.addEventListener("mouseover", handleHover);
@@ -383,7 +340,6 @@ resetButton.addEventListener("click", function () {
       }
     }
   }
-
 
   //HIGHLIGHT FUNCTIONS
   function highlightColumn(index) {
