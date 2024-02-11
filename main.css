@@ -139,24 +139,29 @@
 }
 
 /* Add overflow: auto to the table wrapper */
-#table-wrapper {
-  margin-top: 20px;
-  max-height: calc(100vh - 105px);
-  overflow: auto;
+
+#table-title-together {
+  margin-top: 400px;
+  max-height: 10vh;
+ /* max-height: calc(80vh - 300px);*/
+ 
 }
+
 
 #table-title{
   position: sticky;
-  top: 4px;
+  top: 0px;
   z-index: 90;
-  margin-top: 100px;
   text-align: center;
   font-size: large;
   font-family: Calibri, sans-serif;
   align-content: center;
-
 }
-
+#table-wrapper {
+  margin-top: 20px;
+ /* max-height: calc(80vh - 300px);*/
+  overflow: auto;
+}
 
 /* Your existing table styles */
 #schedule {
