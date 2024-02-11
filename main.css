@@ -6,7 +6,7 @@
   text-align: center;
   white-space: nowrap;
   font-family: Calibri, sans-serif;
-  white-space: normal; /* Allow content to break into multiple lines */
+  white-space: normal;
 }
 
 /* Header row styles */
@@ -28,21 +28,17 @@
   width: 100px;
   background-color: #354156;
 }
-
-/* Add this style to make the first two header cells sticky and designate them as special columns */
 .head-cell.special-column {
-  min-width: 70px!important;
-  max-width: 70px!important;
-  width: 70px!important;
+  min-width: 70px !important;
+  max-width: 70px !important;
+  width: 70px !important;
   position: sticky;
   left: 0;
   z-index: 9;
 }
-
-/* Add this style to make the second header cell sticky and designate it as a special column */
 .head-cell.special-column:nth-child(2) {
   position: sticky;
-  left: 82px!important;
+  left: 82px !important;
   z-index: 8;
 }
 
@@ -61,8 +57,6 @@
   cursor: default;
   height: 30px;
 }
-
-/* Add this style to make the first body cell sticky and designate it as a special column */
 .body-cell.special-column:first-child {
   position: sticky;
   left: 0;
@@ -70,11 +64,9 @@
   background-color: #4f607e;
   color: white;
 }
-
-/* Add this style to make the second body cell sticky and designate it as a special column */
 .body-cell.special-column:nth-child(2) {
   position: sticky;
-  left: 82px!important;
+  left: 82px !important;
   z-index: 8;
   background-color: #4f607e;
   color: white;
@@ -87,7 +79,7 @@
   top: 0;
   bottom: 0;
   left: 100%;
-  width: 5px; /* Adjust the width of the shadow as needed */
+  width: 5px;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
 }
 
@@ -100,30 +92,23 @@
 
 /* Highlight styles */
 .highlight {
-  background-color: yellow;
+  background-color: rgb(255, 255, 180);
 }
 
 /* Hover effect for body cells when hovered */
 .body-row:hover .body-cell:not(:nth-child(1)):not(:nth-child(2)) {
-  background-color: rgba(237, 237, 237, 0.4); /* Change the background color on hover */
+  background-color: rgba(237, 237, 237, 0.4);
 }
-
-/* Hover effect for body cells when hovered */
 .body-cell:hover:not(:nth-child(1)):not(:nth-child(2)) {
-  background-color: rgba(237, 237, 237, 0.4); /* Change the background color on hover */
+  background-color: rgba(237, 237, 237, 0.4);
 }
-
-/* Hover effect for body cells when hovered */
 .body-cell.hovered-cell:not(:nth-child(1)):not(:nth-child(2)) {
-  background-color: rgba(211, 208, 208, 0.9) !important; /* Change the background color when hovered */
+  background-color: rgba(211, 208, 208, 0.9) !important;
 }
-
-/* Hover effect for entire column */
 .body-cell.hovered-column {
-  background-color: rgba(237, 237, 237, 0.5); /* Change the background color for the entire column when hovered */
-  transition: background-color 0.1s ease; /* Add a smooth transition effect for the entire column */
+  background-color: rgba(237, 237, 237, 0.5);
+  transition: background-color 0.1s ease;
 }
-
 
 /* Sticky container styles */
 #sticky-container {
@@ -141,13 +126,12 @@
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-
 #table-title-together {
   margin-top: 100px;
   max-height: calc(100vh-90px);
 }
 
-#table-title{
+#table-title {
   position: sticky;
   top: 0px;
   z-index: 90;
@@ -193,35 +177,34 @@
   cursor: pointer;
   width: 120px;
 }
-
 #previousWeeksButton:hover,
 #nextWeeksButton:hover {
-  background-color: #c42222a9; /* Darker shade on hover */
+  background-color: #c42222a9;
 }
 
 /* Set a width for the search input */
 #searchInput {
-  width: 200px; /* Adjust the width as needed */
-  order: 0; /* Place search bar at the far right */
-  margin-left: 5px; /* Push to the far right and be responsive */
+  width: 200px;
+  order: 0;
+  margin-left: 5px;
 }
 
 /* Set a width for the search label */
 label {
-  color: #555; /* Subtle text color for labels */
+  color: #555;
   font-size: 10px;
 }
 
 /* Set margin-left for the filter dropdown */
 #filterColumn {
-  order: 0; /* Place filter dropdown to the left of the search label */
-  margin-right: auto; /* Adjust the margin as needed */
+  order: 0;
+  margin-right: auto;
   margin-left: 5px;
 }
 
 #resetButton {
   order: 2;
-  background-color: #c42222; /* Blue color for the reset button */
+  background-color: #c42222;
   color: #fff;
   cursor: pointer;
   width: 120px;
@@ -229,7 +212,5 @@ label {
 }
 
 #resetButton:hover {
-  background-color: #c42222a9; /* Darker shade on hover */
+  background-color: #c42222a9;
 }
-
-/* Add this class to the table or specific elements when you want to apply the transition */
