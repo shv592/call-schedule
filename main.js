@@ -12,10 +12,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const previousWeeksButton = document.getElementById("previousWeeksButton");
   const dataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBfkLZwlSmj2Rh0w8AFLlirlzCm_26qZnf4tIcE5e8qgqQz7NtFBZyhBRX61TB0-jCignTKJNdOty/pub?gid=0&single=true&output=tsv';
   const moment = window.moment || (await import('https://cdn.jsdelivr.net/momentjs/latest/moment.min.js')).default;
-  if (!moment) {
-    console.error("Moment.js is not loaded. Check the CDN link or your internet connection.");
-    return;
-  }
+
 
   let tableData = [];
   let selectedColumnIndex = -1;

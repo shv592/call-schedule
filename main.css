@@ -29,21 +29,20 @@
   background-color: #354156;
 }
 
-/* Sticky styles for the first two header cells */
-.head-cell:nth-child(1),
-.head-cell:nth-child(2) {
-  min-width: 70px !important;
-  max-width: 70px !important;
-  width: 70px !important;
+/* Add this style to make the first two header cells sticky and designate them as special columns */
+.head-cell.special-column {
+  min-width: 70px!important;
+  max-width: 70px!important;
+  width: 70px!important;
   position: sticky;
   left: 0;
   z-index: 9;
 }
 
-/* Sticky styles for the second header cell */
-.head-cell:nth-child(2) {
+/* Add this style to make the second header cell sticky and designate it as a special column */
+.head-cell.special-column:nth-child(2) {
   position: sticky;
-  left: 82px !important;
+  left: 82px!important;
   z-index: 8;
 }
 
@@ -63,9 +62,8 @@
   height: 30px;
 }
 
-/* Sticky styles for the first two body cells */
-.body-cell:first-child,
-.body-cell:nth-child(2) {
+/* Add this style to make the first body cell sticky and designate it as a special column */
+.body-cell.special-column:first-child {
   position: sticky;
   left: 0;
   z-index: 9;
@@ -73,8 +71,17 @@
   color: white;
 }
 
-/* Sticky styles for the second body cell with a gradient shadow */
-.body-cell:nth-child(2)::after {
+/* Add this style to make the second body cell sticky and designate it as a special column */
+.body-cell.special-column:nth-child(2) {
+  position: sticky;
+  left: 82px!important;
+  z-index: 8;
+  background-color: #4f607e;
+  color: white;
+}
+
+/* Add this style to create a shadow for the sticky column */
+.body-cell.special-column:nth-child(2)::after {
   content: '';
   position: absolute;
   top: 0;
@@ -114,13 +121,9 @@
 /* Hover effect for entire column */
 .body-cell.hovered-column {
   background-color: rgba(237, 237, 237, 0.5); /* Change the background color for the entire column when hovered */
-  transition: background-color 0.3s ease; /* Add a smooth transition effect for the entire column */
+  transition: background-color 0.1s ease; /* Add a smooth transition effect for the entire column */
 }
 
-/* Smooth transition for hover effects */
-.body-cell.hovered-column {
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Add a smooth transition effect */
-}
 
 /* Sticky container styles */
 #sticky-container {
@@ -138,12 +141,10 @@
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Add overflow: auto to the table wrapper */
 
 #table-title-together {
   margin-top: 100px;
   max-height: calc(100vh-90px);
- 
 }
 
 #table-title{
@@ -153,22 +154,20 @@
   text-align: center;
   font-size: large;
   font-family: Calibri, sans-serif;
-
 }
+
 #table-wrapper {
   margin-top: 20px;
   max-height: 75vh;
   overflow: auto;
 }
 
-/* Your existing table styles */
 #schedule {
   border-collapse: collapse;
   border: 0;
-  
 }
 
-/* BUTTON DESIGNS */
+/* NAVIGATION ELEMENTS DESIGNS */
 #previousWeeksButton,
 #nextWeeksButton,
 #filterColumn,
@@ -233,68 +232,4 @@ label {
   background-color: #c42222a9; /* Darker shade on hover */
 }
 
-body {
-  transition: background-color 3s ease;
-}
-
-.head-cell,
-.body-cell {
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.hovered-cell,
-.hovered-column {
-  transition: background-color 0.3s ease;
-}
-
-/* Table update transition */
-#schedule.updating-table {
-  opacity: 0; /* Optionally fade out the table during the update */
-  transition: opacity 1s ease-in-out; /* Add a smooth transition effect */
-}
-
-/* Add this style to make the first two header cells sticky and designate them as special columns */
-.head-cell.special-column {
-  min-width: 70px!important;
-  max-width: 70px!important;
-  width: 70px!important;
-  position: sticky;
-  left: 0;
-  z-index: 9;
-}
-
-/* Add this style to make the second header cell sticky and designate it as a special column */
-.head-cell.special-column:nth-child(2) {
-  position: sticky;
-  left: 82px!important;
-  z-index: 8;
-}
-
-/* Add this style to make the first body cell sticky and designate it as a special column */
-.body-cell.special-column:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 9;
-  background-color: #4f607e;
-  color: white;
-}
-
-/* Add this style to make the second body cell sticky and designate it as a special column */
-.body-cell.special-column:nth-child(2) {
-  position: sticky;
-  left: 82px!important;
-  z-index: 8;
-  background-color: #4f607e;
-  color: white;
-}
-
-/* Add this style to create a shadow for the sticky column */
-.body-cell.special-column:nth-child(2)::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 100%;
-  width: 5px; /* Adjust the width of the shadow as needed */
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
-}
+/* Add this class to the table or specific elements when you want to apply the transition */
