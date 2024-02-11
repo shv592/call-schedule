@@ -290,9 +290,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
   resetButton.addEventListener("click", function () {
     selectedColumnIndex = -1;
+    initializeTable(); // Reinitialize the table
     searchInput.value = "";
     filterDropdown.value = "";
-    initializeTable(); // Reinitialize the table
   });
 
   // Hover effect for rows and columns
