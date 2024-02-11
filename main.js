@@ -150,12 +150,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     dateCell.innerHTML = `<span>${formattedDate}</span>`;
     trElement.appendChild(dateCell);
 
-  // Create cell for Day using JavaScript date object
-  const dayCell = document.createElement("td");
-  dayCell.setAttribute("class", "body-cell special-column");
-  const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
-  dayCell.innerHTML = `<span>${dayOfWeek}</span>`;
-  trElement.appendChild(dayCell);
+    // Create cell for Day using JavaScript date object
+    const dayCell = document.createElement("td");
+    dayCell.setAttribute("class", "body-cell special-column");
+    const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
+    dayCell.innerHTML = `<span>${dayOfWeek}</span>`;
+    trElement.appendChild(dayCell);
 
     // Create cells for the rest of the data
     data.slice(2).forEach((item) => {
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Day cell
         const dayCell = document.createElement("td");
-        dayCell.setAttribute("class", "body-cell");
+        dayCell.setAttribute("class", "body-cell special-column");
         dayCell.innerHTML = `<span>${tableData[i][1]}</span>`;
         trElementForBody.appendChild(dayCell);
 
@@ -246,6 +246,8 @@ document.addEventListener("DOMContentLoaded", async function () {
           tdElement.setAttribute("class", "body-cell");
           tdElement.innerHTML = `<span>${tableData[i][selectedColumnIndex]}</span>`; // +2 to account for date and column 0
           trElementForBody.appendChild(tdElement);
+          const dayOfWeek = tableData[i][selectedColumnIndex];
+          dayCell.innerHTML = `<span>${dayOfWeek}</span>`;
         } else {
           // Display all columns except the first two
           tableData[i].slice(2).forEach((item) => {
@@ -302,24 +304,24 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   // Update the filter dropdown options
-function updateFilterDropdown(data) {
-  // Clear existing options
-  filterDropdown.innerHTML = '';
-  
-  // Create a default "Select a Team" option
-  const defaultOption = document.createElement("option");
-  defaultOption.value = "";
-  defaultOption.textContent = "Select a Team";
-  filterDropdown.appendChild(defaultOption);
+  function updateFilterDropdown(data) {
+    // Clear existing options
+    filterDropdown.innerHTML = '';
 
-  // Add options for each column
-  data.slice(2).forEach((item, index) => {
-    const optionElement = document.createElement("option");
-    optionElement.value = (index + 2).toString();
-    optionElement.textContent = item;
-    filterDropdown.appendChild(optionElement);
-  });
-}
+    // Create a default "Select a Team" option
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Select a Team";
+    filterDropdown.appendChild(defaultOption);
+
+    // Add options for each column
+    data.slice(2).forEach((item, index) => {
+      const optionElement = document.createElement("option");
+      optionElement.value = (index + 2).toString();
+      optionElement.textContent = item;
+      filterDropdown.appendChild(optionElement);
+    });
+  }
 
   // Function to move to the next block
   function moveToNextBlock() {
