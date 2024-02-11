@@ -227,18 +227,34 @@ document.addEventListener("DOMContentLoaded", async function () {
   function highlightCells() {
     const searchTerm = searchInput.value.trim().toLowerCase();
     if (!searchTerm) {
+      // If the search term is empty, remove all highlights
+      removeAllHighlights();
       return;
     }
+  
     const cells = document.querySelectorAll('.body-cell');
     cells.forEach(cell => {
       const text = cell.textContent.toLowerCase();
-      if (text.includes(searchTerm)) {
+      const words = text.split(' ');
+  
+      // Check if any word in the cell starts with the search term
+      const startsWithSearchTerm = words.some(word => word.startsWith(searchTerm));
+  
+      if (startsWithSearchTerm) {
         cell.classList.add('highlight');
       } else {
         cell.classList.remove('highlight');
       }
     });
   }
+
+  // Remove highlights from all cells
+function removeAllHighlights() {
+  const cells = document.querySelectorAll('.body-cell');
+  cells.forEach(cell => {
+    cell.classList.remove('highlight');
+  });
+}
 
   // Update the filter dropdown options
   function updateFilterDropdown(data) {
@@ -315,7 +331,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  //HIGHLIGHT FUNCTIONS
+  //HOVER COLUMN
   function highlightColumn(index) {
     const cells = document.querySelectorAll(`.body-cell:nth-child(${index + 1})`);
     cells.forEach((cell) => {
