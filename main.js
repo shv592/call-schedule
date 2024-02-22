@@ -167,31 +167,38 @@ document.addEventListener("DOMContentLoaded", async function () {
     return trElement;
   }
 
-  // Update the table based on the selected filters
+ 
 // Update the table based on the selected filters
 function updateTable() {
+  console.log("Selected value:", filterDropdown.value);  // Log the selected value for debugging
+
   tbodyElement.innerHTML = '';
-const isSelectATeamSelected = filterDropdown.value === "";
-  if (isSelectATeamSelected) {
-    // If the selected value in the dropdown is empty, show the original table
+
+  if (filterDropdown.value === "default") {
+    console.log("Showing original table");  // Add this log for debugging
+    selectedColumnIndex = -1;
+    searchInput.value = "";
+    filterDropdown.value = "default";  // Set the value explicitly to "default"
     theadElement.innerHTML = '';
     theadElement.appendChild(createTableHeader(tableData[0]));
-
+  
+    // Clear tbodyElement before appending rows
+    tbodyElement.innerHTML = '';
+    
     for (let i = 1; i < tableData.length; i++) {
       const trElementForBody = createTrForTableBody(tableData[i]);
       const rowDate = moment(tableData[i][0]).toDate();
-
+  
       if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
         tbodyElement.appendChild(trElementForBody);
       }
-
+  
       if (isToday(rowDate)) {
         trElementForBody.classList.add('body-row--today');
       }
     }
-
-    // Reset selectedColumnIndex to -1 when "Select a Team" is chosen
     selectedColumnIndex = -1;
+  
   } else {
     // If a team is selected, display the filtered table
     const headerData = ["DATE", "DAY"];
@@ -229,7 +236,7 @@ const isSelectATeamSelected = filterDropdown.value === "";
   function updateFilterDropdown(data) {
     filterDropdown.innerHTML = '';
     const defaultOption = document.createElement("option");     // Create a default "Select a Team" option
-    defaultOption.value = "";
+    defaultOption.value = "default";
     defaultOption.textContent = "Select a Team";
     filterDropdown.appendChild(defaultOption);
     data.slice(2).forEach((item, index) => {      // Add options for each column
