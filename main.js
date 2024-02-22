@@ -171,6 +171,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   function updateTable() {
     tbodyElement.innerHTML = '';
     if (filterDropdown.value === "") {
+          // If the selected value in the dropdown is empty, show the original table
+
       theadElement.innerHTML = '';
       theadElement.appendChild(createTableHeader(tableData[0]));
       for (let i = 1; i < tableData.length; i++) {
