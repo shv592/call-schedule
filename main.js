@@ -168,48 +168,62 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   // Update the table based on the selected filters
-  function updateTable() {
-    tbodyElement.innerHTML = '';
-    if (filterDropdown.value === "") {
-          // If the selected value in the dropdown is empty, show the original table
+// Update the table based on the selected filters
+function updateTable() {
+  tbodyElement.innerHTML = '';
 
-      theadElement.innerHTML = '';
-      theadElement.appendChild(createTableHeader(tableData[0]));
-      for (let i = 1; i < tableData.length; i++) {
-        const trElementForBody = createTrForTableBody(tableData[i]);
-        const rowDate = moment(tableData[i][0]).toDate();
-        if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
-          tbodyElement.appendChild(trElementForBody);
-        }
-        if (isToday(rowDate)) {
-          trElementForBody.classList.add('body-row--today');
-        }
+  if (filterDropdown.value === "") {
+    // If the selected value in the dropdown is empty, show the original table
+    theadElement.innerHTML = '';
+    theadElement.appendChild(createTableHeader(tableData[0]));
+
+    for (let i = 1; i < tableData.length; i++) {
+      const trElementForBody = createTrForTableBody(tableData[i]);
+      const rowDate = moment(tableData[i][0]).toDate();
+
+      if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
+        tbodyElement.appendChild(trElementForBody);
       }
-    } else {
-      const headerData = ["DATE", "DAY"];
-      if (selectedColumnIndex !== -1) {        // Only display the selected column in the header
-        headerData.push(tableData[0][selectedColumnIndex]);
-      } else {
-        headerData.push("DATE", "DAY");
-      }
-      theadElement.innerHTML = '';
-      theadElement.appendChild(createTableHeader(headerData));
-      for (let i = 1; i < tableData.length; i++) {
-        const trElementForBody = createTrForTableBody(tableData[i]);
-        const rowDate = moment(tableData[i][0]).toDate();
-        if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
-          tbodyElement.appendChild(trElementForBody);
-        }
-        if (isToday(rowDate)) {
-          trElementForBody.classList.add('body-row--today');
-        }
+
+      if (isToday(rowDate)) {
+        trElementForBody.classList.add('body-row--today');
       }
     }
-    tableElement.innerHTML = '';
-    tableElement.appendChild(theadElement);
-    tableElement.appendChild(tbodyElement);
-    highlightCells();
+
+    // Reset selectedColumnIndex to -1 when "Select a Team" is chosen
+    selectedColumnIndex = -1;
+  } else {
+    // If a team is selected, display the filtered table
+    const headerData = ["DATE", "DAY"];
+    if (selectedColumnIndex !== -1) {
+      headerData.push(tableData[0][selectedColumnIndex]);
+    } else {
+      headerData.push("DATE", "DAY");
+    }
+
+    theadElement.innerHTML = '';
+    theadElement.appendChild(createTableHeader(headerData));
+
+    for (let i = 1; i < tableData.length; i++) {
+      const trElementForBody = createTrForTableBody(tableData[i]);
+      const rowDate = moment(tableData[i][0]).toDate();
+
+      if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
+        tbodyElement.appendChild(trElementForBody);
+      }
+
+      if (isToday(rowDate)) {
+        trElementForBody.classList.add('body-row--today');
+      }
+    }
   }
+
+  tableElement.innerHTML = '';
+  tableElement.appendChild(theadElement);
+  tableElement.appendChild(tbodyElement);
+  highlightCells();
+}
+
 
   // Update the filter dropdown options
   function updateFilterDropdown(data) {
