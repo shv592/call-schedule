@@ -171,8 +171,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 // Update the table based on the selected filters
 function updateTable() {
   tbodyElement.innerHTML = '';
-
-  if (filterDropdown.value === "") {
+const isSelectATeamSelected = filterDropdown.value === "";
+  if (isSelectATeamSelected) {
     // If the selected value in the dropdown is empty, show the original table
     theadElement.innerHTML = '';
     theadElement.appendChild(createTableHeader(tableData[0]));
