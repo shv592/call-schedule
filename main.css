@@ -150,6 +150,18 @@
   border-collapse: collapse;
   border: 0;
 }
+/* Apply custom styles for iPhone devices */
+@media only screen and (max-device-width: 480px) {
+  /* Make the first two columns sticky within the table wrapper */
+  .body-cell.special-column:first-child,
+  .body-cell.special-column:nth-child(2) {
+    position: sticky;
+    left: auto;
+    z-index: 9;
+    background-color: #4f607e;
+    color: white;
+    transform: translateX(-100%); /* Move the columns outside the viewport */
+  }
 
 /* NAVIGATION ELEMENTS DESIGNS */
 #previousWeeksButton,
