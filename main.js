@@ -55,6 +55,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
   
+// Fetch data and update table every second
+setInterval(async () => {
+  try {
+    const tableData = await getTableData();
+    // Update your table with the fetched data
+    updateTable(tableData);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}, 1000);
+  
+  
+
   // Initializes the original table
   async function initializeTable() {
     tableData = await getTableData();
