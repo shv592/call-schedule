@@ -24,15 +24,15 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
   let specificYear = determineSchoolYearStart();
 
-  //Determines the first sunday in july. 
-  function getFirstSundayInJuly(specificYear) {
+  //Determines the first Monday in july. 
+  function getFirstMondayInJuly(specificYear) {
     const julyMoment = moment(`${specificYear}-07-01`, 'YYYY-MM-DD');
     const dayOfWeek = julyMoment.day(); // Calculate the day of the week for July 1st
-    const daysToAdd = dayOfWeek === 0 ? 0 : 7 - dayOfWeek; // Calculate the number of days to add to reach the first Sunday
-    const firstSundayMoment = julyMoment.add(daysToAdd, 'days').startOf('day'); // Add the days to get the first Sunday
-    return firstSundayMoment;
+    const daysToAdd = dayOfWeek === 1 ? 0 : 8 - dayOfWeek; // Calculate the number of days to add to reach the first Monday
+    const firstMondayMoment = julyMoment.add(daysToAdd, 'days').startOf('day'); // Add the days to get the first Monday
+    return firstMondayMoment;
   }
-  let schoolYearStart = getFirstSundayInJuly(specificYear);
+  let schoolYearStart = getFirstMondayInJuly(specificYear);
 
   //Variables
   let tableData = [];
@@ -75,7 +75,7 @@ setInterval(async () => {
 
     // Resets all variables on July 1st
     if (currentDate.isSame(schoolYearStart.clone().startOf('year').add(6, 'months'), 'day')) { 
-      schoolYearStart = getFirstSundayInJuly(currentDate.year());
+      schoolYearStart = getFirstMondayInJuly(currentDate.year());
       currentDate = moment().startOf('day');
       daysElapsed = Math.ceil(currentDate.diff(schoolYearStart, "days"));
       blockNumber = 1;
