@@ -55,7 +55,7 @@
   color: #000;
   position: relative;
   cursor: default;
-  height: 20px;
+  height: 25px;
 }
 .body-cell.special-column:first-child {
   position: sticky;
