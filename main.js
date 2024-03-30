@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   let selectedColumnIndex = -1;
   let currentBlockStartDate;
   let currentBlockEndDate;
-  const daysElapsed = Math.ceil(currentDate.diff(schoolYearStart, "days"));
+  let daysElapsed = Math.ceil(currentDate.diff(schoolYearStart, "days"));
   let blockNumber = Math.ceil(daysElapsed / 28);
 
 
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 // Fetch data and update table every second
 setInterval(async () => {
   try {
-    const tableData = await getTableData();
+    tableData = await getTableData();
     // Update your table with the fetched data
     updateTable(tableData);
   } catch (error) {
