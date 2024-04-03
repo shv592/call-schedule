@@ -145,11 +145,7 @@
 }
 
 
-/* Apply custom styles for iPhone devices */
-@media only screen and (max-device-width: 480px) {
-  /* Reset the sticky styles for iPhone devices */
- 
-}
+
 
 
 /* NAVIGATION ELEMENTS DESIGNS */
