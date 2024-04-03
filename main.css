@@ -24,14 +24,10 @@
 /* Header cell styles */
 .head-cell {
   min-width: 80px;
-  max-width: 80px;
-  width: 80px;
   background-color: #354156;
 }
 .head-cell.special-column {
   min-width: 50px !important;
-  max-width: 50px !important;
-  width: 50px !important;
   position: sticky;
   left: 0;
   z-index: 9;
@@ -51,9 +47,7 @@
 /* Body cell styles */
 .body-cell {
   font-size: 12px;
-    font-weight: normal;
   color: #000;
-  position: relative;
   cursor: default;
   height: 25px;
 }
@@ -96,12 +90,11 @@
 }
 
 /* Hover effect for body cells when hovered */
-.body-row:hover .body-cell:not(:nth-child(1)):not(:nth-child(2)) {
+
+.body-row:hover{
   background-color: rgba(237, 237, 237, 0.4);
 }
-.body-cell:hover:not(:nth-child(1)):not(:nth-child(2)) {
-  background-color: rgba(237, 237, 237, 0.4);
-}
+
 .body-cell.hovered-cell:not(:nth-child(1)):not(:nth-child(2)) {
   background-color: rgba(211, 208, 208, 0.9) !important;
 }
@@ -155,14 +148,10 @@
 /* Apply custom styles for iPhone devices */
 @media only screen and (max-device-width: 480px) {
   /* Reset the sticky styles for iPhone devices */
-  .body-cell.special-column:first-child,
-  .body-cell.special-column:nth-child(2) {
-    position: static;
-    z-index: auto;
-    background-color: transparent;
-    color: inherit;
-  }
+ 
 }
+
+
 /* NAVIGATION ELEMENTS DESIGNS */
 #previousWeeksButton,
 #nextWeeksButton,
