@@ -1,9 +1,13 @@
 document.addEventListener("DOMContentLoaded", async function () {
   //Constants
 <<<<<<< HEAD
+<<<<<<< HEAD
   
 =======
 >>>>>>> parent of 627fbbc (Update main.js)
+=======
+  
+>>>>>>> parent of 8384613 (Update main.js)
   const dataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBfkLZwlSmj2Rh0w8AFLlirlzCm_26qZnf4tIcE5e8qgqQz7NtFBZyhBRX61TB0-jCignTKJNdOty/pub?gid=0&single=true&output=tsv';
   const moment = window.moment || (await import('https://cdn.jsdelivr.net/momentjs/latest/moment.min.js')).default;
 
