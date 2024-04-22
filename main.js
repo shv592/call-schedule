@@ -1,13 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
   //Constants
-<<<<<<< HEAD
-<<<<<<< HEAD
-  
-=======
->>>>>>> parent of 627fbbc (Update main.js)
-=======
-  
->>>>>>> parent of 8384613 (Update main.js)
   const dataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBfkLZwlSmj2Rh0w8AFLlirlzCm_26qZnf4tIcE5e8qgqQz7NtFBZyhBRX61TB0-jCignTKJNdOty/pub?gid=0&single=true&output=tsv';
   const moment = window.moment || (await import('https://cdn.jsdelivr.net/momentjs/latest/moment.min.js')).default;
 
@@ -258,7 +250,7 @@ function updateTable() {
     filterDropdown.innerHTML = '';
     const defaultOption = document.createElement("option");     // Create a default "Select a Team" option
     defaultOption.value = "default";
-    defaultOption.textContent = "Select a Team";
+    defaultOption.textContent = "All";
     filterDropdown.appendChild(defaultOption);
     data.slice(2).forEach((item, index) => {      // Add options for each column
       const optionElement = document.createElement("option");

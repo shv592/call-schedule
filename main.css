@@ -1,84 +1,156 @@
+/* Set font-family to Calibri for the whole code */
+* {
+  font-family: "Gill Sans", sans-serif;
+}
+
+/* Sticky container styles */
+#sticky-container {
+  position: sticky;
+  top: 0;
+  background-color: #263344;
+  padding: 15px 10px 15px 10px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Adjust spacing between elements */
+  color: #ffffff;
+}
+
+#table-title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#table-wrapper {
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+/* Navigation elements styles */
+#previousWeeksButton,
+#nextWeeksButton{
+  margin-right: 10px; /* Add margin between buttons */
+  padding: 10px;
+  cursor: pointer;
+  background-color: #c42222;
+  color: #fff;
+  border: none;
+  border-radius: 3px; /* Add border radius for rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow for depth */
+  transition: background-color 0.3s ease, transform 0.1s ease; /* Add transition for smooth hover effect */
+}
+
+#previousWeeksButton:hover,
+#nextWeeksButton:hover{
+  background-color: #c42222a9;
+  transform: translateY(-1px); /* Add a slight upward movement on hover */
+}
+
+#searchInput {
+  padding: 5px; /* Remove padding */
+  border: none; /* Remove border */
+  height: 40px;
+  min-width: 100px;
+color: #000;
+}
+
+#filterColumn {
+  height: 40px;
+  width: 60px; /* Adjust the width of the dropdown */
+  margin-left: auto; /* Push select dropdown to the right */
+  color: #000; /* Change font color */
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23000" height="24" viewBox="0 0 24 24" width="24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Add arrow icon */
+  background-repeat: no-repeat;
+  background-color: rgb(226, 226, 226);
+  background-position: right 8px center; /* Position the arrow icon */
+  padding: 10px; /* Remove padding */
+  border: none; /* Remove border */
+  border-radius: 3px 0px 0px 3px; /* Set border radius, 0 for left */
+}
+
+/* Search button styles */
+#resetButton {
+  height: 40px;
+  padding: 0px 10px 0px 10px; /* Remove padding */
+  cursor: pointer;
+  background-color: #c42222;
+  color: #fff;
+  border: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23fff" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21.6 20.2l-3.5-3.5c.8-1.2 1.3-2.7 1.3-4.2 0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8c1.5 0 3-0.5 4.2-1.3l3.5 3.5c0.4 0.4 1 0.4 1.4 0s0.4-1 0-1.4zM4 12c0-3.3 2.7-6 6-6s6 2.7 6 6-2.7 6-6 6-6-2.7-6-6z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center; /* Center the background image */
+  background-size: 50%; /* Adjust the size of the background image */  border-radius: 0px 3px 3px 0px; /* Remove border radius */
+  box-shadow: none; /* Remove box shadow */
+  transition: background-color 0.3s ease, transform 0;
+  min-width: 40px;
+}
+
+
+#resetButton:hover {
+  background-color: #c42222a9;
+  transform: translateY(-1px); /* Add a slight upward movement on hover */
+}
+
+/* Label styles */
+label {
+  margin-right: 10px; /* Add margin between labels and input elements */
+}
+
+
+
+/* Remove vertical borders within the table */
+#schedule {
+  border-collapse: collapse;
+}
+
+/* Remove borders from table cells */
+.body-cell {
+  font-size: 12px;
+  height: 20px;
+}
+
 /* Common styles for header and body cells */
 .head-cell,
 .body-cell,
 .head-row {
   padding: 5px;
   text-align: center;
-  white-space: nowrap;
-  font-family: Calibri, sans-serif;
   white-space: normal;
 }
 
 /* Header row styles */
 .head-row {
-  height: 30px;
+  border: none;
+  letter-spacing: 0.5px; /* Add space between characters */
+  font-size: 12px;
+  height: 50px;
   position: sticky;
   top: 0;
   z-index: 10;
-  font-size: 12px;
-  font-weight: bold;
   color: white;
-  background-color: #354156;
+  background-color: #354257;
 }
 
 /* Header cell styles */
 .head-cell {
-  min-width: 80px;
-  background-color: #354156;
+  min-width: 100px;
 }
 
-.head-cell.special-column {
-  min-width: 50px !important;
-  position: sticky;
-  left: 0;
-  z-index: 9;
-}
-
-.head-cell.special-column:nth-child(2) {
-  position: sticky;
-  left: 58px !important;
-  z-index: 8;
-}
-
-/* Body row styles */
-.body-row {
-  background-color: #fff;
-  color: #000;
-}
-
-/* Body cell styles */
-.body-cell {
-  font-size: 12px;
-  color: #000;
-  cursor: default;
-  height: 25px;
-}
-
-.body-cell.special-column:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 9;
-  background-color: #4f607e;
-  color: white;
-}
-
+/* Sticky special column */
+.head-cell.special-column,
+.body-cell.special-column:first-child,
 .body-cell.special-column:nth-child(2) {
   position: sticky;
-  left: 58px !important;
-  z-index: 8;
-  background-color: #4f607e;
-  color: white;
+  left: 0;
+  background-color: #354156; /* Set background color for sticky columns */
+  color: white; /* Set font color for the first two columns */
+  z-index: 9; /* Ensure the first two columns stay behind the header row */
 }
 
-/* Add this style to create a shadow for the sticky column */
-.body-cell.special-column:nth-child(2)::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 100%;
-  width: 5px;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
+.head-cell.special-column:nth-child(2),
+.body-cell.special-column:nth-child(2) {
+  left: 90px; /* Adjust the left position according to the width of the first column */
 }
 
 /* Today row styles */
@@ -88,122 +160,34 @@
   color: #fff;
 }
 
+/* Today row styles for the first two columns */
+.body-row--today .body-cell:nth-child(1),
+.body-row--today .body-cell:nth-child(2) {
+  background-color: rgb(164, 46, 46); /* Apply background color to the first two columns */
+}
 /* Highlight styles */
 .highlight {
   background-color: rgb(255, 255, 180);
 }
 
 /* Hover effect for body cells when hovered */
-
 .body-row:hover {
   background-color: rgba(237, 237, 237, 0.4);
+  transition: background-color 1s ease;
 }
 
 .body-cell.hovered-cell:not(:nth-child(1)):not(:nth-child(2)) {
-  background-color: rgba(211, 208, 208, 0.9) !important;
+  background-color: rgba(211, 208, 208, 0.9);
+  transition: background-color 1s ease;
 }
 
 .body-cell.hovered-column {
   background-color: rgba(237, 237, 237, 0.5);
-  transition: background-color 0.1s ease;
-}
-
-/* Sticky container styles */
-#sticky-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #ffffff;
-  padding: 10px;
-  z-index: 100;
-  font-family: Calibri, sans-serif;
-  align-items: center;
-  justify-content: space-between;
-
-}
-
-#table-title-together {
-
-  position: sticky;
-  margin-top: 200px;
-  max-height: calc(200vh-100px);
-}
-
-#table-title {
-  margin-top: 20px;
-  z-index: 90;
-  text-align: center;
-  font-size: 18px;
-  font-family: Calibri, sans-serif;
-}
-
-#table-wrapper {
-  margin-top: 20px;
-  max-height: 75vh;
-
-}
-
-#schedule {
-  border-collapse: collapse;
-  border: 0;
+  transition: background-color 1s ease;
 }
 
 
-/* NAVIGATION ELEMENTS DESIGNS */
-#previousWeeksButton,
-#nextWeeksButton,
-#filterColumn,
-#resetButton {
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  font-size: 12px;
-}
 
-/* Move the buttons to the left */
-#previousWeeksButton,
-#nextWeeksButton {
-  order: -1;
-  background-color: #c42222;
-  color: #fff;
-  cursor: pointer;
-  min-width: 100px;
-}
 
-#previousWeeksButton:hover,
-#nextWeeksButton:hover {
-  background-color: #c42222a9;
-}
 
-/* Set a width for the search input */
-#searchInput {
 
-  order: 0;
-
-}
-
-/* Label */
-label {
-  color: #555;
-  font-size: 12px;
-}
-
-/* Set margin-left for the filter dropdown */
-#filterColumn {
-  order: 0;
-  margin-right: auto;
-
-}
-
-#resetButton {
-  order: 2;
-  background-color: #c42222;
-  color: #fff;
-  cursor: pointer;
-
-}
-
-#resetButton:hover {
-  background-color: #c42222a9;
-}
