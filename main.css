@@ -26,12 +26,14 @@
   min-width: 80px;
   background-color: #354156;
 }
+
 .head-cell.special-column {
   min-width: 50px !important;
   position: sticky;
   left: 0;
   z-index: 9;
 }
+
 .head-cell.special-column:nth-child(2) {
   position: sticky;
   left: 58px !important;
@@ -51,6 +53,7 @@
   cursor: default;
   height: 25px;
 }
+
 .body-cell.special-column:first-child {
   position: sticky;
   left: 0;
@@ -58,6 +61,7 @@
   background-color: #4f607e;
   color: white;
 }
+
 .body-cell.special-column:nth-child(2) {
   position: sticky;
   left: 58px !important;
@@ -91,13 +95,14 @@
 
 /* Hover effect for body cells when hovered */
 
-.body-row:hover{
+.body-row:hover {
   background-color: rgba(237, 237, 237, 0.4);
 }
 
 .body-cell.hovered-cell:not(:nth-child(1)):not(:nth-child(2)) {
   background-color: rgba(211, 208, 208, 0.9) !important;
 }
+
 .body-cell.hovered-column {
   background-color: rgba(237, 237, 237, 0.5);
   transition: background-color 0.1s ease;
@@ -112,40 +117,36 @@
   padding: 10px;
   z-index: 100;
   font-family: Calibri, sans-serif;
-  display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  min-width: 97vw;
+
 }
 
 #table-title-together {
-  margin-top: 90px;
-  max-height: calc(100vh-90px);
+
+  position: sticky;
+  margin-top: 200px;
+  max-height: calc(200vh-100px);
 }
 
 #table-title {
-  position: sticky;
-  top: 0px;
+  margin-top: 20px;
   z-index: 90;
   text-align: center;
-  font-size: 12px;
-    font-family: Calibri, sans-serif;
+  font-size: 18px;
+  font-family: Calibri, sans-serif;
 }
 
 #table-wrapper {
   margin-top: 20px;
   max-height: 75vh;
-  overflow: auto;
+
 }
 
 #schedule {
   border-collapse: collapse;
   border: 0;
 }
-
-
-
 
 
 /* NAVIGATION ELEMENTS DESIGNS */
@@ -157,7 +158,8 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  font-size: 12px;}
+  font-size: 12px;
+}
 
 /* Move the buttons to the left */
 #previousWeeksButton,
@@ -166,8 +168,9 @@
   background-color: #c42222;
   color: #fff;
   cursor: pointer;
-  width: 120px;
+  min-width: 100px;
 }
+
 #previousWeeksButton:hover,
 #nextWeeksButton:hover {
   background-color: #c42222a9;
@@ -175,21 +178,22 @@
 
 /* Set a width for the search input */
 #searchInput {
-  width: 200px;
+
   order: 0;
-  margin-left: 5px;
+
 }
 
 /* Label */
 label {
   color: #555;
-  font-size: 12px;}
+  font-size: 12px;
+}
 
 /* Set margin-left for the filter dropdown */
 #filterColumn {
   order: 0;
   margin-right: auto;
-  margin-left: 5px;
+
 }
 
 #resetButton {
@@ -197,9 +201,7 @@ label {
   background-color: #c42222;
   color: #fff;
   cursor: pointer;
-  width: 120px;
-  margin-left: 30px;
-  margin-right: 20px;
+
 }
 
 #resetButton:hover {
