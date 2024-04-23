@@ -11,27 +11,23 @@
 </head>
 
 <body>
-
-  <div id="all-in">
-    <div id="table-title"></div>
-
-    <nav id="sticky-container">
+  <div id="table-title"></div>
+  <nav id="sticky-container">
+    <div id="navButtons">
       <button id="previousWeeksButton">Last Block</button>
       <button id="nextWeeksButton">Next Block</button>
-      <select id="filterColumn">
-        <option value="default">All</option>
-      </select>
-
-      <div id=searchContainer>
-        <input type="text" id="searchInput" placeholder="Search name">
-        <button id="searchButton"></button>
-        <button id="resetButton">Reset</button>
-      </div>
-
-    </nav>
-    <div id="table-wrapper">
-      <table id="schedule"></table>
     </div>
+
+    <div id=searchContainer>
+      <select id="filterColumn"><option value="default">All</option></select>
+      <input type="text" id="searchInput" placeholder="Search name">
+      <button id="searchButton"></button>
+      <button id="resetButton">Reset</button>
+    </div>
+
+  </nav>
+  <div id="table-wrapper">
+    <table id="schedule"></table>
   </div>
 
   <script src="main.js"></script>

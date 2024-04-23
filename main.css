@@ -10,20 +10,20 @@
   border: none;
   letter-spacing: 0.5px;
   font-size: 12px;
-  height: 50px;
+  height: 45px;
   position: sticky;
   z-index: 800;
-  top: 0px; /* Adjust this value according to your design */
-
+  top: 0px;
   color: white;
   background-color: #354257;
 }
 
-
 #table-wrapper {
   position: sticky;
-  top: 100px; /* Adjust according to the combined height of table title and sticky container */
-  max-height: calc(100vh - 150px); /* Adjust according to the available viewport height and the top offset */
+  top: 60px;
+  /* Adjust according to the combined height of table title and sticky container */
+  max-height: calc(100vh - 150px);
+  /* Adjust according to the available viewport height and the top offset */
   overflow: auto;
 }
 
@@ -40,22 +40,20 @@
   position: sticky;
   top: 0;
   background-color: #263344;
-  padding: 10px 20px;
+  padding: 10px 10px;
   z-index: 900;
   display: flex;
   align-items: center;
   color: #ffffff;
-  overflow-x: hidden; /* Add this line to hide horizontal overflow */
-
+  overflow-x: hidden;
 }
 
-
-
 /* Navigation elements styles */
+
 #previousWeeksButton,
 #nextWeeksButton {
   font-size: 14px;
-  margin-right: 20px;
+  margin-right: 10px;
   padding: 10px;
   cursor: pointer;
   background-color: #c42222;
@@ -73,9 +71,10 @@
 }
 
 #searchContainer {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   width: 50%;
+  margin-left: auto; /* Move the search container to the right */
 }
 
 /* Navigation elements styles */
@@ -102,7 +101,6 @@
   padding: 5px;
   border: none;
   height: 30px;
-  width: 100%; /* Ensure full width */
   color: #000;
 }
 
@@ -161,8 +159,6 @@
   white-space: normal;
 }
 
-
-
 /* Header cell styles */
 .head-cell {
   min-width: 100px;
@@ -217,55 +213,57 @@
 
 /* Responsive design */
 @media screen and (max-width: 500px) {
+  /* Hide navigation buttons */
+  #navButtons {
+    display: none;
+  }
+
+  /* Adjust search input and button widths */
+  #searchInput {
+    min-width: 70%;
+  }
+
   #sticky-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  #searchInput,
-  #filterColumn,
-  #resetButton {
-    margin-top: 10px;
+    flex-direction: row-reverse; /* Reverse the order of items */
+    justify-content: space-between; /* Distribute items evenly */
+    align-items: center; /* Center items vertically */
   }
 
-  #previousWeeksButton,
-  #nextWeeksButton {
-    width: auto; /* Adjust button width as needed */
+  #searchContainer {
+    margin-left: 0; /* Move the search container to the left */
+    margin-right: auto; /* Move the search container to the right */
   }
 
-  table {
-    border-collapse: collapse;
+  #searchButton {
+    min-width: 30%;
   }
 
-  /* Hide table header */
-  .head-row {
+  /* Hide table title in mobile view */
+  #table-title {
     display: none;
   }
 
-  /* Display each row as a card */
-  .body-row {
-    display: block;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
-
-  /* Adjust cell styles for mobile view */
-  .body-cell {
-    display: block;
-    padding: 10px;
-  }
-  .body-cell:nth-child(2) {
-    display: none;
-  }
-
-  /* Apply special styles to the first two columns */
-  .body-cell:nth-child(1){
-    font-weight: bold;
-  }
-
-  /* Adjust hover effect for mobile view */
-  .body-row:hover {
+  /* Remove hover background color for mobile view */
+  .body-row:hover,
+  .body-cell.hovered-cell:not(:nth-child(1)):not(:nth-child(2)),
+  .body-cell.hovered-column {
     background-color: transparent;
+  }
+
+  /* Hide the second special column */
+  .head-cell.special-column:nth-child(2),
+  .body-cell.special-column:nth-child(2) {
+    display: none;
+  }
+
+  /* Make the table wrapper span the full height of the viewport */
+  #table-wrapper {
+    height: 100vh;
+    overflow-y: auto; /* Add a vertical scrollbar if needed */
+  }
+  body {
+    margin: 0; /* Remove default margin */
+    height: 100vh; /* Set the height of the body to 100% of the viewport height */
   }
 }
