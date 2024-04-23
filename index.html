@@ -11,23 +11,24 @@
 </head>
 
 <body>
-    <div id="table-title"></div>
+  <div id="table-title"></div>
 
   <nav id="sticky-container">
     <button id="previousWeeksButton">Last Block</button>
     <button id="nextWeeksButton">Next Block</button>
     <select id="filterColumn">
-      <option value="default">Search by team</option>
+      <option value="default">All</option>
     </select>
-    <input type="text" id="searchInput" placeholder="Search by name">
-    <button id="resetButton"></button>
-  </nav>
-  <div id="table-title-together">
+    <input type="text" id="searchInput" placeholder="Search name">
+    <button id="searchButton"></button>
+    <button id="resetButton">Reset</button>
 
+
+  </nav>
   <div id="table-wrapper">
     <table id="schedule"></table>
-  </div></div>
-  
+  </div>
+
   <script src="main.js"></script>
 
 </body>
