@@ -313,12 +313,16 @@
   #schedule {
     border-collapse: collapse; /* Collapse borders to avoid double borders */
     width: 100%; /* Ensure the table fills the container */
-    border: 1px solid #ddd; /* Add border to the table */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
   }
 
   #table-wrapper {
     height: 100vh;
-    overflow-y: auto;
+    width: 100vh
+    overflow-x: auto;
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
   }
 
 }
