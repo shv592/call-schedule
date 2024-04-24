@@ -263,8 +263,11 @@
   }
 
   #table-wrapper {
-    height: 100vh;
-    overflow-y: auto;
+    width: 100%; /* Ensure the wrapper spans the whole width */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+    height: calc(100vh - 60px); /* Adjust height to fit the screen minus the sticky container */
+    overflow-y: auto; /* Add vertical scrollbar if needed */
   }
 
 }
@@ -318,11 +321,12 @@
   }
 
   #table-wrapper {
-    height: 100vh;
-    width: 100vh
-    overflow-x: auto;
+    width: 100%; /* Ensure the wrapper spans the whole width */
     margin: 0; /* Remove any margin */
     padding: 0; /* Remove any padding */
+    height: calc(100vh - 60px); /* Adjust height to fit the screen minus the sticky container */
+    overflow-y: auto; /* Add vertical scrollbar if needed */
   }
+
 
 }
