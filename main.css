@@ -1,59 +1,38 @@
 /* Set font-family to Calibri for the whole code */
 * {
-  font-family: "Gill Sans", sans-serif;
+  font-family: "Calibri", sans-serif;
 }
 
-/* Sticky container styles */
-/* Header row styles */
-
-.head-row {
-  border: none;
-  letter-spacing: 0.5px;
-  font-size: 12px;
-  height: 45px;
-  position: sticky;
-  z-index: 800;
-  top: 0px;
-  color: white;
-  background-color: #354257;
-}
-
-#table-wrapper {
-  position: sticky;
-  top: 60px;
-  /* Adjust according to the combined height of table title and sticky container */
-  max-height: calc(100vh - 150px);
-  /* Adjust according to the available viewport height and the top offset */
-  overflow: auto;
-}
-
-#table-title {
-  margin: 10px;
-  text-align: center;
-  position: sticky;
-  top: 0px;
-  padding: 10px 0;
-  z-index: 1000;
-}
-
+/* Main Container */
 #sticky-container {
-  position: sticky;
-  top: 0;
   background-color: #263344;
-  padding: 10px 10px;
-  z-index: 900;
+  color: #ffffff;
+  display: flex;
+  /* Use flexbox */
+  justify-content: space-between;
+  /* Distribute items evenly along the main axis */
+  align-items: center;
+  /* Align items vertically */
+  padding: 10px 20px;
+  /* Add padding for better spacing */
+  max-width: 100%;
+  /* Ensure the container does not exceed viewport width */
+  box-sizing: border-box;
+}
+
+/* Child Containers in the navigation bar */
+
+/* ELEMENT 1 */
+#navButtons {
   display: flex;
   align-items: center;
-  color: #ffffff;
-  overflow-x: hidden;
 }
-
-/* Navigation elements styles */
 
 #previousWeeksButton,
 #nextWeeksButton {
-  font-size: 14px;
   margin-right: 10px;
+  /* Add some spacing between the buttons */
+  font-size: 14px;
   padding: 10px;
   cursor: pointer;
   background-color: #c42222;
@@ -70,38 +49,20 @@
   transform: translateY(-1px);
 }
 
-#searchContainer {
-  display: inline-flex;
+/* ELEMENT 2 */
+#table-title {
+  width: 45%;
+  text-align: center;
   align-items: center;
-  width: 50%;
-  margin-left: auto; /* Move the search container to the right */
 }
 
-/* Navigation elements styles */
-#resetButton {
-  font-size: 14px;
-  margin-right: 0px;
-  margin-left: 20px;
-  padding: 10px;
-  cursor: pointer;
-  background-color: #009ac0;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, transform 0.1s ease;
-}
-
-#resetButton:hover {
-  background-color: #006680;
-  transform: translateY(-1px);
-}
-
-#searchInput {
-  padding: 5px;
-  border: none;
-  height: 30px;
-  color: #000;
+/* ELEMENT 3 */
+#searchContainer {
+  flex: 1;
+  /* Allow the search container to expand */
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
 }
 
 #filterColumn {
@@ -118,8 +79,19 @@
   border-radius: 3px 0px 0px 3px;
 }
 
+#searchInput {
+  flex: 1;
+  /* Let the search input take up the remaining space */
+  padding: 5px;
+  border: none;
+  height: 30px;
+  color: #000;
+}
+
 /* Search button styles */
 #searchButton {
+  flex: 0 0 auto;
+  /* Do not grow or shrink */
   height: 40px;
   padding: 0px 10px;
   cursor: pointer;
@@ -129,46 +101,83 @@
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23fff" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21.6 20.2l-3.5-3.5c.8-1.2 1.3-2.7 1.3-4.2 0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8c1.5 0 3-0.5 4.2-1.3l3.5 3.5c0.4 0.4 1 0.4 1.4 0s0.4-1 0-1.4zM4 12c0-3.3 2.7-6 6-6s6 2.7 6 6-2.7 6-6 6-6-2.7-6-6z"/></svg>');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 50%;
+  background-size: 50% !important;
   border-radius: 0px 3px 3px 0px;
-  width: 15%;
+  min-width: 40px;
 }
 
 #searchButton:hover {
   background-color: #c42222a9;
 }
 
-/* Remove vertical borders within the table */
+#resetButton {
+  font-size: 14px;
+  margin-left: 20px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #009ac0;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  width: 70px;
+}
+
+#resetButton:hover {
+  background-color: #006680;
+  transform: translateY(-1px);
+}
+
+
+/* TABLE STYLES */
+
+#table-wrapper {
+  position: sticky;
+  top: 60px;
+  max-height: 85vh;
+  /* Set the maximum height to 90% of the viewport height */
+  overflow: auto;
+}
+
 #schedule {
   background-color: #ffffff;
   border-collapse: collapse;
 }
 
-/* Remove borders from table cells */
-.body-cell {
-  font-size: 12px;
-  height: 20px;
-}
-
-/* Common styles for header and body cells */
-.head-cell,
-.body-cell,
+/* ACTUAL CELLS & HEADERS */
 .head-row {
-  padding: 5px;
-  text-align: center;
+  border: none;
+  font-size: 12px;
+  height: 40px;
+  position: sticky;
+  z-index: 800;
+  top: 0px;
+  color: white;
+  background-color: #354257;
+  padding: 2px;
   white-space: normal;
 }
 
-/* Header cell styles */
 .head-cell {
   min-width: 100px;
+  padding: 2px;
+  white-space: normal;
 }
 
-/* Sticky special column */
+.body-cell {
+  font-size: 12px;
+  height: 20px;
+  text-align: center;
+  padding: 2px;
+  white-space: normal;
+}
+
 .head-cell.special-column,
 .body-cell.special-column:first-child,
 .body-cell.special-column:nth-child(2) {
   min-width: 55px;
+  padding: 5px;
   position: sticky;
   left: 0;
   background-color: #354156;
@@ -181,21 +190,10 @@
   left: 65px;
 }
 
-/* Today row styles */
 .body-row--today,
 .body-row--today .body-cell {
-  background-color: rgb(164, 46, 46) !important;
+  background-color: rgb(188, 42, 42) !important;
   color: #fff;
-}
-
-.body-row--today .body-cell:nth-child(1),
-.body-row--today .body-cell:nth-child(2) {
-  background-color: rgb(164, 46, 46);
-}
-
-/* Highlight styles */
-.highlight {
-  background-color: rgb(255, 255, 0);
 }
 
 /* Hover effect for body cells when hovered */
@@ -211,59 +209,62 @@
   background-color: rgba(237, 237, 237, 0.5);
 }
 
+/* Highlight styles */
+.highlight {
+  background-color: rgb(255, 255, 0);
+}
+
+
+
 /* Responsive design */
 @media screen and (max-width: 500px) {
+
   /* Hide navigation buttons */
-  #navButtons {
+  #navButtons, #resetButton, #searchContainer, #searchButton {
     display: none;
   }
 
-  /* Adjust search input and button widths */
-  #searchInput {
-    min-width: 70%;
-  }
-
-  #sticky-container {
-    display: flex;
-    flex-direction: row-reverse; /* Reverse the order of items */
-    justify-content: space-between; /* Distribute items evenly */
-    align-items: center; /* Center items vertically */
-  }
-
-  #searchContainer {
-    margin-left: 0; /* Move the search container to the left */
-    margin-right: auto; /* Move the search container to the right */
-  }
-
-  #searchButton {
-    min-width: 30%;
-  }
-
-  /* Hide table title in mobile view */
   #table-title {
-    display: none;
+    width: 100%; /* Make the table title span the full width */
+    text-align: center; /* Center the text */
+    margin: 20px 0px 0px 0px;
+    font-size: 15px;
   }
 
-  /* Remove hover background color for mobile view */
+  .head-row, .head-cell {
+    /* Other styles */
+    word-wrap: break-word; /* This allows long words to be broken and wrap onto the next line */
+    padding: 0px; /* Add padding to improve spacing */
+    border: 1px solid #ddd; /* Add border to the body cells */
+    height: 20px;
+  }
+
+  #schedule .body-cell {
+    font-size: 12px; /* Adjust font size to make cells smaller */
+    word-wrap: break-word; /* This allows long words to be broken and wrap onto the next line */
+    padding: 0px; /* Add padding to improve spacing */
+  }
+
   .body-row:hover,
   .body-cell.hovered-cell:not(:nth-child(1)):not(:nth-child(2)),
   .body-cell.hovered-column {
     background-color: transparent;
   }
 
-  /* Hide the second special column */
   .head-cell.special-column:nth-child(2),
   .body-cell.special-column:nth-child(2) {
     display: none;
   }
 
-  /* Make the table wrapper span the full height of the viewport */
+  #schedule {
+    border-collapse: collapse; /* Collapse borders to avoid double borders */
+    width: 100%; /* Ensure the table fills the container */
+    border: 1px solid #ddd; /* Add border to the table */
+  }
+
   #table-wrapper {
     height: 100vh;
-    overflow-y: auto; /* Add a vertical scrollbar if needed */
+    overflow-y: auto;
   }
-  body {
-    margin: 0; /* Remove default margin */
-    height: 100vh; /* Set the height of the body to 100% of the viewport height */
-  }
+
 }
