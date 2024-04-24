@@ -217,7 +217,61 @@
 
 
 /* Responsive design */
-@media screen and (max-width: 500px), (max-height: 500px) {
+@media screen and (max-width: 1179px), (max-height: 2556px) {
+
+  /* Hide navigation buttons */
+  #navButtons, #resetButton, #searchContainer, #searchButton {
+    display: none;
+  }
+
+  #table-title {
+    width: 100%; /* Make the table title span the full width */
+    text-align: center; /* Center the text */
+    margin: 20px 0px 0px 0px;
+    font-size: 15px;
+  }
+
+  .head-row, .head-cell {
+    /* Other styles */
+    word-wrap: break-word; /* This allows long words to be broken and wrap onto the next line */
+    padding: 0px; /* Add padding to improve spacing */
+    border: 1px solid #ddd; /* Add border to the body cells */
+    height: 20px;
+  }
+
+  #schedule .body-cell {
+    font-size: 12px; /* Adjust font size to make cells smaller */
+    word-wrap: break-word; /* This allows long words to be broken and wrap onto the next line */
+    padding: 0px; /* Add padding to improve spacing */
+  }
+
+  .body-row:hover,
+  .body-cell.hovered-cell:not(:nth-child(1)):not(:nth-child(2)),
+  .body-cell.hovered-column {
+    background-color: transparent;
+  }
+
+  .head-cell.special-column:nth-child(2),
+  .body-cell.special-column:nth-child(2) {
+    display: none;
+  }
+
+  #schedule {
+    border-collapse: collapse; /* Collapse borders to avoid double borders */
+    width: 100%; /* Ensure the table fills the container */
+    border: 1px solid #ddd; /* Add border to the table */
+  }
+
+  #table-wrapper {
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+}
+
+
+/* Responsive design */
+@media screen and (max-width: 2556px), (max-height: 1179px) {
 
   /* Hide navigation buttons */
   #navButtons, #resetButton, #searchContainer, #searchButton {
