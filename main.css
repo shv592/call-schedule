@@ -217,7 +217,7 @@
 
 
 /* Responsive design */
-@media screen and (max-height: 2556px) {
+@media screen and (max-height: 500px) {
 
   /* Hide navigation buttons */
   #navButtons, #resetButton, #searchContainer, #searchButton {
@@ -274,7 +274,7 @@
 
 
 /* Responsive design */
-@media screen and (max-width: 3000px) {
+@media screen and (max-width: 500px) {
 
   /* Hide navigation buttons */
   #navButtons, #resetButton, #searchContainer, #searchButton {
