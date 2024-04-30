@@ -1,3 +1,5 @@
+import { print_button } from "./print_button.js"
+
 document.addEventListener("DOMContentLoaded", async function () {
 
   // Constants
@@ -379,5 +381,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   tableElement.addEventListener("mouseover", handleHover);
   tableElement.addEventListener("mouseout", handleHover);
   await initializeTable();
+  print_button.init(tbodyElement,theadElement);
   scrollToTodayRow();
 });

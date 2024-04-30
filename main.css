@@ -22,14 +22,12 @@
 
 /* Child Containers in the navigation bar */
 
-/* ELEMENT 1 */
 #navButtons {
   display: flex;
   align-items: center;
 }
 
-#previousWeeksButton,
-#nextWeeksButton {
+#navButtons button {
   margin-right: 10px;
   /* Add some spacing between the buttons */
   font-size: 14px;
@@ -43,10 +41,19 @@
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
-#previousWeeksButton:hover,
-#nextWeeksButton:hover {
+#navButtons button:hover {
   background-color: #c42222a9;
   transform: translateY(-1px);
+}
+
+#navButtons .print_button {
+  background-color:#39FF33;
+  color: black;
+}
+
+#navButtons .print_button:hover {
+  background-color: darkseagreen;
+  transfrom: translateY(-1px);
 }
 
 /* ELEMENT 2 */
@@ -328,5 +335,63 @@
     overflow-y: auto; /* Add vertical scrollbar if needed */
   }
 
+}
+
+/* PRINT TABLE */
+
+.hidden_div {
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
 
 }
+
+.hidden {
+
+  display: none;
+}
+
+
+#logo {
+  width: 50%;
+  height: 60%;
+}
+
+#print_header {
+  width: 100%;
+  text-align:center;
+  font-size:1.5em;
+}
+
+.print_table_header {
+  text-align:center;
+  font-size:1.5em;
+  background-color:black;
+  color:white;
+}
+
+.print_table {
+  margin: 0 auto;
+  width: 90%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+
+}
+
+.print_table th {
+
+  border: 1px solid black;
+  background-color: #eee;
+
+}
+
+.print_table td {
+
+  border: 1px solid black;
+
+}
+
