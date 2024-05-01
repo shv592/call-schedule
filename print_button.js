@@ -83,7 +83,7 @@
 
       //  MAKE HEADER
       var div = document.createElement("DIV");
-      div.id = "print_header";
+      div.id = "page_header";
       var img = new Image();
       img.src = "saskim.png";
       div.appendChild(img);
@@ -99,7 +99,7 @@
       var header = document.createElement("TD");
       header.colSpan = "2";
       header.textContent = this.today[1].doc + ", " + this.today[0].doc;
-      header.classList.add("print_table_header");
+      header.classList.add("header");
       row.appendChild(header);
       this.table.appendChild(row);
       // MAKE BODY
@@ -116,13 +116,13 @@
       hidden_div.appendChild(this.table);
 
       // MAKE ROTA TABLE
-      this.rota_table.classList.add("print_table");
+      this.rota_table.classList.add("rota_table");
       // MAKE HEADER
       var row = document.createElement("TR");
       var header = document.createElement("TD");
       header.colSpan = "3";
       header.textContent = "CTU Juniors for " + document.getElementById("table-title").textContent;
-      header.classList.add("print_table_header");
+      header.classList.add("header");
       row.appendChild(header);
       this.rota_table.appendChild(row);
       // MAKE ROTAS
