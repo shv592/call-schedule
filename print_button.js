@@ -44,9 +44,63 @@
 
     html: `
       <div id="print_header">
-        <img id="logo" src="callsched/static/js/saskim.png"></img>
-        </br>Saskatoon Internal Medicine Schedule</br>
+        <img id="logo" src="saskim.png"></img>
+        <p>Saskatoon Internal Medicine Schedule</p>
       </div>
+    `,
+
+    css: `
+    <style>
+
+    #print_header {
+      width: 100%;
+      text-align:center;
+      font-size:25px;
+    }
+
+    #logo {
+      width: 300px;
+      height: 100px;
+      margin-bottom: -30px;
+    }
+
+    .print_table {
+      width: 65%;
+    }
+
+    .header {
+      text-align:center;
+      font-size:18px;
+      background-color:black;
+      color:white;
+    }
+
+    .rota_table {
+      width: 70%;
+    }
+
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      font-size: 12px;
+
+    }
+
+    table th {
+
+      border: 1px solid black;
+      background-color: #eee;
+
+    }
+
+    table td {
+
+      border: 1px solid black;
+
+    }
+
+    </style>
     `,
 
     init: function(tbodyElement,theadElement) {
@@ -76,21 +130,21 @@
       }
 
       //  MAKE HIDDEN DIV
-      var hidden_div = document.createElement("DIV");
-      hidden_div.id = "hidden_div";
-      hidden_div.classList.add("hidden_div");
-      hidden_div.classList.add("hidden");
+      // var hidden_div = document.createElement("DIV");
+      // hidden_div.id = "hidden_div";
+      // hidden_div.classList.add("hidden_div");
+      // hidden_div.classList.add("hidden");
 
       //  MAKE HEADER
-      var div = document.createElement("DIV");
-      div.id = "page_header";
-      var img = new Image();
-      img.src = "saskim.png";
-      div.appendChild(img);
-      var p = document.createElement("P");
-      p.textContent = "Saskatoon Internal Medicine Schedule";
-      div.appendChild(p)
-      hidden_div.appendChild(div)
+      // var div = document.createElement("DIV");
+      // div.id = "page_header";
+      // var img = new Image();
+      // img.src = "saskim.png";
+      // div.appendChild(img);
+      // var p = document.createElement("P");
+      // p.textContent = "Saskatoon Internal Medicine Schedule";
+      // div.appendChild(p)
+      // hidden_div.appendChild(div)
 
       //  MAKE SCHEDULE TABLE
       this.table.classList.add("print_table");
@@ -113,7 +167,7 @@
         row.appendChild(td);
         this.table.appendChild(row);
       }
-      hidden_div.appendChild(this.table);
+      // hidden_div.appendChild(this.table);
 
       // MAKE ROTA TABLE
       this.rota_table.classList.add("rota_table");
@@ -154,8 +208,8 @@
           }
         this.rota_table.appendChild(row);
       }
-      hidden_div.appendChild(this.rota_table);
-      document.body.appendChild(hidden_div);
+      // hidden_div.appendChild(this.rota_table);
+      // document.body.appendChild(hidden_div);
 
       this.render();
 
@@ -167,9 +221,12 @@
       button.innerHTML = "Print 24hr Call";
       button.classList.add("print_button");
       button.addEventListener("click", () => {
-        document.getElementById("hidden_div").classList.remove("hidden");
-        window.print();
-        document.getElementById("hidden_div").classList.add("hidden");
+        let print_div = window.open("");
+        print_div.document.write(this.html + this.table.outerHTML + this.rota_table.outerHTML + this.css);
+        print_div.print();
+        // document.getElementById("hidden_div").classList.remove("hidden");
+        // window.print();
+        // document.getElementById("hidden_div").classList.add("hidden");
       });
       navButtons.appendChild(button);
 
