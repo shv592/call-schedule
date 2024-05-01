@@ -366,12 +366,12 @@
 #page_header {
   width: 100%;
   text-align:center;
-  font-size:2vw;
+  font-size:25px;
 }
 
 .hidden_div .header {
   text-align:center;
-  font-size:2vw;
+  font-size:18px;
   background-color:black;
   color:white;
 }
@@ -384,7 +384,7 @@
   margin: 0 auto;
   border-collapse: collapse;
   margin-bottom: 20px;
-  font-size: 1.2vw;
+  font-size: 12px;
 
 }
 
