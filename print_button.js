@@ -224,6 +224,7 @@
         let print_div = window.open("");
         print_div.document.write(this.html + this.table.outerHTML + this.rota_table.outerHTML + this.css);
         print_div.print();
+        print_div.onafterprint = () => print_div.close();
         // document.getElementById("hidden_div").classList.remove("hidden");
         // window.print();
         // document.getElementById("hidden_div").classList.add("hidden");
