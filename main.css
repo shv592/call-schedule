@@ -7,16 +7,11 @@
 #sticky-container {
   background-color: #263344;
   color: #ffffff;
-  display: flex;
-  /* Use flexbox */
-  justify-content: space-between;
-  /* Distribute items evenly along the main axis */
-  align-items: center;
-  /* Align items vertically */
-  padding: 10px 20px;
-  /* Add padding for better spacing */
-  max-width: 100%;
-  /* Ensure the container does not exceed viewport width */
+  display: flex;/* Use flexbox */
+  justify-content: space-between; /* Distribute items evenly along the main axis */
+  align-items: center; /* Align items vertically */
+  padding: 10px 20px;/* Add padding for better spacing */
+  max-width: 100%;/* Ensure the container does not exceed viewport width */
   box-sizing: border-box;
 }
 
@@ -28,10 +23,9 @@
 }
 
 #navButtons button {
-  margin-right: 10px;
-  /* Add some spacing between the buttons */
-  font-size: 14px;
-  padding: 10px;
+  margin-right: 10px;/* Add some spacing between the buttons */
+  font-size: 12px;
+  padding: 10px 5px 10px 5px;
   cursor: pointer;
   background-color: #c42222;
   color: #fff;
@@ -39,7 +33,7 @@
   border-radius: 3px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.1s ease;
-  width: 80px;
+  width: 90px;
 }
 
 #navButtons button:hover {
@@ -66,8 +60,7 @@
 
 /* ELEMENT 3 */
 #searchContainer {
-  flex: 1;
-  /* Allow the search container to expand */
+  flex: 1;/* Allow the search container to expand */
   display: flex;
   align-items: center;
   margin-left: 30px;
@@ -89,8 +82,7 @@
 }
 
 #searchInput {
-  flex: 1;
-  /* Let the search input take up the remaining space */
+  flex: 1; /* Let the search input take up the remaining space */
   padding: 5px;
   border: none;
   height: 30px;
@@ -99,8 +91,7 @@
 
 /* Search button styles */
 #searchButton {
-  flex: 0 0 auto;
-  /* Do not grow or shrink */
+  flex: 0 0 auto; /* Do not grow or shrink */
   height: 40px;
   padding: 0px 10px;
   cursor: pointer;
@@ -120,7 +111,7 @@
 }
 
 #resetButton {
-  font-size: 14px;
+  font-size: 12px;
   margin-left: 20px;
   padding: 10px;
   cursor: pointer;
@@ -143,9 +134,7 @@
 
 #table-wrapper {
   position: sticky;
-  top: 60px;
-  max-height: 85vh;
-  /* Set the maximum height to 90% of the viewport height */
+  max-height: 70vh; /* Set the maximum height to 70% of the viewport height */
   overflow: auto;
 }
 
@@ -156,7 +145,6 @@
 
 /* ACTUAL CELLS & HEADERS */
 .head-row {
-  border: none;
   font-size: 12px;
   height: 40px;
   position: sticky;
@@ -165,27 +153,23 @@
   color: white;
   background-color: #354257;
   padding: 2px;
-  white-space: normal;
 }
 
 .head-cell {
-  min-width: 100px;
+  min-width: 90px;
   padding: 2px;
-  white-space: normal;
 }
 
 .body-cell {
   font-size: 12px;
-  height: 20px;
+  height: 30px;
   text-align: center;
-  padding: 2px;
-  white-space: normal;
 }
 
 .head-cell.special-column,
 .body-cell.special-column:first-child,
 .body-cell.special-column:nth-child(2) {
-  min-width: 55px;
+  min-width: 45px;
   padding: 5px;
   position: sticky;
   left: 0;
@@ -196,7 +180,7 @@
 
 .head-cell.special-column:nth-child(2),
 .body-cell.special-column:nth-child(2) {
-  left: 65px;
+  left: 55px;
 }
 
 .body-row--today,
@@ -283,7 +267,7 @@
 
 
 /* Responsive design */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 300px) {
 
   /* Hide navigation buttons */
   #navButtons, #resetButton, #searchContainer, #searchButton {
