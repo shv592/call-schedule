@@ -134,7 +134,7 @@
 
 #table-wrapper {
   position: sticky;
-  max-height: 70vh; /* Set the maximum height to 70% of the viewport height */
+  max-height: 80vh; /* Set the maximum height to 70% of the viewport height */
   overflow: auto;
 }
 
