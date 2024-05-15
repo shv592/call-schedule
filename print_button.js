@@ -59,19 +59,21 @@
     }
 
     #logo {
-      width: 300px;
-      height: 100px;
+
       margin-bottom: -30px;
     }
 
     .print_table {
+      font-family: sans serif;
       width: 65%;
     }
 
     .header {
+      font-family: sans serif;
       text-align:center;
       font-size:18px;
       background-color:black;
+
       color:white;
     }
 
@@ -80,7 +82,9 @@
     }
 
     table {
+      font-family: sans serif;
       margin: 0 auto;
+      padding: 5px;
       border-collapse: collapse;
       margin-bottom: 30px;
       font-size: 12px;

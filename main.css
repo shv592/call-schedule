@@ -9,9 +9,11 @@
   position: fixed;
   width: 100%;
   z-index: 1000;
-  top: calc(50px + 20px); /* Adjust 100px according to the height of your sticky container */
+  top: calc(50px + 20px);
+  /* Adjust 100px according to the height of your sticky container */
   overflow: auto;
-  max-height: calc(100vh - (50px + 20px)); /* Adjust 100px according to the height of your sticky container */
+  max-height: calc(100vh - (50px + 20px));
+  /* Adjust 100px according to the height of your sticky container */
 
 }
 
@@ -22,12 +24,17 @@
 
   background-color: #263344;
   color: #ffffff;
-  display: flex;/* Use flexbox */
-  justify-content: space-between;/* Distribute items evenly along the main axis */
-  align-items: center;/* Align items vertically */
-  padding: 10px 20px;/* Add padding for better spacing */
+  display: flex;
+  /* Use flexbox */
+  justify-content: space-between;
+  /* Distribute items evenly along the main axis */
+  align-items: center;
+  /* Align items vertically */
+  padding: 10px 20px;
+  /* Add padding for better spacing */
   box-sizing: border-box;
-  max-width: 100%;/* Ensure the container does not exceed viewport width */
+  max-width: 100%;
+  /* Ensure the container does not exceed viewport width */
 
 }
 
@@ -432,7 +439,7 @@
 
   border: 1px solid black;
   background-color: #ebeaea;
-color:#000;
+  color: #000;
 }
 
 
