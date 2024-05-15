@@ -388,11 +388,12 @@
 
 .hidden {
   display: none;
+  font-family: sans-serif;
 }
 
 
 .hidden_div img {
-  width: 40%;
+  width: 50%;
   height: 60%;
   margin-bottom: -20px;
 }
@@ -405,6 +406,7 @@
   width: 100%;
   text-align: center;
   font-size: 25px;
+  padding-top: 10px;
 }
 
 .hidden_div .header {
@@ -423,15 +425,17 @@
   border-collapse: collapse;
   margin-bottom: 20px;
   font-size: 12px;
+  padding: 5px;
 
 }
 
 .hidden_div table th {
 
   border: 1px solid black;
-  background-color: #eee;
-
+  background-color: #d0d0d0;
+color:#000;
 }
+
 
 .hidden_div table td {
 
