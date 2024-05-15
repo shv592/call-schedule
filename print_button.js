@@ -19,18 +19,18 @@
       "BLUE": "CTU Blue Jr (Weekend)",
       "RED": "CTU Red Jr (Weekend)",
       "CTU ED": "CTU ED Jr (Weekend)",
-      "WARD NIGHT": "Ward Night Jr (Mon-Thurs)",
-      "ED NIGHT": "ED Night Jr (Mon-Thurs)",
-      "LATE STAY": "Late Stay Jr (Mon-Thurs)",
-      "BLUE SR": "CTU Blue Sr (8am-5pm)",
-      "RED SR": "CTU Red Sr (8am-5pm)",
-      "CTU ED SR": "CTU ED Sr (8am-5pm)",
-      "DAY FLOAT": "CTU Day Float (9am-9pm) (New IM Consults/Direct for IM)",
-      "NIGHT FLOAT": "CTU Night Float (9pm-9am) (New IM Consults/Direct for IM)",
+      "WARD NIGHT": "Ward Night Jr (Mon - Thurs)",
+      "ED NIGHT": "ED Night Jr (Mon - Thurs)",
+      "LATE STAY": "Late Stay Jr (Mon - Thurs)",
+      "BLUE SR": "CTU Blue Sr (8am - 5pm)",
+      "RED SR": "CTU Red Sr (8am - 5pm)",
+      "CTU ED SR": "CTU ED Sr (8am - 5pm)",
+      "DAY FLOAT": "CTU Day Float (9am - 9pm) (New IM Consults/Direct for IM)",
+      "NIGHT FLOAT": "CTU Night Float (9pm - 9am) (New IM Consults/Direct for IM)",
       "W/E 24H SS": "RUH Subspecialty",
       "W/D PM SS": "RUH Weekday PM Subspecialty",
-      "GIM SPH DAY": "SPH GIM 8am-4pm",
-      "GIM SPH PM": "SPH GIM 4pm-Midnight",
+      "GIM SPH DAY": "SPH GIM 8am - 4pm",
+      "GIM SPH PM": "SPH GIM 4pm - Midnight",
       "NEPHRO": "SPH Nephro",
       "CCU JR": "CCU Jr",
       "CCU SR": "CCU Sr",
@@ -55,7 +55,6 @@
 
     #print_header {
       font-family: "Calibri", sans-serif;
-
       width: 100%;
       text-align:center;
       font-size:25px;
@@ -81,7 +80,6 @@
 
     .rota_table {
       font-family: "Calibri", sans-serif;
-
       width: 70%;
     }
 
@@ -103,9 +101,7 @@
     }
 
     table td {
-
       border: 1px solid black;
-
     }
 
     </style>
