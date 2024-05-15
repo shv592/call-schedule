@@ -46,7 +46,10 @@
       <div id="print_header">
         <img id="logo" src="saskim.png"></img>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <br><br><br>
+=======
+>>>>>>> parent of c6f3b26 (Update print_button.js)
 =======
 >>>>>>> parent of c6f3b26 (Update print_button.js)
         <p>Saskatoon Internal Medicine Schedule</p>
@@ -58,7 +61,10 @@
 
     #print_header {
 <<<<<<< HEAD
+<<<<<<< HEAD
       font-family: "Calibri", sans-serif;
+=======
+>>>>>>> parent of c6f3b26 (Update print_button.js)
 =======
 >>>>>>> parent of c6f3b26 (Update print_button.js)
       width: 100%;
@@ -68,7 +74,11 @@
 
     #logo {
 <<<<<<< HEAD
+<<<<<<< HEAD
       width: 60%;
+=======
+
+>>>>>>> parent of c6f3b26 (Update print_button.js)
 =======
 
 >>>>>>> parent of c6f3b26 (Update print_button.js)
@@ -77,9 +87,12 @@
 
     .print_table {
 <<<<<<< HEAD
+<<<<<<< HEAD
       font-family: "Calibri", sans-serif;
       width: 70%;
 =======
+=======
+>>>>>>> parent of c6f3b26 (Update print_button.js)
       font-family: sans serif;
       width: 65%;
 >>>>>>> parent of c6f3b26 (Update print_button.js)
@@ -96,7 +109,10 @@
 
     .rota_table {
 <<<<<<< HEAD
+<<<<<<< HEAD
       font-family: "Calibri", sans-serif;
+=======
+>>>>>>> parent of c6f3b26 (Update print_button.js)
 =======
 >>>>>>> parent of c6f3b26 (Update print_button.js)
       width: 70%;
