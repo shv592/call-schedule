@@ -393,8 +393,7 @@
 
 
 .hidden_div img {
-  width: 50%;
-  height: 60%;
+
   margin-bottom: -20px;
 }
 
@@ -432,7 +431,7 @@
 .hidden_div table th {
 
   border: 1px solid black;
-  background-color: #d0d0d0;
+  background-color: #ebeaea;
 color:#000;
 }
 
