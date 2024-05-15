@@ -25,7 +25,7 @@
       "BLUE SR": "CTU Blue Sr (8am - 5pm)",
       "RED SR": "CTU Red Sr (8am - 5pm)",
       "CTU ED SR": "CTU ED Sr (8am - 5pm)",
-      "DAY FLOAT": "CTU Day Float (9am - 9pm) (New IM Consults/Direct for IM)",
+      "DAY FLOAT": "CTU Day Float (9am - 9pm)(New IM Consults/Direct for IM)",
       "NIGHT FLOAT": "CTU Night Float (9pm - 9am) (New IM Consults/Direct for IM)",
       "W/E 24H SS": "RUH Subspecialty",
       "W/D PM SS": "RUH Weekday PM Subspecialty",
@@ -45,7 +45,7 @@
     html: `
       <div id="print_header">
         <img id="logo" src="saskim.png"></img>
-        <p></p>
+        <br><br><br>
         <p>Saskatoon Internal Medicine Schedule</p>
       </div>
     `,
@@ -61,12 +61,13 @@
     }
 
     #logo {
+      width: 60%;
       margin-bottom: -30px;
     }
 
     .print_table {
       font-family: "Calibri", sans-serif;
-      width: 65%;
+      width: 70%;
     }
 
     .header {
@@ -86,7 +87,6 @@
     table {
       font-family: "Calibri", sans-serif;
       margin: 0 auto;
-      padding: 5px;
       border-collapse: collapse;
       margin-bottom: 30px;
       font-size: 12px;
@@ -94,13 +94,14 @@
     }
 
     table th {
-
+      padding-left: 10px;
       border: 1px solid black;
       background-color: #eee;
 
     }
 
     table td {
+      padding-left: 10px;
       border: 1px solid black;
     }
 
