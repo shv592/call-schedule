@@ -45,6 +45,7 @@
     html: `
       <div id="print_header">
         <img id="logo" src="saskim.png"></img>
+        <p></p>
         <p>Saskatoon Internal Medicine Schedule</p>
       </div>
     `,
@@ -53,23 +54,24 @@
     <style>
 
     #print_header {
+      font-family: "Calibri", sans-serif;
+
       width: 100%;
       text-align:center;
       font-size:25px;
     }
 
     #logo {
-
       margin-bottom: -30px;
     }
 
     .print_table {
-      font-family: sans serif;
+      font-family: "Calibri", sans-serif;
       width: 65%;
     }
 
     .header {
-      font-family: sans serif;
+      font-family: "Calibri", sans-serif;
       text-align:center;
       font-size:18px;
       background-color:black;
@@ -78,11 +80,13 @@
     }
 
     .rota_table {
+      font-family: "Calibri", sans-serif;
+
       width: 70%;
     }
 
     table {
-      font-family: sans serif;
+      font-family: "Calibri", sans-serif;
       margin: 0 auto;
       padding: 5px;
       border-collapse: collapse;
