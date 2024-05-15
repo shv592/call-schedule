@@ -61,7 +61,7 @@
     }
 
     #logo {
-      width: 40%;
+      width: 30%;
       margin-bottom: -30px;
     }
 
