@@ -53,7 +53,10 @@
     <style>
 
     #print_header {
+<<<<<<< HEAD
       font-family: "Calibri", sans-serif;
+=======
+>>>>>>> parent of c6f3b26 (Update print_button.js)
       width: 100%;
       text-align:center;
       font-size:25px;
@@ -61,7 +64,10 @@
 
     #logo {
 <<<<<<< HEAD
+<<<<<<< HEAD
       width: 60%;
+=======
+>>>>>>> parent of c6f3b26 (Update print_button.js)
 
       margin-bottom: -30px;
     }
@@ -69,9 +75,12 @@
     .print_table {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       font-family: "Calibri", sans-serif;
       width: 70%;
 =======
+=======
+>>>>>>> parent of c6f3b26 (Update print_button.js)
 =======
 >>>>>>> parent of c6f3b26 (Update print_button.js)
       font-family: sans serif;
@@ -91,7 +100,10 @@
     .rota_table {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       font-family: "Calibri", sans-serif;
+=======
+>>>>>>> parent of c6f3b26 (Update print_button.js)
 =======
 >>>>>>> parent of c6f3b26 (Update print_button.js)
 =======
