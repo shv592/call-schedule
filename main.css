@@ -4,6 +4,7 @@
 }
 
 /* Main Container */
+<<<<<<< HEAD
 
 #table-wrapper {
   position: fixed;
@@ -17,13 +18,12 @@
 
 }
 
+=======
+>>>>>>> parent of f7cd4a3 (Update main.css)
 #sticky-container {
-
-  position: sticky;
-  top: 0;
-
   background-color: #263344;
   color: #ffffff;
+<<<<<<< HEAD
   display: flex;
   /* Use flexbox */
   justify-content: space-between;
@@ -36,6 +36,14 @@
   max-width: 100%;
   /* Ensure the container does not exceed viewport width */
 
+=======
+  display: flex;/* Use flexbox */
+  justify-content: space-between; /* Distribute items evenly along the main axis */
+  align-items: center; /* Align items vertically */
+  padding: 10px 20px;/* Add padding for better spacing */
+  max-width: 100%;/* Ensure the container does not exceed viewport width */
+  box-sizing: border-box;
+>>>>>>> parent of f7cd4a3 (Update main.css)
 }
 
 /* Child Containers in the navigation bar */
@@ -46,8 +54,7 @@
 }
 
 #navButtons button {
-  margin-right: 10px;
-  /* Add some spacing between the buttons */
+  margin-right: 10px;/* Add some spacing between the buttons */
   font-size: 12px;
   padding: 10px 5px 10px 5px;
   cursor: pointer;
@@ -66,7 +73,7 @@
 }
 
 #navButtons .print_button {
-  background-color: #39FF33;
+  background-color:#39FF33;
   color: black;
 }
 
@@ -84,8 +91,7 @@
 
 /* ELEMENT 3 */
 #searchContainer {
-  flex: 1;
-  /* Allow the search container to expand */
+  flex: 1;/* Allow the search container to expand */
   display: flex;
   align-items: center;
   margin-left: 30px;
@@ -107,8 +113,7 @@
 }
 
 #searchInput {
-  flex: 1;
-  /* Let the search input take up the remaining space */
+  flex: 1; /* Let the search input take up the remaining space */
   padding: 5px;
   border: none;
   height: 30px;
@@ -117,8 +122,7 @@
 
 /* Search button styles */
 #searchButton {
-  flex: 0 0 auto;
-  /* Do not grow or shrink */
+  flex: 0 0 auto; /* Do not grow or shrink */
   height: 40px;
   padding: 0px 10px;
   cursor: pointer;
@@ -159,6 +163,11 @@
 
 /* TABLE STYLES */
 
+#table-wrapper {
+  position: sticky;
+  max-height: 80vh; /* Set the maximum height to 70% of the viewport height */
+  overflow: auto;
+}
 
 #schedule {
   background-color: #ffffff;
@@ -171,7 +180,7 @@
   height: 40px;
   position: sticky;
   z-index: 800;
-  top: 0;
+  top: 0px;
   color: white;
   background-color: #354257;
   padding: 2px;
@@ -235,41 +244,29 @@
 @media screen and (max-height: 200px) {
 
   /* Hide navigation buttons */
-  #navButtons,
-  #resetButton,
-  #searchContainer,
-  #searchButton {
+  #navButtons, #resetButton, #searchContainer, #searchButton {
     display: none;
   }
 
   #table-title {
-    width: 100%;
-    /* Make the table title span the full width */
-    text-align: center;
-    /* Center the text */
+    width: 100%; /* Make the table title span the full width */
+    text-align: center; /* Center the text */
     margin: 20px 0px 0px 0px;
     font-size: 15px;
   }
 
-  .head-row,
-  .head-cell {
+  .head-row, .head-cell {
     /* Other styles */
-    word-wrap: break-word;
-    /* This allows long words to be broken and wrap onto the next line */
-    padding: 0px;
-    /* Add padding to improve spacing */
-    border: 1px solid #ddd;
-    /* Add border to the body cells */
+    word-wrap: break-word; /* This allows long words to be broken and wrap onto the next line */
+    padding: 0px; /* Add padding to improve spacing */
+    border: 1px solid #ddd; /* Add border to the body cells */
     height: 20px;
   }
 
   #schedule .body-cell {
-    font-size: 12px;
-    /* Adjust font size to make cells smaller */
-    word-wrap: break-word;
-    /* This allows long words to be broken and wrap onto the next line */
-    padding: 0px;
-    /* Add padding to improve spacing */
+    font-size: 12px; /* Adjust font size to make cells smaller */
+    word-wrap: break-word; /* This allows long words to be broken and wrap onto the next line */
+    padding: 0px; /* Add padding to improve spacing */
   }
 
   .body-row:hover,
@@ -284,23 +281,17 @@
   }
 
   #schedule {
-    border-collapse: collapse;
-    /* Collapse borders to avoid double borders */
-    width: 100%;
-    /* Ensure the table fills the container */
-    border: 1px solid #ddd;
-    /* Add border to the table */
+    border-collapse: collapse; /* Collapse borders to avoid double borders */
+    width: 100%; /* Ensure the table fills the container */
+    border: 1px solid #ddd; /* Add border to the table */
   }
 
   #table-wrapper {
-    width: 100%;
-    /* Ensure the wrapper spans the whole width */
-    margin: 0;
-    /* Remove any margin */
-    padding: 0;
-    /* Remove any padding */
-    overflow-y: auto;
-    /* Add vertical scrollbar if needed */
+    width: 100%; /* Ensure the wrapper spans the whole width */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+    height: calc(100vh - 60px); /* Adjust height to fit the screen minus the sticky container */
+    overflow-y: auto; /* Add vertical scrollbar if needed */
   }
 
 }
@@ -310,41 +301,29 @@
 @media screen and (max-width: 300px) {
 
   /* Hide navigation buttons */
-  #navButtons,
-  #resetButton,
-  #searchContainer,
-  #searchButton {
+  #navButtons, #resetButton, #searchContainer, #searchButton {
     display: none;
   }
 
   #table-title {
-    width: 100%;
-    /* Make the table title span the full width */
-    text-align: center;
-    /* Center the text */
+    width: 100%; /* Make the table title span the full width */
+    text-align: center; /* Center the text */
     margin: 20px 0px 0px 0px;
     font-size: 15px;
   }
 
-  .head-row,
-  .head-cell {
+  .head-row, .head-cell {
     /* Other styles */
-    word-wrap: break-word;
-    /* This allows long words to be broken and wrap onto the next line */
-    padding: 0px;
-    /* Add padding to improve spacing */
-    border: 1px solid #ddd;
-    /* Add border to the body cells */
+    word-wrap: break-word; /* This allows long words to be broken and wrap onto the next line */
+    padding: 0px; /* Add padding to improve spacing */
+    border: 1px solid #ddd; /* Add border to the body cells */
     height: 20px;
   }
 
   #schedule .body-cell {
-    font-size: 12px;
-    /* Adjust font size to make cells smaller */
-    word-wrap: break-word;
-    /* This allows long words to be broken and wrap onto the next line */
-    padding: 0px;
-    /* Add padding to improve spacing */
+    font-size: 12px; /* Adjust font size to make cells smaller */
+    word-wrap: break-word; /* This allows long words to be broken and wrap onto the next line */
+    padding: 0px; /* Add padding to improve spacing */
   }
 
   .body-row:hover,
@@ -359,25 +338,18 @@
   }
 
   #schedule {
-    border-collapse: collapse;
-    /* Collapse borders to avoid double borders */
-    width: 100%;
-    /* Ensure the table fills the container */
-    margin: 0;
-    /* Remove any margin */
-    padding: 0;
-    /* Remove any padding */
+    border-collapse: collapse; /* Collapse borders to avoid double borders */
+    width: 100%; /* Ensure the table fills the container */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
   }
 
   #table-wrapper {
-    width: 100%;
-    /* Ensure the wrapper spans the whole width */
-    margin: 0;
-    /* Remove any margin */
-    padding: 0;
-    /* Remove any padding */
-    overflow-y: auto;
-    /* Add vertical scrollbar if needed */
+    width: 100%; /* Ensure the wrapper spans the whole width */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+    height: calc(100vh - 60px); /* Adjust height to fit the screen minus the sticky container */
+    overflow-y: auto; /* Add vertical scrollbar if needed */
   }
 
 }
@@ -410,16 +382,21 @@
 
 #page_header {
   width: 100%;
+<<<<<<< HEAD
   text-align: center;
   font-size: 25px;
   padding-top: 10px;
+=======
+  text-align:center;
+  font-size:25px;
+>>>>>>> parent of f7cd4a3 (Update main.css)
 }
 
 .hidden_div .header {
-  text-align: center;
-  font-size: 18px;
-  background-color: black;
-  color: white;
+  text-align:center;
+  font-size:18px;
+  background-color:black;
+  color:white;
 }
 
 .hidden_div .rota_table {
