@@ -1,14 +1,14 @@
- // PRINT BUTTON **************************************************************************************************************************
+// PRINT BUTTON **************************************************************************************************************************
 
- export const print_button = {
+export const print_button = {
 
   today: [],
   table: document.createElement("table"),
   rota_table: document.createElement("table"),
   counts: {
-    "BLUE": {"docs":[]},
-    "RED": {"docs":[]},
-    "CTU ED": {"docs":[]},
+    "BLUE": { "docs": [] },
+    "RED": { "docs": [] },
+    "CTU ED": { "docs": [] },
   },
   rotas_to_count: ["BLUE", "RED", "CTU ED"],
 
@@ -25,12 +25,12 @@
     "BLUE SR": "CTU Blue Sr (8am-5pm)",
     "RED SR": "CTU Red Sr (8am-5pm)",
     "CTU ED SR": "CTU ED Sr (8am-5pm)",
-    "DAY FLOAT": "CTU Day Float (9am-9pm) (New IM Consults/Direct for IM)",
-    "NIGHT FLOAT": "CTU Night Float (9pm-9am) (New IM Consults/Direct for IM)",
+    "DAY FLOAT": "CTU Day Float (9am-9pm) (New Consults)",
+    "NIGHT FLOAT": "CTU Night Float (9pm-9am) (New Consults)",
     "W/E 24H SS": "RUH Subspecialty",
     "W/D PM SS": "RUH Weekday PM Subspecialty",
-    "GIM SPH DAY": "SPH GIM 8am-4pm",
-    "GIM SPH PM": "SPH GIM 4pm-Midnight",
+    "GIM SPH DAY": "SPH GIM (8am-4pm)",
+    "GIM SPH PM": "SPH GIM (4pm-12am)",
     "NEPHRO": "SPH Nephro",
     "CCU JR": "CCU Jr",
     "CCU SR": "CCU Sr",
@@ -45,70 +45,86 @@
   html: `
     <div id="print_header">
       <img id="logo" src="saskim.png"></img>
-      <p>Saskatoon Internal Medicine Schedule</p>
+      <p>Saskatoon Internal Medicine Call Schedule</p>
     </div>
   `,
 
   css: `
   <style>
 
+p{
+  font-family: "Calibri", sans-serif;
+}
+
   #print_header {
-    width: 100%;
     text-align:center;
-    font-size:25px;
+    font-size:18px;
   }
 
   #logo {
-    width: 300px;
-    height: 100px;
-    margin-bottom: -30px;
+    width: 200px;
+    margin-bottom: -10px;
   }
 
   .print_table {
+    font-family: "Calibri", sans-serif;
+    text-align:left;
+    font-size: 12px;
     width: 65%;
+    margin: auto;
+    margin-bottom: 30px;
+
+
   }
 
   .header {
-    text-align:center;
-    font-size:18px;
+    text-align:left;
     background-color:black;
     color:white;
   }
 
   .rota_table {
-    width: 70%;
+    font-family: "Calibri", sans-serif;
+    margin: auto;
+    width: 65%;
+    text-align:left;
+    padding-left: 10px;
+    table-layout: fixed; 
+    font-size: 12px;
+
+
   }
 
   table {
-    margin: 0 auto;
     border-collapse: collapse;
     margin-bottom: 30px;
-    font-size: 12px;
-
   }
 
   table th {
-
     border: 1px solid black;
     background-color: #eee;
+    text-align:left;
+    padding-left: 10px;
+    width: 65%;
+
 
   }
 
   table td {
-
     border: 1px solid black;
+    padding-left: 10px;
 
   }
 
   </style>
   `,
 
-  init: function(tbodyElement,theadElement) {
+  init: function (tbodyElement, theadElement) {
 
     // GATHER DATA
     for (var y = 0; y < tbodyElement.rows.length; y++) {
       if (tbodyElement.rows[y].classList.contains("body-row--today")) {
-        for (var x = 0; x <tbodyElement.rows[0].cells.length; x++) {
+        for (var x = 0; x < tbodyElement.rows[0].cells.length; x++) {
           let item = {}
           item.header = theadElement.rows[0].cells[x].textContent.replace(/\s+/g, ' ').trim();;
           item.description = this.descriptions[item.header];
@@ -119,7 +135,7 @@
     }
 
     // COUNT DOCS
-    for (var x = 0; x <tbodyElement.rows[0].cells.length; x++) {
+    for (var x = 0; x < tbodyElement.rows[0].cells.length; x++) {
       var rota = theadElement.rows[0].cells[x].textContent.replace(/\s+/g, ' ').trim();
       if (this.rotas_to_count.indexOf(rota) >= 0) {
         for (var y = 0; y < tbodyElement.rows.length; y++) {
@@ -189,7 +205,7 @@
     row.appendChild(th);
     var th = document.createElement("TH");
     th.textContent = "ED Juniors";
-    row.appendChild(th);      
+    row.appendChild(th);
     this.rota_table.appendChild(row);
     // ADD DOCS
     let biggest_team = 0;
@@ -200,12 +216,12 @@
     }
     for (var i = 0; i < biggest_team; i++) {
       var row = document.createElement("TR");
-        for (var rota of this.rotas_to_count) {
-          var td = document.createElement("TD");
-          td.classList.add("rota_doc_td");
-          td.textContent = this.counts[rota]["docs"][i] || "";
-          row.appendChild(td);
-        }
+      for (var rota of this.rotas_to_count) {
+        var td = document.createElement("TD");
+        td.classList.add("rota_doc_td");
+        td.textContent = this.counts[rota]["docs"][i] || "";
+        row.appendChild(td);
+      }
       this.rota_table.appendChild(row);
     }
     // hidden_div.appendChild(this.rota_table);
@@ -215,7 +231,7 @@
 
   },
 
-  render: function() {
+  render: function () {
 
     let button = document.createElement("button");
     button.innerHTML = "Print 24hr Call";
@@ -233,12 +249,12 @@
 
   },
 
-  count_jr: function(rota, doc) {
+  count_jr: function (rota, doc) {
 
     if (doc === "") return
     if (doc.charAt(doc.length - 1) === "*") return
     if (doc in this.counts[rota]) {
-      this.counts[rota][doc] ++
+      this.counts[rota][doc]++
     }
     else {
       this.counts[rota][doc] = 1
