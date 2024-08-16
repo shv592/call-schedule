@@ -1,38 +1,35 @@
 /* Set font-family to Calibri for the whole code */
 * {
   font-family: "Calibri", sans-serif;
+  margin: 0; /* Reset default margin */
+  padding: 0; /* Reset default padding */
 }
 
 /* Main Container */
-
 #table-wrapper {
-  position: fixed;
+  position: relative;
   width: 100%;
-  z-index: 1000;
-  top: calc(50px + 20px); /* Adjust 100px according to the height of your sticky container */
+  height: calc(100vh - 50px); /* Adjust to account for sticky container height */
   overflow: auto;
-  max-height: calc(100vh - (50px + 20px)); /* Adjust 100px according to the height of your sticky container */
-
+  margin-top: 0; /* Remove extra margin */
 }
 
+/* Sticky Container */
 #sticky-container {
-
   position: sticky;
   top: 0;
-
   background-color: #263344;
   color: #ffffff;
-  display: flex;/* Use flexbox */
-  justify-content: space-between;/* Distribute items evenly along the main axis */
-  align-items: center;/* Align items vertically */
-  padding: 10px 20px;/* Add padding for better spacing */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 10px 20px;
+  width: 100%;
   box-sizing: border-box;
-  max-width: 100%;/* Ensure the container does not exceed viewport width */
-
+  z-index: 1000;
 }
 
 /* Child Containers in the navigation bar */
-
 #navButtons {
   display: flex;
   align-items: center;
@@ -40,9 +37,8 @@
 
 #navButtons button {
   margin-right: 10px;
-  /* Add some spacing between the buttons */
   font-size: 12px;
-  padding: 10px 5px 10px 5px;
+  padding: 10px 5px;
   cursor: pointer;
   background-color: #c42222;
   color: #fff;
@@ -65,21 +61,21 @@
 
 #navButtons .print_button:hover {
   background-color: darkseagreen;
-  transfrom: translateY(-1px);
+  transform: translateY(-1px);
 }
 
-/* ELEMENT 2 */
+/* Table Title */
 #table-title {
   width: 45%;
   text-align: center;
-  align-items: center;
+  font-size: 14px; /* Adjust as needed */
+  font-weight: bold; /* Make title bold if needed */
 }
 
-/* ELEMENT 3 */
+/* Search Container */
 #searchContainer {
-  flex: 1;
-  /* Allow the search container to expand */
   display: flex;
+  flex-wrap: wrap; /* Allow wrapping */
   align-items: center;
   margin-left: 30px;
 }
@@ -101,17 +97,13 @@
 
 #searchInput {
   flex: 1;
-  /* Let the search input take up the remaining space */
   padding: 5px;
   border: none;
   height: 30px;
   color: #000;
 }
 
-/* Search button styles */
 #searchButton {
-  flex: 0 0 auto;
-  /* Do not grow or shrink */
   height: 40px;
   padding: 0px 10px;
   cursor: pointer;
@@ -149,13 +141,11 @@
   transform: translateY(-1px);
 }
 
-
 /* TABLE STYLES */
-
-
 #schedule {
   background-color: #ffffff;
   border-collapse: collapse;
+  width: 100%;
 }
 
 /* ACTUAL CELLS & HEADERS */
@@ -223,157 +213,6 @@
 }
 
 
-
-/* Responsive design */
-@media screen and (max-height: 200px) {
-
-  /* Hide navigation buttons */
-  #navButtons,
-  #resetButton,
-  #searchContainer,
-  #searchButton {
-    display: none;
-  }
-
-  #table-title {
-    width: 100%;
-    /* Make the table title span the full width */
-    text-align: center;
-    /* Center the text */
-    margin: 20px 0px 0px 0px;
-    font-size: 15px;
-  }
-
-  .head-row,
-  .head-cell {
-    /* Other styles */
-    word-wrap: break-word;
-    /* This allows long words to be broken and wrap onto the next line */
-    padding: 0px;
-    /* Add padding to improve spacing */
-    border: 1px solid #ddd;
-    /* Add border to the body cells */
-    height: 20px;
-  }
-
-  #schedule .body-cell {
-    font-size: 12px;
-    /* Adjust font size to make cells smaller */
-    word-wrap: break-word;
-    /* This allows long words to be broken and wrap onto the next line */
-    padding: 0px;
-    /* Add padding to improve spacing */
-  }
-
-  .body-row:hover,
-  .body-cell.hovered-cell:not(:nth-child(1)):not(:nth-child(2)),
-  .body-cell.hovered-column {
-    background-color: transparent;
-  }
-
-  .head-cell.special-column:nth-child(2),
-  .body-cell.special-column:nth-child(2) {
-    display: none;
-  }
-
-  #schedule {
-    border-collapse: collapse;
-    /* Collapse borders to avoid double borders */
-    width: 100%;
-    /* Ensure the table fills the container */
-    border: 1px solid #ddd;
-    /* Add border to the table */
-  }
-
-  #table-wrapper {
-    width: 100%;
-    /* Ensure the wrapper spans the whole width */
-    margin: 0;
-    /* Remove any margin */
-    padding: 0;
-    /* Remove any padding */
-    overflow-y: auto;
-    /* Add vertical scrollbar if needed */
-  }
-
-}
-
-
-/* Responsive design */
-@media screen and (max-width: 300px) {
-
-  /* Hide navigation buttons */
-  #navButtons,
-  #resetButton,
-  #searchContainer,
-  #searchButton {
-    display: none;
-  }
-
-  #table-title {
-    width: 100%;
-    /* Make the table title span the full width */
-    text-align: center;
-    /* Center the text */
-    margin: 20px 0px 0px 0px;
-    font-size: 15px;
-  }
-
-  .head-row,
-  .head-cell {
-    /* Other styles */
-    word-wrap: break-word;
-    /* This allows long words to be broken and wrap onto the next line */
-    padding: 0px;
-    /* Add padding to improve spacing */
-    border: 1px solid #ddd;
-    /* Add border to the body cells */
-    height: 20px;
-  }
-
-  #schedule .body-cell {
-    font-size: 12px;
-    /* Adjust font size to make cells smaller */
-    word-wrap: break-word;
-    /* This allows long words to be broken and wrap onto the next line */
-    padding: 0px;
-    /* Add padding to improve spacing */
-  }
-
-  .body-row:hover,
-  .body-cell.hovered-cell:not(:nth-child(1)):not(:nth-child(2)),
-  .body-cell.hovered-column {
-    background-color: transparent;
-  }
-
-  .head-cell.special-column:nth-child(2),
-  .body-cell.special-column:nth-child(2) {
-    display: none;
-  }
-
-  #schedule {
-    border-collapse: collapse;
-    /* Collapse borders to avoid double borders */
-    width: 100%;
-    /* Ensure the table fills the container */
-    margin: 0;
-    /* Remove any margin */
-    padding: 0;
-    /* Remove any padding */
-  }
-
-  #table-wrapper {
-    width: 100%;
-    /* Ensure the wrapper spans the whole width */
-    margin: 0;
-    /* Remove any margin */
-    padding: 0;
-    /* Remove any padding */
-    overflow-y: auto;
-    /* Add vertical scrollbar if needed */
-  }
-
-}
 
 /* PRINT TABLE */
 
@@ -443,3 +282,7 @@ font-family: Arial, Helvetica, sans-serif;}
   border: 1px solid black;
 
 }
+
+
+/*responsive mobile design*/
+
