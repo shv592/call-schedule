@@ -17,14 +17,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   //************************ DATE CALCULATIONS ************************************************************************************************
   let currentDate = moment().startOf('day');
-
   // Dynamically updates the schoolYear
   function determineSchoolYearStart() {
     const julyMoment = moment(`${currentDate.year()}-07-01`, 'YYYY-MM-DD');
     return currentDate.isSameOrAfter(julyMoment) ? currentDate.year() : currentDate.year() - 1;
   }
   let specificYear = determineSchoolYearStart();
-
   //Determines the first Monday in july. 
   function getFirstMondayInJuly(specificYear) {
     const julyMoment = moment(`${specificYear}-07-01`, 'YYYY-MM-DD');
@@ -36,8 +34,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   let schoolYearStart = getFirstMondayInJuly(specificYear);
   //************************************************************************************************************************************************
 
-
-  //VARIABLES
+  //************************ VARIABLES ************************************************************************************************************************************************
   let tableData = [];
   let selectedColumnIndex = -1;
   let currentBlockStartDate;
@@ -45,8 +42,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   let daysElapsed = Math.ceil(currentDate.diff(schoolYearStart, "days"));
   let blockNumber = Math.ceil(daysElapsed / 28);
 
-  //ASYNC FUNCTIONS ************************************************************************************************************************************************
-
+  //************************ ASYNC FUNCTIONS ************************************************************************************************************************************************
   // Fetch data from external source - google docs
   async function getTableData() {
     try {
@@ -62,7 +58,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Initializes the original table
   async function initializeTable() {
     tableData = await getTableData();
-
     // Resets all variables on July 1st
     if (currentDate.isSame(schoolYearStart.clone().startOf('year').add(6, 'months'), 'day')) {
       schoolYearStart = getFirstMondayInJuly(currentDate.year());
@@ -72,7 +67,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     } else {
       blockNumber = Math.ceil(daysElapsed / 28); // Calculates the block number 
     }
-
     // Current block's start and end dates based on the current block number
     currentBlockStartDate = schoolYearStart.clone().add((blockNumber - 1) * 28, "days");
     currentBlockEndDate = currentBlockStartDate.clone().add(27, "days");
@@ -87,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateTable();
   }
 
-  // ************************ FUNCTIONS ************************************************
+  //************************ FUNCTIONS ************************************************************************************************************************************************
 
   // Check if a given date is today
   function isToday(date) {
@@ -132,37 +126,34 @@ document.addEventListener("DOMContentLoaded", async function () {
     return trElement;
   }
 
-
   // Create the rows of the table based on data
   function createTrForTableBody(data) {
     const trElement = document.createElement("tr");
     trElement.setAttribute("class", "body-row");
-
     const date = moment(data[0]).toDate();
     if (isToday(date)) {
       trElement.classList.add("body-row--today");
     }
-
     const dateValue = data[0];  // Create DATE CELL based on google sheet value, and format it. 
     const dateCell = document.createElement("td");
     const formattedDate = moment(dateValue).format('MMM D');
     const dayCell = document.createElement("td");      // Create cell for Day using the value from Google sheet
     const dayValue = data[1]; // Assuming the "Day" column is at index 1
-
     dateCell.setAttribute("class", `body-cell${' special-column'}`);
     dateCell.innerHTML = `<span>${formattedDate}</span>`;
     dayCell.setAttribute("class", "body-cell special-column");
     dayCell.innerHTML = `<span>${dayValue}</span>`;
     trElement.appendChild(dateCell);
     trElement.appendChild(dayCell);
-
-    if (selectedColumnIndex !== -1) {      // Create cells based on selected column
+    // Create cells based on selected column
+    if (selectedColumnIndex !== -1) {
       const tdElement = document.createElement("td");
       tdElement.setAttribute("class", "body-cell");
       tdElement.innerHTML = `<span>${data[selectedColumnIndex]}</span>`;
       trElement.appendChild(tdElement);
     } else {
-      data.slice(2).forEach((item) => {        // Create cells for the rest of the data
+      // Create cells for the rest of the data
+      data.slice(2).forEach((item) => {
         const tdElement = document.createElement("td");
         tdElement.setAttribute("class", "body-cell");
         tdElement.innerHTML = `<span>${item}</span>`;
@@ -172,61 +163,52 @@ document.addEventListener("DOMContentLoaded", async function () {
     return trElement;
   }
 
-
   // Update the table based on the selected filters
   function updateTable() {
-
-
-  
-
-      tbodyElement.innerHTML = '';
-      if (filterDropdown.value === "default") {
-        console.log("Showing original table");  // Add this log for debugging
-        selectedColumnIndex = -1;
-        filterDropdown.value = "default";  // Set the value explicitly to "default"
-        theadElement.innerHTML = '';
-        theadElement.appendChild(createTableHeader(tableData[0]));
-        tbodyElement.innerHTML = '';  // Clear tbodyElement before appending rows
-        for (let i = 1; i < tableData.length; i++) {
-          const trElementForBody = createTrForTableBody(tableData[i]);
-          const rowDate = moment(tableData[i][0]).toDate();
-          if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
-            tbodyElement.appendChild(trElementForBody);
-          }
-          if (isToday(rowDate)) {
-            trElementForBody.classList.add('body-row--today');
-          }
+    tbodyElement.innerHTML = '';
+    if (filterDropdown.value === "default") {
+      console.log("Showing original table");  // Add this log for debugging
+      selectedColumnIndex = -1;
+      filterDropdown.value = "default";  // Set the value explicitly to "default"
+      theadElement.innerHTML = '';
+      theadElement.appendChild(createTableHeader(tableData[0]));
+      tbodyElement.innerHTML = '';  // Clear tbodyElement before appending rows
+      for (let i = 1; i < tableData.length; i++) {
+        const trElementForBody = createTrForTableBody(tableData[i]);
+        const rowDate = moment(tableData[i][0]).toDate();
+        if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
+          tbodyElement.appendChild(trElementForBody);
         }
-        selectedColumnIndex = -1;
-      } else {
-        // If a team is selected, display the filtered table
-        const headerData = ["DATE", "DAY"];
-        if (selectedColumnIndex !== -1) {
-          headerData.push(tableData[0][selectedColumnIndex]);
-        } else {
-          headerData.push("DATE", "DAY");
-        }
-        theadElement.innerHTML = '';
-        theadElement.appendChild(createTableHeader(headerData));
-        for (let i = 1; i < tableData.length; i++) {
-          const trElementForBody = createTrForTableBody(tableData[i]);
-          const rowDate = moment(tableData[i][0]).toDate();
-          if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
-            tbodyElement.appendChild(trElementForBody);
-          }
-          if (isToday(rowDate)) {
-            trElementForBody.classList.add('body-row--today');
-          }
+        if (isToday(rowDate)) {
+          trElementForBody.classList.add('body-row--today');
         }
       }
-    
+      selectedColumnIndex = -1;
+    } else {
+      // If a team is selected, display the filtered table
+      const headerData = ["DATE", "DAY"];
+      if (selectedColumnIndex !== -1) {
+        headerData.push(tableData[0][selectedColumnIndex]);
+      } else {
+        headerData.push("DATE", "DAY");
+      }
+      theadElement.innerHTML = '';
+      theadElement.appendChild(createTableHeader(headerData));
+      for (let i = 1; i < tableData.length; i++) {
+        const trElementForBody = createTrForTableBody(tableData[i]);
+        const rowDate = moment(tableData[i][0]).toDate();
+        if (rowDate >= currentBlockStartDate && rowDate <= currentBlockEndDate) {
+          tbodyElement.appendChild(trElementForBody);
+        }
+        if (isToday(rowDate)) {
+          trElementForBody.classList.add('body-row--today');
+        }
+      }
+    }
     tableElement.innerHTML = '';
     tableElement.appendChild(theadElement);
     tableElement.appendChild(tbodyElement);
-
   }
-
-
 
   // Update the filter dropdown options
   function updateFilterDropdown(data) {
@@ -256,21 +238,20 @@ document.addEventListener("DOMContentLoaded", async function () {
   function adjustFilterColumnWidth() {
     const selectedOption = filterDropdown.options[filterDropdown.selectedIndex];
     const selectedOptionText = selectedOption.textContent;
-    const paddingAndMargin = 35; // Adjust this value according to the total padding and margin applied to the dropdown
+    const paddingAndMargin = 35; // Adjust this value based on your dropdown's styling
     const selectedOptionWidth = getTextWidth(selectedOptionText) + paddingAndMargin;
-    console.log("Selected option width:", selectedOptionWidth); // Log the width to check if it's accurate
-    filterDropdown.style.width = selectedOptionWidth + 'px';
+    filterDropdown.style.width = `${selectedOptionWidth}px`;
+    filterDropdown.style.minWidth = `${selectedOptionWidth}px`;
   }
 
+  // Function to get the width of the text in pixels
   function getTextWidth(text) {
-    // Create a temporary span element to measure the text width
     const span = document.createElement("span");
     span.style.visibility = "hidden";
     span.style.whiteSpace = "nowrap";
     span.innerText = text;
     document.body.appendChild(span);
     const width = span.offsetWidth;
-    console.log("Text:", text, "Width:", width); // Log text and width
     document.body.removeChild(span);
     return width;
   }
@@ -297,12 +278,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     const cells = document.querySelectorAll('.body-cell');
     cells.forEach(cell => {
       const text = cell.textContent.toLowerCase();
+      const row = cell.parentElement; // Get the row containing the cell
+  
       if (searchTerm && text.includes(searchTerm)) {
         // Highlight cells containing the search term
         cell.classList.add('highlight');
+  
+        // Check if the row is today's row and adjust font color if needed
+        if (row.classList.contains('body-row--today')) {
+          cell.style.color = 'black';
+        } else {
+          cell.style.color = ''; // Reset color if not today's row
+        }
       } else {
         // Remove highlight from cells not matching the search term
         cell.classList.remove('highlight');
+        cell.style.color = ''; // Reset color
       }
     });
   }
@@ -339,14 +330,20 @@ document.addEventListener("DOMContentLoaded", async function () {
   //*******************************************************************************************************************************************************************************
 
   //EVENT LISTENERS FOR BUTTONS AND INPUT FIELDS //********************************************************************************************************************************
+  
 
-  searchInput.addEventListener("keyup", function (event) {
+  
+searchInput.addEventListener("input", function () {
+    highlightCells(); // Call the highlightCells() function on input change
+});
+
+// Update highlights when the Enter key is pressed
+searchInput.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
-      searchInput.blur(); // Remove focus from the search input
-      highlightCells(); // Call the highlightCells() function when Enter key is pressed
+        searchInput.blur(); // Remove focus from the search input
+        highlightCells(); // Call the highlightCells() function when Enter key is pressed
     }
-  });
-
+});
   searchButton.addEventListener("click", function (event) {
     highlightCells(); // Call the highlightCells() function when the search button is clicked
   });
@@ -363,7 +360,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateTable();
     updateTitle();
   });
-
   previousWeeksButton.addEventListener("click", () => {
     moveToPreviousBlock();
     updateTable();
@@ -381,6 +377,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   tableElement.addEventListener("mouseover", handleHover);
   tableElement.addEventListener("mouseout", handleHover);
   await initializeTable();
-  print_button.init(tbodyElement,theadElement);
+  print_button.init(tbodyElement, theadElement);
   scrollToTodayRow();
 });
