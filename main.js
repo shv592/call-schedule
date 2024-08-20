@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const searchButton = document.getElementById('searchButton');
   const resetButton = document.getElementById('resetButton');
 
+
   //************************ DATE CALCULATIONS ************************************************************************************************
   let currentDate = moment().startOf('day');
   // Dynamically updates the schoolYear
@@ -371,6 +372,7 @@ searchInput.addEventListener("keyup", function (event) {
     adjustFilterColumnWidth(); // Adjust filter column width when the selected option changes
     updateTable();
   });
+
 
   // INITIALIZE TABLE ON PAGE LOAD ************************************************************************************************************************************************
 

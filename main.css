@@ -36,7 +36,11 @@
 }
 
 html, body {
+  margin: 0;
+  padding: 0;
   height: 100%;
+  overflow: hidden; /* Disable scrolling on the body */
+  
 }
 
 /* Main Container */
@@ -44,14 +48,15 @@ html, body {
   position: relative;
   width: 100%;
   height: calc(100vh - 70px); /* Adjust to account for sticky container height */
-  overflow: auto;
+  overflow: auto; /* Enable vertical scrolling for the table content */
+  min-width: 300px; /* Optional: Ensure a minimum width for readability */
+
 }
 
 /* Sticky Container */
 #sticky-container {
   display: flex;
-  align-items: center;
-  justify-content: space-between; /* Adjusts alignment and spacing */
+  align-items: flex-start; /* Align items to the start */
   padding: 10px 20px;
   width: 100%;
   box-sizing: border-box;
@@ -66,10 +71,10 @@ html, body {
 #navButtons {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 #navButtons button {
-  margin-right: 10px;
   font-size: var(--nav-button-font-size);
   padding: 10px 5px;
   cursor: pointer;
@@ -98,10 +103,15 @@ html, body {
 
 /* Table Title */
 #table-title {
-  width: 45%;
+  flex: 1;
+  min-width: 45%;
   text-align: center;
+  display: flex;
   font-size: var(--title-font-size);
   font-weight: bold;
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+vertical-align: middle;
 }
 
 /* Search Container */
@@ -109,7 +119,6 @@ html, body {
   display: flex;
   align-items: center;
   margin-left: auto; /* Pushes search container to the end */
-  width: 500px;
 }
 
 /* Filter Column */
@@ -176,7 +185,7 @@ html, body {
   background-color: var(--table-bg-color);
   border-collapse: collapse;
   overflow-x: auto; /* Adds horizontal scrolling if needed */
-  table-layout: fixed; /* Keeps table layout fixed */
+  table-layout: auto; /* Ensure table layout adapts to content */
 
 }
 
@@ -206,15 +215,24 @@ html, body {
 .body-cell.special-column {
   min-width: 45px;
   padding: 5px;
-  position: sticky;
   background-color: #354156;
   color: var(--secondary-text-color);
   z-index: 9;
+  position: sticky;
+
+}
+/* Sticky Column 1 */
+.head-cell.special-column:nth-child(1),
+.body-cell.special-column:nth-child(1) {
+  left: 0; /* Fixed position for the first column */
 }
 
 .head-cell.special-column:nth-child(2),
 .body-cell.special-column:nth-child(2) {
   left: 55px;
+  position: sticky;
+
+
 }
 
 .body-row--today {
@@ -307,3 +325,37 @@ html, body {
 
 
 
+
+
+
+/* General styles for the mobile view */
+
+
+/* For Mobile View */
+@media (max-width: 768px) {
+  #sticky-container {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the start */
+  }
+
+  #table-title {
+    order: 1; /* Move table title to the top */
+    width: 100%;
+    text-align: center;
+  }
+  #navButtons {
+    order: 2; /* Move navigation buttons to the middle row */
+    width: 100%;
+    justify-content: center;
+    margin: 10px 0; /* Add margin for spacing */
+  }
+  #searchContainer {
+    order: 3; /* Move search and reset buttons to the bottom row */
+    width: 100%;
+    display: flex;
+  }
+
+  #searchButton {
+    margin-left: auto; /* Align search button to the right */
+  }
+}
