@@ -6,19 +6,19 @@ export const print_button = {
   table: document.createElement("table"),
   rota_table: document.createElement("table"),
   counts: {
-    "BLUE": { "docs": [] },
-    "RED": { "docs": [] },
-    "CTU ED": { "docs": [] },
+    "BLUE JR": { "docs": [] },
+    "RED JR": { "docs": [] },
+    "CTU ED JR": { "docs": [] },
   },
-  rotas_to_count: ["BLUE", "RED", "CTU ED"],
+  rotas_to_count: ["BLUE JR", "RED JR", "CTU ED JR"],
 
   descriptions: {
 
     "DATE": "Date",
     "DAY": "Day",
-    "BLUE": "CTU Blue Jr (Weekend)",
-    "RED": "CTU Red Jr (Weekend)",
-    "CTU ED": "CTU ED Jr (Weekend)",
+    "BLUE JR": "CTU Blue Jr (Weekend)",
+    "RED JR": "CTU Red Jr (Weekend)",
+    "CTU ED JR": "CTU ED Jr (Weekend)",
     "WARD NIGHT": "Ward Night Jr (Mon-Thurs)",
     "ED NIGHT": "ED Night Jr (Mon-Thurs)",
     "LATE STAY": "Late Stay Jr (Mon-Thurs)",
