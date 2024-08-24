@@ -31,23 +31,14 @@
 /* General Resets and Base Styles */
 * {
   font-family: var(--font-family);
-  margin: 0;
-  padding: 0;
+
 }
 
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
   overflow: hidden;
-  
-}
-#table-wrapper {
-  position: relative;
-  width: 100%;
-  height: calc(100vh - 100px); /* Adjust to account for sticky container height */
-  overflow: auto; /* Adds horizontal scrolling if needed */
-  margin-top: 40px;
+  height: 100%;
 }
 
 /* Sticky Container */
@@ -58,7 +49,17 @@ html, body {
   position: sticky;
   top: 0;
   z-index: 1000;
-  height:fit-content;
+  margin-top: 0;
+}
+
+
+#table-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: auto;
+  z-index: 90;
+  height: calc(100vh - 60px); /* Adjust to account for sticky container height */
+
 }
 
 /* Navigation Buttons */
@@ -174,8 +175,6 @@ html, body {
 #schedule {
   background-color: var(--table-bg-color);
   border-collapse: collapse;
-  table-layout: auto; /* Ensure table layout adapts to content */
-
 }
 
 
@@ -316,18 +315,26 @@ html, body {
 }
 
 
-
-
-
-
-/* General styles for the mobile view */
-
-
 /* For Mobile View */
 @media (max-width: 768px) {
   #sticky-container {
+    position: sticky;
+    top: 0;
     flex-direction: column; /* Stack elements vertically */
     align-items: flex-start; /* Align items to the start */
+    z-index: 1000;
+    width: 100%; /* Ensure it takes the full width of the viewport */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+  }
+
+
+  #table-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: auto;
+    z-index: 90;
+    height: calc(100vh - 80px); /* Adjust to match sticky container height */
+    box-sizing: border-box; /* Ensure padding is included in height calculations */
   }
 
   #table-title {
