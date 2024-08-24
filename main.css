@@ -1,19 +1,19 @@
 /* Font and Color Variables */
 :root {
   --font-family: "Calibri", sans-serif;
-  --primary-bg-color: #263344;
-  --primary-text-color: #ffffff;
-  --secondary-bg-color: #354257;
+  --primary-bg-color: #c5c5c535;
+  --primary-text-color: rgb(67, 67, 67);
+  --secondary-bg-color: #566a87;
   --secondary-text-color: white;
   --highlight-bg-color: rgb(255, 255, 0);
   --today-bg-color: rgb(188, 42, 42);
-  --search-bg-color: rgb(226, 226, 226);
+  --search-bg-color: #e2e2e2;
   --search-btn-bg-color: #c42222;
-  --search-btn-hover-bg-color: #c42222a9;
+  --search-btn-hover-bg-color: #9b1a1a;
   --reset-btn-bg-color: #009ac0;
   --reset-btn-hover-bg-color: #006680;
-  --print-btn-bg-color: #39FF33;
-  --print-btn-hover-bg-color: darkseagreen;
+  --print-btn-bg-color: #279250;
+  --print-btn-hover-bg-color: #1c6839;
   --table-bg-color: #ffffff;
   --cell-bg-color: rgba(237, 237, 237, 0.4);
   --hover-cell-bg-color: rgba(211, 208, 208, 0.9);
@@ -24,7 +24,7 @@
   --header-font-size: 20px;
   --sub-header-font-size: 18px;
   --table-font-size: 12px;
-  --title-font-size: 14px;
+  --title-font-size: 16px;
   --nav-button-font-size: 12px;
 }
 
@@ -39,29 +39,20 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; /* Disable scrolling on the body */
   
 }
-
-/* Main Container */
 #table-wrapper {
   position: relative;
   width: 100%;
   height: calc(100vh - 70px); /* Adjust to account for sticky container height */
   overflow: auto; /* Enable vertical scrolling for the table content */
-  min-width: 300px; /* Optional: Ensure a minimum width for readability */
-
 }
 
 /* Sticky Container */
 #sticky-container {
   display: flex;
-  align-items: flex-start; /* Align items to the start */
   padding: 10px 20px;
-  width: 100%;
-  box-sizing: border-box;
   background-color: var(--primary-bg-color);
-  color: var(--primary-text-color);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -79,7 +70,7 @@ html, body {
   padding: 10px 5px;
   cursor: pointer;
   background-color: var(--search-btn-bg-color);
-  color: var(--primary-text-color);
+  color: var(--secondary-text-color);
   border: none;
   border-radius: 3px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -94,7 +85,7 @@ html, body {
 
 #navButtons .print_button {
   background-color: var(--print-btn-bg-color);
-  color: black;
+  color: rgb(255, 255, 255);
 }
 
 #navButtons .print_button:hover {
@@ -103,15 +94,12 @@ html, body {
 
 /* Table Title */
 #table-title {
-  flex: 1;
-  min-width: 45%;
+  min-width: 40%;
   text-align: center;
-  display: flex;
   font-size: var(--title-font-size);
   font-weight: bold;
-  align-items: center; /* Center text vertically */
-  justify-content: center; /* Center text horizontally */
-vertical-align: middle;
+  margin-top: 10px;
+  color: var(--primary-text-color);
 }
 
 /* Search Container */
@@ -119,6 +107,7 @@ vertical-align: middle;
   display: flex;
   align-items: center;
   margin-left: auto; /* Pushes search container to the end */
+
 }
 
 /* Filter Column */
@@ -134,8 +123,6 @@ vertical-align: middle;
   box-sizing: border-box; /* Ensure padding is included in width */
   transition: width 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for width, background color, and box shadow */
 }
-
-
 
 #searchInput {
   flex: 1;
@@ -163,16 +150,16 @@ vertical-align: middle;
 
 #resetButton {
   font-size: var(--nav-button-font-size);
-  margin-left: 20px;
+  margin-left: 10px;
   padding: 10px;
   cursor: pointer;
   background-color: var(--reset-btn-bg-color);
-  color: var(--primary-text-color);
+  color: var(--secondary-text-color);
   border: none;
   border-radius: 3px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.1s ease;
-  width: 70px;
+  min-width: 70px;
 }
 
 #resetButton:hover {
@@ -186,8 +173,8 @@ vertical-align: middle;
   border-collapse: collapse;
   overflow-x: auto; /* Adds horizontal scrolling if needed */
   table-layout: auto; /* Ensure table layout adapts to content */
-
 }
+
 
 /* Header and Cell Styles */
 .head-row {
@@ -237,12 +224,14 @@ vertical-align: middle;
 
 .body-row--today {
   background-color: var(--today-bg-color);
-  color: var(--primary-text-color);
+  color: var(--secondary-text-color);
 }
 
 .body-row:hover:not(.body-row--today) {
   background-color: var(--cell-bg-color);
 }
+
+
 
 
 /* Ensure hover effects do not apply to highlighted cells */

@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const searchInput = document.getElementById('searchInput');
   const searchButton = document.getElementById('searchButton');
   const resetButton = document.getElementById('resetButton');
+  const newButton = document.getElementById("newButton"); // Ensure this button exists in your HTML
 
 
   //************************ DATE CALCULATIONS ************************************************************************************************
@@ -374,6 +375,7 @@ searchInput.addEventListener("keyup", function (event) {
   });
 
 
+
   // INITIALIZE TABLE ON PAGE LOAD ************************************************************************************************************************************************
 
   tableElement.addEventListener("mouseover", handleHover);
@@ -381,4 +383,5 @@ searchInput.addEventListener("keyup", function (event) {
   await initializeTable();
   print_button.init(tbodyElement, theadElement);
   scrollToTodayRow();
+
 });
