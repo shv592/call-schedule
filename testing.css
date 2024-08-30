@@ -1,4 +1,4 @@
-/* Font and Color Variables */
+stick to my code: /* Font and Color Variables */
 :root {
   --font-family: "Calibri", sans-serif;
   --primary-bg-color: #c5c5c535;
@@ -48,7 +48,6 @@ html, body {
   background-color: var(--primary-bg-color);
   position: sticky;
   z-index: 1000;
-
 }
 
 #table-wrapper {
@@ -63,13 +62,11 @@ html, body {
   display: flex;
   align-items: center;
   gap: 5px;
-  flex-grow: 1; /* Allow buttons to grow */
-  flex-shrink: 1; /* Allow buttons to shrink */
 }
 
 #navButtons button {
   font-size: var(--nav-button-font-size);
-  padding: 10px 10px;
+  padding: 10px 5px;
   cursor: pointer;
   background-color: var(--search-btn-bg-color);
   color: var(--secondary-text-color);
@@ -77,6 +74,7 @@ html, body {
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background-color 0.5s ease, transform 0.3s ease;
+  width: 90px;
 }
 
 #navButtons button:hover {
@@ -95,16 +93,13 @@ html, body {
 
 /* Table Title */
 #table-title {
+  min-width: 40%;
   text-align: center;
   font-size: var(--title-font-size);
   font-weight: bold;
   margin-top: 10px;
   color: var(--primary-text-color);
-  margin: 10px auto; /* Center title horizontally */
-  flex-grow: 5; /* Allow title to take available space */
-
 }
-
 
 /* Search Container */
 #searchContainer {
@@ -163,8 +158,7 @@ html, body {
   border-radius: 3px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.1s ease;
-  flex-grow: 1; /* Allow buttons to grow */
-  flex-shrink: 1; /* Allow buttons to shrink */
+  min-width: 70px;
 }
 
 #resetButton:hover {
@@ -349,8 +343,6 @@ html, body {
     text-align: center;
     font-size: 14px!important;
   }
-
-  
 
   #navButtons {
     order: 2;
