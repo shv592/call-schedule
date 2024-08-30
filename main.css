@@ -44,29 +44,28 @@ html, body {
 /* Sticky Container */
 #sticky-container {
   display: flex;
-  padding: 10px 20px;
+  padding: 10px;
   background-color: var(--primary-bg-color);
   position: sticky;
-  top: 0;
   z-index: 1000;
-  margin-top: 0;
+  overflow: hidden;
+
 }
 
-
 #table-wrapper {
-  position: relative;
   width: 100%;
   overflow: auto;
   z-index: 90;
-  height: calc(100vh - 60px); /* Adjust to account for sticky container height */
-
+  height: calc(100vh - 100px); /* Adjust to account for sticky container height */
 }
 
 /* Navigation Buttons */
 #navButtons {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
+  flex-grow: 1; /* Allow buttons to grow */
+  flex-shrink: 1; /* Allow buttons to shrink */
 }
 
 #navButtons button {
@@ -76,10 +75,9 @@ html, body {
   background-color: var(--search-btn-bg-color);
   color: var(--secondary-text-color);
   border: none;
-  border-radius: 3px;
+  border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  width: 90px;
+  transition: background-color 0.5s ease, transform 0.3s ease;
 }
 
 #navButtons button:hover {
@@ -98,7 +96,7 @@ html, body {
 
 /* Table Title */
 #table-title {
-  min-width: 40%;
+
   text-align: center;
   font-size: var(--title-font-size);
   font-weight: bold;
@@ -163,7 +161,8 @@ html, body {
   border-radius: 3px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.1s ease;
-  min-width: 70px;
+  flex-grow: 1; /* Allow buttons to grow */
+  flex-shrink: 1; /* Allow buttons to shrink */
 }
 
 #resetButton:hover {
@@ -183,10 +182,11 @@ html, body {
   font-size: var(--table-font-size);
   height: 40px;
   position: sticky;
-  top: 0;
   background-color: var(--secondary-bg-color);
   color: var(--secondary-text-color);
   z-index: 800;
+  top: 0;  /* Stick to the top of the container */
+
 }
 
 .head-cell {
@@ -316,45 +316,74 @@ html, body {
 
 
 /* For Mobile View */
+/* For Mobile View */
 @media (max-width: 768px) {
   #sticky-container {
     position: sticky;
     top: 0;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: flex-start; /* Align items to the start */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     z-index: 1000;
-    width: 100%; /* Ensure it takes the full width of the viewport */
-    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
   }
-
 
   #table-wrapper {
     position: relative;
+    margin-top: 0;
     width: 100%;
     overflow: auto;
     z-index: 90;
-    height: calc(100vh - 80px); /* Adjust to match sticky container height */
-    box-sizing: border-box; /* Ensure padding is included in height calculations */
+    box-sizing: border-box;
+    background-color: #fff;
   }
 
   #table-title {
-    order: 1; /* Move table title to the top */
+    order: 1;
     width: 100%;
+    margin-bottom: 10px;
     text-align: center;
-  }
-  #navButtons {
-    order: 2; /* Move navigation buttons to the middle row */
-    width: 100%;
-    justify-content: center;
-    margin: 10px 0; /* Add margin for spacing */
-  }
-  #searchContainer {
-    order: 3; /* Move search and reset buttons to the bottom row */
-    width: 100%;
-    display: flex;
+    font-size: 14px!important;
   }
 
-  #searchButton {
-    margin-left: auto; /* Align search button to the right */
+  #navButtons {
+    order: 2;
+    width: 100%;
+    justify-content: center;
+    font-size: 5px!important;
+    gap: 5px;
   }
+
+  #navButtons button {
+    font-size: 11px; /* Smaller font size */
+    padding: 8px 5px; /* Smaller padding */
+    width: 80px; /* Smaller width */
+  }
+
+  #searchContainer {
+    display: none;
+  }
+  .head-row {
+    top: 0; /* Ensure sticky positioning works in mobile */
+    z-index: 800; /* Ensure it's above content */
+  }
+
+    /* Adjust padding for mobile view */
+    .head-cell {
+      padding-top: 2px!important; /* Smaller padding for headers */
+    }
+  
+    .body-cell {
+      padding-top: 2px!important; /* Smaller padding for cells */
+    }
+  
+    .head-cell.special-column,
+    .body-cell.special-column {
+      padding-top: 1px!important; /* Smaller padding for special columns */
+    }
+
+    
+
 }
