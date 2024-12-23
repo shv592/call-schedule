@@ -1,5 +1,4 @@
 import { print_button } from "./print_button.js"
-
 document.addEventListener("DOMContentLoaded", async function () {
 
   // Constants
@@ -15,7 +14,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const searchButton = document.getElementById('searchButton');
   const resetButton = document.getElementById('resetButton');
   const newButton = document.getElementById("newButton"); // Ensure this button exists in your HTML
-
 
   //************************ DATE CALCULATIONS ************************************************************************************************
   let currentDate = moment().startOf('day');
@@ -34,7 +32,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     return firstMondayMoment;
   }
   let schoolYearStart = getFirstMondayInJuly(specificYear);
-  //************************************************************************************************************************************************
 
   //************************ VARIABLES ************************************************************************************************************************************************
   let tableData = [];
@@ -84,7 +81,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   //************************ FUNCTIONS ************************************************************************************************************************************************
-
   // Check if a given date is today
   function isToday(date) {
     return moment(date).isSame(moment(), "day");
@@ -269,9 +265,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       updateDates();
     }
   }
-  //*****************************************************************************************************************************************************************************************
-
-
   // DESGIN FEATURES: HIGHLIGHTING AND HOVER ************************************************************************************************************************************************
 
   // Function to highlight cells containing the search term
@@ -281,11 +274,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     cells.forEach(cell => {
       const text = cell.textContent.toLowerCase();
       const row = cell.parentElement; // Get the row containing the cell
-  
+
       if (searchTerm && text.includes(searchTerm)) {
         // Highlight cells containing the search term
         cell.classList.add('highlight');
-  
+
         // Check if the row is today's row and adjust font color if needed
         if (row.classList.contains('body-row--today')) {
           cell.style.color = 'black';
@@ -329,23 +322,19 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
     }
   }
-  //*******************************************************************************************************************************************************************************
 
   //EVENT LISTENERS FOR BUTTONS AND INPUT FIELDS //********************************************************************************************************************************
-  
-
-  
-searchInput.addEventListener("input", function () {
+  searchInput.addEventListener("input", function () {
     highlightCells(); // Call the highlightCells() function on input change
-});
+  });
 
-// Update highlights when the Enter key is pressed
-searchInput.addEventListener("keyup", function (event) {
+  // Update highlights when the Enter key is pressed
+  searchInput.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
-        searchInput.blur(); // Remove focus from the search input
-        highlightCells(); // Call the highlightCells() function when Enter key is pressed
+      searchInput.blur(); // Remove focus from the search input
+      highlightCells(); // Call the highlightCells() function when Enter key is pressed
     }
-});
+  });
   searchButton.addEventListener("click", function (event) {
     highlightCells(); // Call the highlightCells() function when the search button is clicked
   });
@@ -374,15 +363,10 @@ searchInput.addEventListener("keyup", function (event) {
     updateTable();
   });
 
-
-
   // INITIALIZE TABLE ON PAGE LOAD ************************************************************************************************************************************************
-
   tableElement.addEventListener("mouseover", handleHover);
   tableElement.addEventListener("mouseout", handleHover);
   await initializeTable();
   print_button.init(tbodyElement, theadElement);
   scrollToTodayRow();
-
 });
-
