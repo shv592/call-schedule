@@ -33,8 +33,7 @@
 
 }
 
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -56,10 +55,8 @@ body {
   width: 100%;
   overflow: auto;
   z-index: 90;
-  height: calc(100vh - 100px);
-  /* Adjust to account for sticky container height */
-  overflow-y: auto;
-  /* Only vertical scrollbar for the table */
+  height: calc(100vh - 100px); /* Adjust to account for sticky container height */
+  overflow-y: auto; /* Only vertical scrollbar for the table */
 }
 
 /* Navigation Buttons */
@@ -67,10 +64,8 @@ body {
   display: flex;
   align-items: center;
   gap: 5px;
-  flex-grow: 1;
-  /* Allow buttons to grow */
-  flex-shrink: 1;
-  /* Allow buttons to shrink */
+  flex-grow: 1; /* Allow buttons to grow */
+  flex-shrink: 1; /* Allow buttons to shrink */
 }
 
 #navButtons button {
@@ -106,10 +101,8 @@ body {
   font-weight: bold;
   margin-top: 10px;
   color: var(--primary-text-color);
-  margin: 10px auto;
-  /* Center title horizontally */
-  flex-grow: 5;
-  /* Allow title to take available space */
+  margin: 10px auto; /* Center title horizontally */
+  flex-grow: 5; /* Allow title to take available space */
 
 }
 
@@ -118,8 +111,7 @@ body {
 #searchContainer {
   display: flex;
   align-items: center;
-  margin-left: auto;
-  /* Pushes search container to the end */
+  margin-left: auto; /* Pushes search container to the end */
 
 }
 
@@ -133,10 +125,8 @@ body {
   padding: 10px;
   border: none;
   border-radius: 3px 0 0 3px;
-  box-sizing: border-box;
-  /* Ensure padding is included in width */
-  transition: width 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-  /* Smooth transition for width, background color, and box shadow */
+  box-sizing: border-box; /* Ensure padding is included in width */
+  transition: width 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for width, background color, and box shadow */
 }
 
 #searchInput {
@@ -174,10 +164,8 @@ body {
   border-radius: 3px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.1s ease;
-  flex-grow: 1;
-  /* Allow buttons to grow */
-  flex-shrink: 1;
-  /* Allow buttons to shrink */
+  flex-grow: 1; /* Allow buttons to grow */
+  flex-shrink: 1; /* Allow buttons to shrink */
 }
 
 #resetButton:hover {
@@ -202,8 +190,7 @@ body {
   background-color: var(--secondary-bg-color);
   color: var(--secondary-text-color);
   z-index: 800;
-  top: 0;
-  /* Stick to the top of the container */
+  top: 0;  /* Stick to the top of the container */
 
 }
 
@@ -228,12 +215,10 @@ body {
   position: sticky;
 
 }
-
 /* Sticky Column 1 */
 .head-cell.special-column:nth-child(1),
 .body-cell.special-column:nth-child(1) {
-  left: 0;
-  /* Fixed position for the first column */
+  left: 0; /* Fixed position for the first column */
 }
 
 .head-cell.special-column:nth-child(2),
@@ -275,8 +260,7 @@ body {
 }
 
 .body-row--today .body-cell.highlight {
-  color: black;
-  /* Ensure text is black in highlighted cells that are in today's row */
+  color: black; /* Ensure text is black in highlighted cells that are in today's row */
 }
 
 /* Print Table Styles */
@@ -366,52 +350,43 @@ body {
     width: 100%;
     margin-bottom: 10px;
     text-align: center;
-    font-size: 14px !important;
+    font-size: 14px!important;
   }
 
-
+  
 
   #navButtons {
     order: 2;
     width: 100%;
     justify-content: center;
-    font-size: 5px !important;
+    font-size: 5px!important;
     gap: 5px;
   }
 
   #navButtons button {
-    font-size: 11px;
-    /* Smaller font size */
-    padding: 8px 5px;
-    /* Smaller padding */
-    width: 80px;
-    /* Smaller width */
+    font-size: 11px; /* Smaller font size */
+    padding: 8px 5px; /* Smaller padding */
+    width: 80px; /* Smaller width */
   }
 
   #searchContainer {
     display: none;
   }
-
   .head-row {
-    top: 0;
-    /* Ensure sticky positioning works in mobile */
-    z-index: 800;
-    /* Ensure it's above content */
+    top: 0; /* Ensure sticky positioning works in mobile */
+    z-index: 800; /* Ensure it's above content */
   }
 
-  /* Adjust padding for mobile view */
-  .head-cell {
-    padding-top: 2px !important;
-    /* Smaller padding for headers */
-  }
-
-  .body-cell {
-    padding-top: 2px !important;
-    /* Smaller padding for cells */
-  }
-
-  .head-cell.special-column,
-  .body-cell.special-column {
-    padding-top: 1px !important;
-    /* Smaller padding for special columns */
-  }
+    /* Adjust padding for mobile view */
+    .head-cell {
+      padding-top: 2px!important; /* Smaller padding for headers */
+    }
+  
+    .body-cell {
+      padding-top: 2px!important; /* Smaller padding for cells */
+    }
+  
+    .head-cell.special-column,
+    .body-cell.special-column {
+      padding-top: 1px!important; /* Smaller padding for special columns */
+    }
