@@ -10,28 +10,33 @@
 </head>
 
 <body>
-    <nav id="sticky-container">
-        <div id="navButtons">
-            <button id="previousWeeksButton">Last Block</button>
-            <button id="nextWeeksButton">Next Block</button>
-        </div>
-        <div id="table-title"></div>
-        <div id=searchContainer>
-            <select id="filterColumn">
-                <option value="default">All</option>
-            </select>
-            <input type="text" id="searchInput" placeholder="Search name">
-            <button id="searchButton"></button>
-            <button id="resetButton">Reset</button>
-
-        </div>
-    </nav>
-    <div id="table-wrapper">
-        <table id="schedule"></table>
+  <!-- fixed header bar -->
+  <nav id="sticky-container">
+    <div id="navButtons">
+      <button id="previousWeeksButton">Last Block</button>
+      <button id="nextWeeksButton">Next Block</button>
     </div>
+    <div id="table-title"></div>
+    <div id="searchContainer">
+      <!-- search controls (hidden on mobile) -->
+      <select id="filterColumn"><option>All</option></select>
+      <input id="searchInput" type="text" placeholder="Search name" />
+      <button id="searchButton"></button>
+      <button id="resetButton">Reset</button>
+    </div>
+  </nav>
 
+  <!-- desktop table (hidden on mobile) -->
+  <div id="table-wrapper">
+    <table id="schedule"></table>
+  </div>
 
+  <!-- mobile accordion (hidden on desktop) -->
+  <div id="mobile-accordion"></div>
+
+  <!-- your JavaScript -->
   <script type="module" src="main.js"></script>
 </body>
+
 
 </html>

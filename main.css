@@ -320,73 +320,154 @@ html, body {
 }
 
 
-/* For Mobile View */
-/* For Mobile View */
+/* MOBILE & ACCORDION (≤768px) */
 @media (max-width: 768px) {
-  #sticky-container {
-    position: sticky;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    z-index: 1000;
-    width: 100%;
-    box-sizing: border-box;
-    background-color: #fff;
-  }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255);
+
+}
+
+/* Sticky Top Container */
+#sticky-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;               /* Ensures it fits exactly in viewport width */
+  max-width: 100%;
+  box-sizing: border-box;
+  background-color: rgb(44, 44, 44);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 8px 12px;
+  overflow-x: hidden;         /* Prevent horizontal overflow */
+}
+
+/* Leave room for sticky header */
+body {
+  padding-top: 100px; /* Adjust this to match #sticky-container height */
+overflow-x: hidden;;
+}
+
+/* Title on top of nav buttons */
+#table-title {
+  order: -1;
+  font-size: 16px;
+  margin-bottom: 10px;
+  width: 100%;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Navigation buttons */
+#navButtons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+#navButtons button {
+  flex: 1;
+  margin: 0 4px;
+  font-size: 14px;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile Accordion Container */
+#mobile-accordion {
+  display: block;
+  padding: 5px;
+  background-color: white;
+}
+
+/* Hide desktop table */
+#table-wrapper {
+  display: none;
+}
+
+/* Hide search & print elements on mobile */
+#printButton,
+.print_button,
+#searchContainer {
+  display: none !important;
+}
+
+
+
+  /* Hide desktop table */
   #table-wrapper {
-    position: relative;
-    margin-top: 0;
-    width: 100%;
-    overflow: auto;
-    z-index: 90;
-    box-sizing: border-box;
-    background-color: #fff;
-  }
-
-  #table-title {
-    order: 1;
-    width: 100%;
-    margin-bottom: 10px;
-    text-align: center;
-    font-size: 14px!important;
-  }
-
-  
-
-  #navButtons {
-    order: 2;
-    width: 100%;
-    justify-content: center;
-    font-size: 5px!important;
-    gap: 5px;
-  }
-
-  #navButtons button {
-    font-size: 11px; /* Smaller font size */
-    padding: 8px 5px; /* Smaller padding */
-    width: 80px; /* Smaller width */
-  }
-
-  #searchContainer {
     display: none;
   }
-  .head-row {
-    top: 0; /* Ensure sticky positioning works in mobile */
-    z-index: 800; /* Ensure it's above content */
+
+  /* Show accordion */
+  #mobile-accordion {
+    display: block !important;
+    width: 100%;
+    padding: 5px;
+    background-color: white;
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
 
-    /* Adjust padding for mobile view */
-    .head-cell {
-      padding-top: 2px!important; /* Smaller padding for headers */
-    }
-  
-    .body-cell {
-      padding-top: 2px!important; /* Smaller padding for cells */
-    }
-  
-    .head-cell.special-column,
-    .body-cell.special-column {
-      padding-top: 1px!important; /* Smaller padding for special columns */
-    }
+  /* Accordion header styling */
+  .accordion-header {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: var(--secondary-bg-color);
+    color: var(--secondary-text-color);
+    border: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .accordion-header:hover {
+    background-color: #4a5975;
+  }
+
+  .accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0px 10px;
+    background-color: var(--table-bg-color);
+    margin-bottom: 5px;
+    border: none;
+  }
+
+  .accordion-panel.expanded {
+    max-height: 1000px; /* Ensure it opens fully */
+  }
+
+  .accordion-item {
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+  }
+
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Default (desktop) — Hide mobile accordion */
+#mobile-accordion {
+  display: none;
+}
